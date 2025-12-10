@@ -73,7 +73,7 @@ This issue has been open for ${bounty.hoursElapsed} hours. ${this.getNextEscalat
 **Maximum possible bounty:** ${bounty.maxAmount} MNEE
 
 ---
-*Escalation ${bounty.escalationCount} triggered by [Bounty Hunter](https://github.com/bounty-hunter/bounty-hunter)*`;
+*Escalation ${bounty.escalationCount} triggered by [FixFlow](https://github.com/bounty-hunter/bounty-hunter)*`;
 
       await this.octokit.issues.createComment({
         owner,

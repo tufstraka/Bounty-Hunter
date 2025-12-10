@@ -1,6 +1,6 @@
-# Bounty Hunter Deployment Guide
+# FixFlow Deployment Guide
 
-This guide walks you through deploying the Bounty Hunter system to production.
+This guide walks you through deploying the FixFlow system to production.
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
@@ -215,7 +215,7 @@ sudo certbot renew --dry-run
 Go to GitHub Settings > Developer settings > GitHub Apps > New GitHub App
 
 **Settings:**
-- **Name**: Bounty Hunter Bot
+- **Name**: FixFlow Bot
 - **Homepage URL**: https://bounty-hunter.io
 - **Webhook URL**: https://api.bounty-hunter.io/webhooks/github
 - **Webhook secret**: Generate a secure secret

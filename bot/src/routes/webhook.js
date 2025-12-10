@@ -5,12 +5,7 @@ import logger from '../utils/logger.js';
 import Bounty from '../models/Bounty.js';
 import bountyService from '../services/bountyService.js';
 import mneeService from '../services/mnee.js';
-import { Octokit } from '@octokit/rest';
-
-// Initialize Octokit
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN
-});
+import githubAppService from '../services/githubApp.js';
 
 // Verify GitHub webhook signature
 function verifyWebhookSignature(payload, signature) {
@@ -41,6 +36,12 @@ router.post('/', async (req, res) => {
 
     // Handle different event types
     switch (eventType) {
+      case 'installation':
+        await handleInstallation(event);
+        break;
+      case 'installation_repositories':
+        await handleInstallationRepositories(event);
+        break;
       case 'pull_request':
         await handlePullRequest(event);
         break;
@@ -61,10 +62,39 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Handle installation webhook events
+async function handleInstallation(event) {
+  try {
+    const { action, installation, repositories } = event;
+    logger.info(`Installation event: ${action} for ${installation.account.login}`);
+    
+    await githubAppService.handleInstallationWebhook(action, installation, repositories);
+  } catch (error) {
+    logger.error('Error handling installation event:', error);
+  }
+}
+
+// Handle installation_repositories webhook events
+async function handleInstallationRepositories(event) {
+  try {
+    const { action, installation, repositories_added, repositories_removed } = event;
+    logger.info(`Installation repositories event: ${action} for ${installation.account.login}`);
+    
+    await githubAppService.handleInstallationRepositoriesWebhook(
+      action,
+      installation,
+      repositories_added || [],
+      repositories_removed || []
+    );
+  } catch (error) {
+    logger.error('Error handling installation_repositories event:', error);
+  }
+}
+
 // Handle pull request events
 async function handlePullRequest(event) {
   try {
-    const { action, pull_request, repository } = event;
+    const { action, pull_request, repository, installation } = event;
 
     if (action === 'closed' && pull_request.merged) {
       logger.info(`PR #${pull_request.number} merged in ${repository.full_name}`);
@@ -73,7 +103,7 @@ async function handlePullRequest(event) {
       const referencedIssues = extractReferencedIssues(pull_request.body || '');
 
       for (const issueNumber of referencedIssues) {
-        await checkAndClaimBounty(repository.full_name, issueNumber, pull_request);
+        await checkAndClaimBounty(repository.full_name, issueNumber, pull_request, installation?.id);
       }
     }
   } catch (error) {
@@ -84,13 +114,16 @@ async function handlePullRequest(event) {
 // Handle workflow run events
 async function handleWorkflowRun(event) {
   try {
-    const { action, workflow_run } = event;
+    const { action, workflow_run, installation } = event;
 
     if (action === 'completed' && workflow_run.conclusion === 'success') {
       // Check if this workflow run is associated with a PR
       if (workflow_run.pull_requests && workflow_run.pull_requests.length > 0) {
         const pr = workflow_run.pull_requests[0];
         logger.info(`Workflow succeeded for PR #${pr.number}`);
+
+        // Get Octokit instance for this installation
+        const octokit = await githubAppService.getOctokitForRepoFullName(workflow_run.repository.full_name);
 
         // Get full PR details
         const [owner, repo] = workflow_run.repository.full_name.split('/');
@@ -104,7 +137,7 @@ async function handleWorkflowRun(event) {
         const referencedIssues = extractReferencedIssues(pullRequest.body || '');
 
         for (const issueNumber of referencedIssues) {
-          await checkAndClaimBounty(workflow_run.repository.full_name, issueNumber, pullRequest);
+          await checkAndClaimBounty(workflow_run.repository.full_name, issueNumber, pullRequest, installation?.id);
         }
       }
     }
@@ -116,7 +149,7 @@ async function handleWorkflowRun(event) {
 // Handle issue events
 async function handleIssues(event) {
   try {
-    const { action, issue, repository } = event;
+    const { action, issue, repository, installation } = event;
 
     if (action === 'closed') {
       logger.info(`Issue #${issue.number} closed in ${repository.full_name}`);
@@ -159,7 +192,7 @@ function extractReferencedIssues(body) {
 }
 
 // Check and claim bounty for an issue
-async function checkAndClaimBounty(repository, issueNumber, pullRequest) {
+async function checkAndClaimBounty(repository, issueNumber, pullRequest, installationId = null) {
   try {
     // Find active bounty for this issue
     const bounty = await Bounty.findOne({
@@ -174,6 +207,9 @@ async function checkAndClaimBounty(repository, issueNumber, pullRequest) {
     }
 
     logger.info(`Found bounty ${bounty.bountyId} for ${repository}#${issueNumber}`);
+
+    // Get Octokit instance for this repository
+    const octokit = await githubAppService.getOctokitForRepoFullName(repository);
 
     // Verify tests are passing
     const [owner, repo] = repository.split('/');

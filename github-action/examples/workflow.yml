@@ -1,4 +1,4 @@
-name: Bounty Hunter - Automated Bug Bounties
+name: FixFlow - Automated Bug Bounties
 
 on:
   workflow_run:
@@ -35,7 +35,7 @@ jobs:
 
 # Alternative: Trigger on push/PR with test job
 ---
-name: Tests with Bounty Hunter
+name: Tests with FixFlow
 
 on:
   push:

@@ -1,7 +1,7 @@
 {
   "name": "@bounty-hunter/bot",
   "version": "1.0.0",
-  "description": "Backend bot for Bounty Hunter system",
+  "description": "Backend bot for FixFlow system",
   "main": "src/index.js",
   "type": "module",
   "scripts": {

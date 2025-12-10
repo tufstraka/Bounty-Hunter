@@ -134,7 +134,7 @@ ${errorDetails}
 - **Escalation Schedule:** +20% after 24h, +50% after 72h, +100% after 1 week
 
 ---
-*This bounty was automatically created by [Bounty Hunter](https://github.com/tufstraka/bounty-hunter)*
+*This bounty was automatically created by [FixFlow](https://github.com/tufstraka/bounty-hunter)*
 `;
 
     // Create GitHub issue
@@ -205,7 +205,7 @@ The bounty is now active and locked in the smart contract. Good luck! 🚀`
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: issue.number,
-        body: `⚠️ **Note:** The blockchain bounty creation failed. This is now a traditional bug report. The Bounty Hunter team has been notified.
+        body: `⚠️ **Note:** The blockchain bounty creation failed. This is now a traditional bug report. The FixFlow team has been notified.
 
 Error: \`${error.message}\``
       });

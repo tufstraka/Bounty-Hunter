@@ -1,7 +1,7 @@
 {
   "name": "@bounty-hunter/github-action",
   "version": "1.0.0",
-  "description": "GitHub Action for Bounty Hunter automated debugging bounty system",
+  "description": "GitHub Action for FixFlow automated debugging bounty system",
   "main": "dist/index.js",
   "scripts": {
     "build": "ncc build src/index.js -o dist",
@@ -16,7 +16,7 @@
     "debugging",
     "automation"
   ],
-  "author": "Bounty Hunter Team",
+  "author": "FixFlow Team",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.1",

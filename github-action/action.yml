@@ -1,6 +1,6 @@
-name: 'Bounty Hunter'
+name: 'FixFlow'
 description: 'Automatically create MNEE bounties for failing tests'
-author: 'Bounty Hunter Team'
+author: 'FixFlow Team'
 
 branding:
   icon: 'dollar-sign'
@@ -32,7 +32,7 @@ inputs:
     required: true
   
   bot_server_url:
-    description: 'URL of the Bounty Hunter bot server'
+    description: 'URL of the FixFlow bot server'
     required: true
   
   bot_api_key:

@@ -10,9 +10,11 @@ import authMiddleware from './middleware/auth.js';
 import bountyRoutes from './routes/bounty.js';
 import webhookRoutes from './routes/webhook.js';
 import adminRoutes from './routes/admin.js';
+import githubRoutes from './routes/github.js';
 import escalationService from './services/escalation.js';
 import bountyService from './services/bountyService.js';
 import mneeService from './services/mnee.js';
+import githubAppService from './services/githubApp.js';
 import db from './db.js';
 
 const app = express();
@@ -37,6 +39,7 @@ app.get('/health', (req, res) => {
 app.use('/api/bounties', authMiddleware, bountyRoutes);
 app.use('/api/admin', authMiddleware, adminRoutes);
 app.use('/webhook', webhookRoutes); // GitHub webhooks don't use our auth
+app.use('/github', githubRoutes); // GitHub App OAuth and installation callbacks
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -71,6 +74,18 @@ async function initializeBountyService() {
   } catch (error) {
     logger.error('Bounty service initialization error:', error);
     process.exit(1);
+  }
+}
+
+// Initialize GitHub App service
+async function initializeGitHubAppService() {
+  try {
+    await githubAppService.initialize();
+    logger.info('GitHub App service initialized');
+  } catch (error) {
+    logger.error('GitHub App service initialization error:', error);
+    // Don't exit - the app can still function with manual token if needed
+    logger.warn('GitHub App features may be limited');
   }
 }
 
@@ -145,6 +160,9 @@ async function startServer() {
     // Initialize bounty service
     await initializeBountyService();
 
+    // Initialize GitHub App service
+    await initializeGitHubAppService();
+
     // Initialize MNEE service
     await initializeMneeService();
 
@@ -153,8 +171,9 @@ async function startServer() {
 
     // Start HTTP server
     const server = app.listen(PORT, () => {
-      logger.info(`Bounty Hunter Bot running on port ${PORT}`);
+      logger.info(`FixFlow Bot running on port ${PORT}`);
       logger.info(`Environment: ${process.env.NODE_ENV}`);
+      logger.info('GitHub App authentication enabled - users grant permissions via OAuth');
       logger.info('Smart contracts removed - all bounty state managed in PostgreSQL');
     });
 

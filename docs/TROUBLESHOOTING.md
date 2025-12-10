@@ -1,4 +1,4 @@
-# Bounty Hunter Troubleshooting Guide
+# FixFlow Troubleshooting Guide
 
 ## Table of Contents
 - [Common Issues](#common-issues)

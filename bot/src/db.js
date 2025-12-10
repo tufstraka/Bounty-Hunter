@@ -52,8 +52,26 @@ export const initDb = async () => {
             CREATE INDEX IF NOT EXISTS idx_bounties_status_last_escalation ON bounties(status, last_escalation);
             CREATE INDEX IF NOT EXISTS idx_bounties_repository ON bounties(repository);
             CREATE INDEX IF NOT EXISTS idx_bounties_bounty_id ON bounties(bounty_id);
+
+            -- GitHub App Installations table
+            CREATE TABLE IF NOT EXISTS github_installations (
+                id SERIAL PRIMARY KEY,
+                installation_id BIGINT UNIQUE NOT NULL,
+                account_login VARCHAR(255) NOT NULL,
+                account_type VARCHAR(50) NOT NULL,
+                account_id BIGINT NOT NULL,
+                repositories JSONB DEFAULT '[]',
+                permissions JSONB DEFAULT '{}',
+                suspended_at TIMESTAMP,
+                suspended_by VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_github_installations_installation_id ON github_installations(installation_id);
+            CREATE INDEX IF NOT EXISTS idx_github_installations_account_login ON github_installations(account_login);
         `);
-        logger.info('Database initialized - bounties table created/verified');
+        logger.info('Database initialized - bounties and github_installations tables created/verified');
     } catch (err) {
         logger.error('Failed to initialize database:', err);
         throw err;

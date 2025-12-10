@@ -1,4 +1,4 @@
-# Bounty Hunter API Reference
+# FixFlow API Reference
 
 ## Table of Contents
 - [Authentication](#authentication)

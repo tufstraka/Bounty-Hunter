@@ -1,6 +1,6 @@
 # MNEE SDK Integration Guide
 
-This document provides comprehensive details on how the Bounty Hunter system integrates with the MNEE SDK for payment processing.
+This document provides comprehensive details on how the FixFlow system integrates with the MNEE SDK for payment processing.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -13,7 +13,7 @@ This document provides comprehensive details on how the Bounty Hunter system int
 
 ## Overview
 
-The Bounty Hunter system uses the MNEE SDK to:
+The FixFlow system uses the MNEE SDK to:
 - Check bot wallet balances
 - Send automatic payments to developers
 - Validate MNEE addresses
@@ -546,6 +546,6 @@ async function testPaymentFlow() {
 ## See Also
 
 - [MNEE SDK Documentation](https://docs.mnee.io)
-- [Bounty Hunter Architecture](./bounty-hunter-architecture.md)
+- [FixFlow Architecture](./bounty-hunter-architecture.md)
 - [Database Schema](./DATABASE_SCHEMA.md)
 - [GitHub Integration](./GITHUB_INTEGRATION.md)

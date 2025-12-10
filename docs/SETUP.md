@@ -1,8 +1,8 @@
-# Bounty Hunter Setup Guide
+# FixFlow Setup Guide
 
 ## Overview
 
-This guide will walk you through setting up the Bounty Hunter system for your GitHub repositories.
+This guide will walk you through setting up the FixFlow system for your GitHub repositories.
 
 ## Prerequisites
 
@@ -49,7 +49,7 @@ GRANT ALL PRIVILEGES ON DATABASE bounty_hunter TO bounty_user;
 3. Configure with these settings:
 
 **Basic Information:**
-- Name: `Bounty Hunter Bot`
+- Name: `FixFlow Bot`
 - Homepage URL: `https://github.com/bounty-hunter/bounty-hunter`
 - Webhook URL: `https://your-bot-server.com/webhook`
 - Webhook secret: Generate a secure random string
@@ -133,12 +133,12 @@ npm start
 2. Click "Install App"
 3. Select repositories to install on
 
-### 4.2 Add Bounty Hunter Action
+### 4.2 Add FixFlow Action
 
 Create `.github/workflows/bounty-hunter.yml`:
 
 ```yaml
-name: Bounty Hunter
+name: FixFlow
 
 on:
   workflow_run:
