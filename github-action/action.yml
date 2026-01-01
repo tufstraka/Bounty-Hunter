@@ -20,7 +20,7 @@ inputs:
   config_file:
     description: 'Path to bounty configuration file'
     required: false
-    default: '.bounty-hunter.yml'
+    default: '.fixflow.yml'
   
   on_failure_only:
     description: 'Only trigger on test failures'
