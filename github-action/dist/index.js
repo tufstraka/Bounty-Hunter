@@ -35963,12 +35963,15 @@ async function run() {
     const { context } = github;
     const octokit = github.getOctokit(githubToken);
 
-    // Check if this is a failed workflow
-    if (onFailureOnly && context.workflow_run?.conclusion !== 'failure') {
-      core.info('Workflow did not fail, skipping bounty creation');
+    // Check if this is a failed workflow (for workflow_run trigger)
+    const workflowRunConclusion = context.payload.workflow_run?.conclusion;
+    if (onFailureOnly && workflowRunConclusion !== 'failure') {
+      core.info(`Workflow did not fail (conclusion: ${workflowRunConclusion || 'not a workflow_run event'}), skipping bounty creation`);
       core.setOutput('bounty_created', 'false');
       return;
     }
+
+    core.info(`Workflow run failed! Creating bounty...`);
 
     // Load configuration
     let config = {
@@ -36078,7 +36081,7 @@ ${errorDetails}
 - **Escalation Schedule:** +20% after 24h, +50% after 72h, +100% after 1 week
 
 ---
-*This bounty was automatically created by [FixFlow](https://github.com/bounty-hunter/bounty-hunter)*
+*This bounty was automatically created by [FixFlow](https://github.com/tufstraka/fixflow)*
 `;
 
     // Create GitHub issue
@@ -36092,7 +36095,7 @@ ${errorDetails}
 
     core.info(`Created issue #${issue.number}: ${issue.html_url}`);
 
-    // Call bot API to create bounty on blockchain
+    // Call bot API to create bounty (MNEE stablecoin payment system)
     try {
       const response = await fetch(`${botServerUrl}/api/bounties`, {
         method: 'POST',
@@ -36115,15 +36118,16 @@ ${errorDetails}
       });
 
       if (!response.ok) {
-        throw new Error(`Bot API returned ${response.status}`);
+        const errorText = await response.text();
+        throw new Error(`Bot API returned ${response.status}: ${errorText}`);
       }
 
       const bountyData = await response.json();
-      core.info(`Created blockchain bounty: ${bountyData.bountyId}`);
+      core.info(`Created bounty: ${bountyData.bountyId}`);
 
       // Set outputs
       core.setOutput('bounty_created', 'true');
-      core.setOutput('bounty_id', bountyData.bountyId);
+      core.setOutput('bounty_id', bountyData.bountyId.toString());
       core.setOutput('issue_number', issue.number.toString());
       core.setOutput('issue_url', issue.html_url);
 
@@ -36132,26 +36136,35 @@ ${errorDetails}
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: issue.number,
-        body: `✅ **Bounty Created on Blockchain!**
+        body: `✅ **Bounty Created!**
 
-Bounty ID: \`${bountyData.bountyId}\`
-Transaction: [View on Sepolia Etherscan](https://sepolia.etherscan.io/tx/${bountyData.transactionHash})
-Smart Contract: [\`${bountyData.contractAddress}\`](https://sepolia.etherscan.io/address/${bountyData.contractAddress})
+**Bounty ID:** \`${bountyData.bountyId}\`
+**Amount:** ${bountyAmount} MNEE (USD-pegged stablecoin)
+**Maximum (with escalation):** ${config.max_bounty || bountyAmount * 3} MNEE
 
-The bounty is now active and locked in the smart contract. Good luck! 🚀`
+The bounty is now active and will be paid automatically when a valid fix is merged.
+
+**To claim this bounty:**
+1. Fix the failing test
+2. Create a PR that references this issue (e.g., "Fixes #${issue.number}")
+3. Add your MNEE address to your PR description: \`MNEE: your_address\`
+
+Good luck! 🚀`
       });
 
     } catch (error) {
-      core.error(`Failed to create blockchain bounty: ${error.message}`);
+      core.error(`Failed to create bounty: ${error.message}`);
 
-      // Update issue to indicate blockchain creation failed
+      // Update issue to indicate bounty creation failed
       await octokit.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
         issue_number: issue.number,
-        body: `⚠️ **Note:** The blockchain bounty creation failed. This is now a traditional bug report. The FixFlow team has been notified.
+        body: `⚠️ **Note:** The automated bounty creation failed. This is now a traditional bug report. The FixFlow team has been notified.
 
-Error: \`${error.message}\``
+Error: \`${error.message}\`
+
+You can still fix this issue, and a bounty may be manually added later.`
       });
     }
 

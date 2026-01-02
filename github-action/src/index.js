@@ -19,12 +19,15 @@ async function run() {
     const { context } = github;
     const octokit = github.getOctokit(githubToken);
 
-    // Check if this is a failed workflow
-    if (onFailureOnly && context.workflow_run?.conclusion !== 'failure') {
-      core.info('Workflow did not fail, skipping bounty creation');
+    // Check if this is a failed workflow (for workflow_run trigger)
+    const workflowRunConclusion = context.payload.workflow_run?.conclusion;
+    if (onFailureOnly && workflowRunConclusion !== 'failure') {
+      core.info(`Workflow did not fail (conclusion: ${workflowRunConclusion || 'not a workflow_run event'}), skipping bounty creation`);
       core.setOutput('bounty_created', 'false');
       return;
     }
+
+    core.info(`Workflow run failed! Creating bounty...`);
 
     // Load configuration
     let config = {
