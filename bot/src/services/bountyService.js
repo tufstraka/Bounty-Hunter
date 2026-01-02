@@ -119,9 +119,9 @@ class BountyService {
     }
   }
 
-  async claimBounty(bountyId, solverAddress, paymentTxId) {
+  async claimBounty(bountyId, solverAddress, paymentTxId, solverGithubLogin = null) {
     try {
-      logger.info(`Marking bounty ${bountyId} as claimed for solver ${solverAddress}`);
+      logger.info(`Marking bounty ${bountyId} as claimed for solver ${solverAddress} (${solverGithubLogin || 'unknown'})`);
 
       const bounty = await Bounty.findOne({ bountyId });
       if (!bounty) {
@@ -135,6 +135,7 @@ class BountyService {
       // Update bounty status
       bounty.status = 'claimed';
       bounty.solver = solverAddress;
+      bounty.solverGithubLogin = solverGithubLogin;
       bounty.claimedAmount = bounty.currentAmount;
       bounty.claimTransactionHash = paymentTxId || `CLAIM-${bountyId}-${Date.now()}`;
       bounty.claimedAt = new Date();

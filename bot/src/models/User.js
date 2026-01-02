@@ -257,11 +257,11 @@ class User {
 
   async updateStats() {
     const { rows } = await db.query(`
-      SELECT 
+      SELECT
         COUNT(*) as bounties_claimed,
         COALESCE(SUM(claimed_amount), 0) as total_earned
       FROM bounties
-      WHERE solver = $1 AND status = 'claimed'
+      WHERE solver_github_login = $1 AND status = 'claimed'
     `, [this.githubLogin]);
 
     this.bountiesClaimed = parseInt(rows[0].bounties_claimed);

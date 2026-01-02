@@ -3,6 +3,7 @@ import crypto from 'crypto';
 const router = express.Router();
 import logger from '../utils/logger.js';
 import Bounty from '../models/Bounty.js';
+import User from '../models/User.js';
 import bountyService from '../services/bountyService.js';
 import mneeService from '../services/mnee.js';
 import githubAppService from '../services/githubApp.js';
@@ -583,12 +584,25 @@ Please contact support if this persists.`
     await bountyService.claimBounty(
       bounty.bountyId,
       solverAddress,
-      paymentResult.transactionId
+      paymentResult.transactionId,
+      pullRequest.user.login // Pass GitHub login
     );
 
     // Update database
     bounty.pullRequestUrl = pullRequest.html_url;
+    bounty.solverGithubLogin = pullRequest.user.login;
     await bounty.save();
+
+    // Update solver's user stats
+    try {
+      const solver = await User.findByGithubLogin(pullRequest.user.login);
+      if (solver) {
+        await solver.updateStats();
+        logger.info(`Updated stats for user ${pullRequest.user.login}`);
+      }
+    } catch (statsError) {
+      logger.warn(`Failed to update user stats for ${pullRequest.user.login}:`, statsError.message);
+    }
 
     // Post success comment
     await octokit.issues.createComment({

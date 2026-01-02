@@ -10,7 +10,8 @@ class Bounty {
     this.currentAmount = data.currentAmount;
     this.maxAmount = data.maxAmount;
     this.status = data.status || 'active';
-    this.solver = data.solver || null;
+    this.solver = data.solver || null; // MNEE wallet address
+    this.solverGithubLogin = data.solverGithubLogin || null; // GitHub username
     this.claimedAmount = data.claimedAmount || null;
     this.transactionHash = data.transactionHash;
     this.claimTransactionHash = data.claimTransactionHash || null;
@@ -80,6 +81,7 @@ class Bounty {
       maxAmount: parseFloat(row.max_amount),
       status: row.status,
       solver: row.solver,
+      solverGithubLogin: row.solver_github_login,
       claimedAmount: row.claimed_amount ? parseFloat(row.claimed_amount) : null,
       transactionHash: row.transaction_hash,
       claimTransactionHash: row.claim_transaction_hash,
@@ -105,21 +107,23 @@ class Bounty {
           current_amount = $1,
           status = $2,
           solver = $3,
-          claimed_amount = $4,
-          claim_transaction_hash = $5,
-          pull_request_url = $6,
-          escalation_count = $7,
-          last_escalation = $8,
-          metadata = $9,
-          claimed_at = $10,
-          updated_at = $11
-        WHERE id = $12
+          solver_github_login = $4,
+          claimed_amount = $5,
+          claim_transaction_hash = $6,
+          pull_request_url = $7,
+          escalation_count = $8,
+          last_escalation = $9,
+          metadata = $10,
+          claimed_at = $11,
+          updated_at = $12
+        WHERE id = $13
         RETURNING *
       `;
       const values = [
         this.currentAmount,
         this.status,
         this.solver,
+        this.solverGithubLogin,
         this.claimedAmount,
         this.claimTransactionHash,
         this.pullRequestUrl,
@@ -136,13 +140,13 @@ class Bounty {
       // Insert
       const text = `
         INSERT INTO bounties (
-          bounty_id, repository, issue_id, issue_url, initial_amount, 
-          current_amount, max_amount, status, solver, claimed_amount, 
-          transaction_hash, claim_transaction_hash, block_number, 
-          pull_request_url, escalation_count, last_escalation, metadata, 
+          bounty_id, repository, issue_id, issue_url, initial_amount,
+          current_amount, max_amount, status, solver, solver_github_login, claimed_amount,
+          transaction_hash, claim_transaction_hash, block_number,
+          pull_request_url, escalation_count, last_escalation, metadata,
           claimed_at, created_at, updated_at
         ) VALUES (
-          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21
         ) RETURNING *
       `;
       const values = [
@@ -155,6 +159,7 @@ class Bounty {
         this.maxAmount,
         this.status,
         this.solver,
+        this.solverGithubLogin,
         this.claimedAmount,
         this.transactionHash,
         this.claimTransactionHash,

@@ -203,6 +203,16 @@ export const initDb = async () => {
                     ALTER TABLE bounties ADD COLUMN creator_id INTEGER REFERENCES users(id);
                 END IF;
             END $$;
+
+            -- Add solver_github_login column to bounties table if not exists
+            DO $$
+            BEGIN
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns
+                    WHERE table_name='bounties' AND column_name='solver_github_login') THEN
+                    ALTER TABLE bounties ADD COLUMN solver_github_login VARCHAR(255);
+                    CREATE INDEX IF NOT EXISTS idx_bounties_solver_github_login ON bounties(solver_github_login);
+                END IF;
+            END $$;
         `);
         logger.info('Database initialized successfully - all tables created/verified');
     } catch (err) {

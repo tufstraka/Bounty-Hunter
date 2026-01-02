@@ -164,7 +164,7 @@ router.get('/me/bounties', authenticateUser, async (req, res) => {
   try {
     const { status, page = 1, limit = 20 } = req.query;
 
-    let query = 'SELECT * FROM bounties WHERE solver = $1';
+    let query = 'SELECT * FROM bounties WHERE solver_github_login = $1';
     const values = [req.user.githubLogin];
     let paramIndex = 2;
 
@@ -181,7 +181,7 @@ router.get('/me/bounties', authenticateUser, async (req, res) => {
     const bounties = rows.map(row => Bounty.fromRow(row));
 
     // Get total count
-    let countQuery = 'SELECT COUNT(*) FROM bounties WHERE solver = $1';
+    let countQuery = 'SELECT COUNT(*) FROM bounties WHERE solver_github_login = $1';
     const countValues = [req.user.githubLogin];
     if (status && status !== 'all') {
       countQuery += ' AND status = $2';
@@ -300,12 +300,12 @@ router.get('/me/stats', authenticateUser, async (req, res) => {
     await req.user.updateStats();
 
     const { rows } = await db.query(`
-      SELECT 
+      SELECT
         COUNT(*) as total_claimed,
         COALESCE(SUM(claimed_amount), 0) as total_earned,
         COUNT(DISTINCT repository) as repositories_contributed
       FROM bounties
-      WHERE solver = $1 AND status = 'claimed'
+      WHERE solver_github_login = $1 AND status = 'claimed'
     `, [req.user.githubLogin]);
 
     const stats = rows[0];
