@@ -265,31 +265,107 @@ docker compose logs frontend -f
 docker compose exec bot npm run db:migrate:prod
 ```
 
-### Nginx Setup as Reverse Proxy
+### Nginx and SSL Setup
 
-#### 1. Install Nginx
+**IMPORTANT**: You must obtain SSL certificates BEFORE enabling the HTTPS Nginx config. Follow these steps in order.
+
+#### 1. Install Nginx and Certbot
 
 ```bash
-sudo apt install -y nginx
+sudo apt install -y nginx certbot python3-certbot-nginx
 ```
 
-#### 2. Create Nginx Configuration
+#### 2. Create ACME Challenge Directory
 
-Create the main site configuration:
+```bash
+sudo mkdir -p /var/www/certbot
+```
+
+#### 3. Create Initial HTTP-Only Config (For Certificate Acquisition)
+
+First, create a simple HTTP-only config to obtain certificates:
 
 ```bash
 sudo nano /etc/nginx/sites-available/fixflow
 ```
 
-Add the following configuration:
+Add this **temporary HTTP-only configuration**:
 
 ```nginx
 # ============================================
-# FixFlow Nginx Configuration
-# Reverse proxy for Docker containers
+# FixFlow Nginx Configuration - HTTP Only
+# Use this first to obtain SSL certificates
 # ============================================
 
-# Rate limiting zone
+server {
+    listen 80;
+    listen [::]:80;
+    server_name yourdomain.com api.yourdomain.com;
+
+    # Allow Let's Encrypt ACME challenge
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    # Temporary: return OK for all other requests
+    location / {
+        return 200 'FixFlow - Obtaining SSL certificates...';
+        add_header Content-Type text/plain;
+    }
+}
+```
+
+#### 4. Enable the Site and Test
+
+```bash
+# Create symbolic link
+sudo ln -s /etc/nginx/sites-available/fixflow /etc/nginx/sites-enabled/
+
+# Remove default site
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# Test configuration
+sudo nginx -t
+
+# Reload Nginx
+sudo systemctl reload nginx
+```
+
+#### 5. Obtain SSL Certificates
+
+Now get certificates using certbot:
+
+```bash
+sudo certbot certonly --webroot -w /var/www/certbot \
+    -d yourdomain.com \
+    -d api.yourdomain.com \
+    --email your-email@example.com \
+    --agree-tos \
+    --non-interactive
+```
+
+Verify certificates were created:
+```bash
+sudo ls -la /etc/letsencrypt/live/yourdomain.com/
+```
+
+#### 6. Update Nginx to Full HTTPS Config
+
+Now that certificates exist, update the Nginx config with full HTTPS support:
+
+```bash
+sudo nano /etc/nginx/sites-available/fixflow
+```
+
+Replace the contents with the **full HTTPS configuration**:
+
+```nginx
+# ============================================
+# FixFlow Nginx Configuration - Full HTTPS
+# Use after SSL certificates are obtained
+# ============================================
+
+# Rate limiting zones
 limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
 limit_req_zone $binary_remote_addr zone=webhook_limit:10m rate=30r/s;
 
@@ -327,17 +403,23 @@ server {
     listen [::]:443 ssl http2;
     server_name api.yourdomain.com;
 
-    # SSL Configuration (will be added by Certbot)
-    ssl_certificate /etc/letsencrypt/live/api.yourdomain.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.yourdomain.com/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    # SSL Configuration
+    ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
+    
+    # SSL Security Settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
 
     # Security headers
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
     # Logging
     access_log /var/log/nginx/fixflow-api-access.log;
@@ -402,17 +484,23 @@ server {
     listen [::]:443 ssl http2;
     server_name yourdomain.com;
 
-    # SSL Configuration (will be added by Certbot)
+    # SSL Configuration
     ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
-    include /etc/letsencrypt/options-ssl-nginx.conf;
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    
+    # SSL Security Settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
 
     # Security headers
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.yourdomain.com;" always;
 
     # Logging
@@ -452,15 +540,9 @@ server {
 }
 ```
 
-#### 3. Enable the Site
+#### 7. Test and Reload Nginx
 
 ```bash
-# Create symbolic link
-sudo ln -s /etc/nginx/sites-available/fixflow /etc/nginx/sites-enabled/
-
-# Remove default site
-sudo rm -f /etc/nginx/sites-enabled/default
-
 # Test configuration
 sudo nginx -t
 
@@ -468,69 +550,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-### SSL Setup with Let's Encrypt
-
-#### 1. Install Certbot
-
-```bash
-sudo apt install -y certbot python3-certbot-nginx
-```
-
-#### 2. Create ACME Challenge Directory
-
-```bash
-sudo mkdir -p /var/www/certbot
-```
-
-#### 3. Obtain SSL Certificates
-
-**Option A: Single Domain (if using same domain for API and frontend)**
-
-```bash
-sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
-```
-
-**Option B: Separate Subdomains (Recommended)**
-
-First, create a temporary Nginx config without SSL:
-
-```bash
-sudo nano /etc/nginx/sites-available/fixflow-temp
-```
-
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com api.yourdomain.com;
-
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot;
-    }
-
-    location / {
-        return 200 'OK';
-        add_header Content-Type text/plain;
-    }
-}
-```
-
-```bash
-# Enable temp config
-sudo ln -sf /etc/nginx/sites-available/fixflow-temp /etc/nginx/sites-enabled/fixflow
-sudo systemctl reload nginx
-
-# Get certificates
-sudo certbot certonly --webroot -w /var/www/certbot \
-    -d yourdomain.com \
-    -d api.yourdomain.com \
-    --email your-email@example.com \
-    --agree-tos \
-    --non-interactive
-
-# Restore full config
-sudo ln -sf /etc/nginx/sites-available/fixflow /etc/nginx/sites-enabled/fixflow
-sudo systemctl reload nginx
-```
+#### 8. Configure SSL Auto-Renewal
 
 #### 4. Configure Auto-Renewal
 
