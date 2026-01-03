@@ -1,0 +1,30 @@
+{
+  "name": "@bounty-hunter/contracts",
+  "version": "1.0.0",
+  "description": "Ethereum smart contracts for FixFlow bounty escrow using MNEE token",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "deploy:mainnet": "hardhat run scripts/deploy.js --network mainnet",
+    "verify": "hardhat verify",
+    "clean": "hardhat clean"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "dotenv": "^16.3.1",
+    "hardhat": "^2.19.0"
+  },
+  "keywords": [
+    "ethereum",
+    "solidity",
+    "hardhat",
+    "smart-contracts",
+    "bounty",
+    "escrow",
+    "mnee"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,979 @@
+{"level":"info","message":"Shutting down gracefully...","service":"bounty-hunter-bot","timestamp":"2026-01-01T07:43:59.275Z"}
+{"address":"172.31.96.13","code":"ETIMEDOUT","errno":-110,"level":"error","message":"Database initialization error: connect ETIMEDOUT 172.31.96.13:5432","port":5432,"service":"bounty-hunter-bot","stack":"Error: connect ETIMEDOUT 172.31.96.13:5432\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:24:20)\n    at async connectDatabase (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:63:5)\n    at async startServer (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:160:5)","syscall":"connect","timestamp":"2026-01-01T07:50:10.160Z"}
+{"level":"info","message":"Shutting down gracefully...","service":"bounty-hunter-bot","timestamp":"2026-01-01T08:23:58.971Z"}
+{"level":"info","message":"Shutting down gracefully...","service":"bounty-hunter-bot","timestamp":"2026-01-01T08:33:29.867Z"}
+{"address":"172.31.96.13","code":"ETIMEDOUT","errno":-110,"level":"error","message":"Database initialization failed: connect ETIMEDOUT 172.31.96.13:5432","port":5432,"service":"bounty-hunter-bot","stack":"Error: connect ETIMEDOUT 172.31.96.13:5432\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:24:20)","syscall":"connect","timestamp":"2026-01-01T08:36:35.440Z"}
+{"database":"pinmaker","host":"database-1-instance-1.cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 11:41:06","user":"postgres"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:06"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:06"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:06"}
+{"LOG_LEVEL":"info","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:06"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:06"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:06"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:102:18)\n    at async connectDatabase (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:88:5)\n    at async startServer (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:219:5)","timestamp":"2026-01-01 11:41:17"}
+{"database":"pinmaker","host":"database-1-instance-1.cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 11:41:48","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:48"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:49"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:49"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:49"}
+{"LOG_LEVEL":"info","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:49"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:49"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 11:41:49"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)\n    at async connectDatabase (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:88:5)\n    at async startServer (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:219:5)","timestamp":"2026-01-01 11:42:19"}
+{"database":"postgres","host":"fixflow-db.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 12:26:22","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:26:22"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:26:23"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:26:23"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:26:23"}
+{"LOG_LEVEL":"info","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:26:23"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:26:23"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:26:23"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)\n    at async connectDatabase (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:88:5)\n    at async startServer (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:219:5)","timestamp":"2026-01-01 12:26:53"}
+{"database":"postgres","host":"fixflow-db.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 12:35:03","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:03"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:03"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)","timestamp":"2026-01-01 12:35:34"}
+{"database":"postgres","host":"fixflow-db.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 12:35:34","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:34"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:35"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:35"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:35"}
+{"LOG_LEVEL":"info","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:35"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:35"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 12:35:35"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)\n    at async connectDatabase (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:88:5)\n    at async startServer (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:219:5)","timestamp":"2026-01-01 12:36:05"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:19:50","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:19:50"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:19:50"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)","timestamp":"2026-01-01 13:20:20"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:20:21","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:20:21"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:20:22"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:20:22"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:20:22"}
+{"LOG_LEVEL":"info","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:20:22"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:20:22"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:20:22"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)\n    at async connectDatabase (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:88:5)\n    at async startServer (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:219:5)","timestamp":"2026-01-01 13:20:52"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:21:24","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:21:24"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:21:24"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:22:10","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:10"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:10"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)","timestamp":"2026-01-01 13:22:40"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:22:40","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:40"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:41"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:41"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:41"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:41"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:41"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:41"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:22:41"}
+{"error":"Connection terminated due to connection timeout","level":"error","message":"Failed to initialize database","service":"bounty-hunter-bot","stack":"Error: Connection terminated due to connection timeout\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Object.initDb (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/db.js:112:18)\n    at async connectDatabase (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:88:5)\n    at async startServer (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:219:5)","timestamp":"2026-01-01 13:23:11"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:55:04","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:04"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:04"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:06"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:06"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:06"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:07"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:55:09","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:09"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:10"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:10"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:10"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:10"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:10"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:10"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:10"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:12"}
+{"duration":"250ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 13:55:13"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:58:55","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:58:55"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:58:55"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:58:58"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:58:58"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:58:58"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:58:59"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 13:59:01","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:01"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:03"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:03"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:03"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:04"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:04"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:04"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:04"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:04"}
+{"duration":"207ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 13:59:04"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 14:07:01","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:01"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:02"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:02"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:02"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:02"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:02"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:02"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:05"}
+{"duration":"241ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:06"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 14:07:22","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:22"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:22"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:22"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:22"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:22"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:22"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:22"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"duration":"253ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:25"}
+{"level":"info","message":"Bounty service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"info","message":"✓ Bounty service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"info","message":"Step 3/4: Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"appId":"2445987","appName":"FixFlow","hasPrivateKey":false,"level":"debug","message":"GitHub App config","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"debug","message":"Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"appId":"2445987","hasInlineKey":false,"hasWebhookSecret":true,"level":"debug","message":"GitHub App configuration","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"debug","message":"Reading private key from file","path":"/home/tufstraka/Desktop/mnee/bounty-hunter/bot/bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"length":1679,"level":"debug","message":"Private key loaded","service":"bounty-hunter-bot","startsWithBegin":true,"timestamp":"2026-01-01 14:07:26"}
+{"level":"debug","message":"Creating GitHub App instance...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"appId":"2445987","level":"info","message":"GitHub App service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"info","message":"✓ GitHub App service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"info","message":"Step 4/4: Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"botAddress":"0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF","environment":"sandbox","hasApiKey":true,"hasWif":true,"level":"debug","message":"MNEE config","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"debug","message":"Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:26"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:27"}
+{"environment":"sandbox","hasApiKey":true,"level":"debug","message":"Creating MNEE client","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:27"}
+{"level":"debug","message":"MNEE client created","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:27"}
+{"level":"debug","message":"Fetching MNEE configuration...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:27"}
+{"decimals":5,"feeAddress":"1H9wgHCTHjmgBw4PAbQ4PQBQhGFrHWhjbU","level":"info","message":"MNEE configuration loaded","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:07:30","tokenId":"833a7720966a2a435db28d967385e8aa7284b6150ebb39482cc5228b73e1703f_0"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 14:08:17","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:17"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:18"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:18"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:18"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:18"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:18"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:18"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:20"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:20"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:20"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"info","message":"Bounty service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"info","message":"✓ Bounty service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"info","message":"Step 3/4: Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"appId":"2445987","appName":"FixFlow","hasPrivateKey":false,"level":"debug","message":"GitHub App config","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"debug","message":"Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"appId":"2445987","hasInlineKey":false,"hasWebhookSecret":true,"level":"debug","message":"GitHub App configuration","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"debug","message":"Reading private key from file","path":"/home/tufstraka/Desktop/mnee/bounty-hunter/bot/bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"length":1679,"level":"debug","message":"Private key loaded","service":"bounty-hunter-bot","startsWithBegin":true,"timestamp":"2026-01-01 14:08:21"}
+{"level":"debug","message":"Creating GitHub App instance...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"appId":"2445987","level":"info","message":"GitHub App service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"info","message":"✓ GitHub App service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"info","message":"Step 4/4: Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"botAddress":"0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF","environment":"sandbox","hasApiKey":true,"hasWif":true,"level":"debug","message":"MNEE config","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"debug","message":"Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:21"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:23"}
+{"environment":"sandbox","hasApiKey":true,"level":"debug","message":"Creating MNEE client","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:23"}
+{"level":"debug","message":"MNEE client created","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:23"}
+{"level":"debug","message":"Fetching MNEE configuration...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:23"}
+{"decimals":5,"feeAddress":"1H9wgHCTHjmgBw4PAbQ4PQBQhGFrHWhjbU","level":"info","message":"MNEE configuration loaded","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24","tokenId":"833a7720966a2a435db28d967385e8aa7284b6150ebb39482cc5228b73e1703f_0"}
+{"level":"info","message":"MNEE payment service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"address":"0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF","level":"debug","message":"Fetching MNEE balance","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"error":"Invalid Bitcoin address: 0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF","level":"error","message":"Failed to get MNEE balance","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"error":"Invalid Bitcoin address: 0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF","hint":"MNEE uses Bitcoin-style addresses (starting with 1 or 3), not Ethereum addresses","level":"warn","message":"⚠ Could not fetch MNEE balance - check MNEE_BOT_ADDRESS format","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"✓ MNEE payment service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"Escalation scheduler started","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"✓ FixFlow Bot Server started successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"environment":"development","level":"info","message":"Server details","port":"3000","service":"bounty-hunter-bot","startupTime":"6232ms","timestamp":"2026-01-01 14:08:24"}
+{"api":"GET /api/*","github":"GET /github/*","health":"GET /health","level":"info","message":"Available endpoints","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24","webhooks":"POST /webhooks/*"}
+{"level":"info","message":"GitHub App authentication enabled - users grant permissions via OAuth","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"All bounty state managed in PostgreSQL (no smart contracts)","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:24"}
+{"level":"info","message":"Shutting down gracefully...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:08:42"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 14:15:11","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:11"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:11"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:11"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:11"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:11"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:11"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:11"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"duration":"229ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"Bounty service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"✓ Bounty service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"Step 3/4: Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"appId":"2445987","appName":"FixFlow","hasPrivateKey":false,"level":"debug","message":"GitHub App config","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"appId":"2445987","hasInlineKey":false,"hasWebhookSecret":true,"level":"debug","message":"GitHub App configuration","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"Reading private key from file","path":"/home/tufstraka/Desktop/mnee/bounty-hunter/bot/bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"length":1679,"level":"debug","message":"Private key loaded","service":"bounty-hunter-bot","startsWithBegin":true,"timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"Creating GitHub App instance...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"appId":"2445987","level":"info","message":"GitHub App service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"✓ GitHub App service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"info","message":"Step 4/4: Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"botAddress":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","environment":"sandbox","hasApiKey":true,"hasWif":true,"level":"debug","message":"MNEE config","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:13"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:14"}
+{"environment":"sandbox","hasApiKey":true,"level":"debug","message":"Creating MNEE client","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:14"}
+{"level":"debug","message":"MNEE client created","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:14"}
+{"level":"debug","message":"Fetching MNEE configuration...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:14"}
+{"decimals":5,"feeAddress":"1H9wgHCTHjmgBw4PAbQ4PQBQhGFrHWhjbU","level":"info","message":"MNEE configuration loaded","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:15","tokenId":"833a7720966a2a435db28d967385e8aa7284b6150ebb39482cc5228b73e1703f_0"}
+{"level":"info","message":"MNEE payment service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:15"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"debug","message":"Fetching MNEE balance","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:15"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"debug","message":"MNEE balance retrieved","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"info","message":"✓ MNEE wallet connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"info","message":"✓ MNEE payment service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"info","message":"Escalation scheduler started","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"info","message":"✓ FixFlow Bot Server started successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"environment":"development","level":"info","message":"Server details","port":"3000","service":"bounty-hunter-bot","startupTime":"6051ms","timestamp":"2026-01-01 14:15:17"}
+{"api":"GET /api/*","github":"GET /github/*","health":"GET /health","level":"info","message":"Available endpoints","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17","webhooks":"POST /webhooks/*"}
+{"level":"info","message":"GitHub App authentication enabled - users grant permissions via OAuth","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"info","message":"All bounty state managed in PostgreSQL (no smart contracts)","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:17"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:15:44"}
+{"duration":"49ms","ip":"::1","level":"warn","message":"GET /","service":"bounty-hunter-bot","status":404,"timestamp":"2026-01-01 14:15:46"}
+{"duration":"6ms","ip":"::1","level":"warn","message":"GET /favicon.ico","service":"bounty-hunter-bot","status":404,"timestamp":"2026-01-01 14:15:48"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"GET /health","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:15:55"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/auth/github","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:17:38"}
+{"duration":"6ms","ip":"::1","level":"debug","message":"GET /auth/github","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:17:38"}
+{"level":"info","message":"Shutting down gracefully...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:19:19"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 14:49:25","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:25"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:26"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:26"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:26"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:26"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:26"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:26"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"Bounty service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"✓ Bounty service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"Step 3/4: Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"appId":"2445987","appName":"FixFlow","hasPrivateKey":false,"level":"debug","message":"GitHub App config","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"appId":"2445987","hasInlineKey":false,"hasWebhookSecret":true,"level":"debug","message":"GitHub App configuration","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"Reading private key from file","path":"/home/tufstraka/Desktop/mnee/bounty-hunter/bot/bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"length":1679,"level":"debug","message":"Private key loaded","service":"bounty-hunter-bot","startsWithBegin":true,"timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"Creating GitHub App instance...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"appId":"2445987","level":"info","message":"GitHub App service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"✓ GitHub App service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"info","message":"Step 4/4: Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"botAddress":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","environment":"sandbox","hasApiKey":true,"hasWif":true,"level":"debug","message":"MNEE config","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:28"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:29"}
+{"environment":"sandbox","hasApiKey":true,"level":"debug","message":"Creating MNEE client","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:29"}
+{"level":"debug","message":"MNEE client created","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:29"}
+{"level":"debug","message":"Fetching MNEE configuration...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:29"}
+{"decimals":5,"feeAddress":"1H9wgHCTHjmgBw4PAbQ4PQBQhGFrHWhjbU","level":"info","message":"MNEE configuration loaded","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:31","tokenId":"833a7720966a2a435db28d967385e8aa7284b6150ebb39482cc5228b73e1703f_0"}
+{"level":"info","message":"MNEE payment service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:31"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"debug","message":"Fetching MNEE balance","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:31"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"debug","message":"MNEE balance retrieved","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"info","message":"✓ MNEE wallet connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"info","message":"✓ MNEE payment service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"info","message":"Escalation scheduler started","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"info","message":"✓ FixFlow Bot Server started successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"environment":"development","level":"info","message":"Server details","port":"3000","service":"bounty-hunter-bot","startupTime":"5667ms","timestamp":"2026-01-01 14:49:32"}
+{"api":"GET /api/*","github":"GET /github/*","health":"GET /health","level":"info","message":"Available endpoints","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32","webhooks":"POST /webhooks/*"}
+{"level":"info","message":"GitHub App authentication enabled - users grant permissions via OAuth","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"info","message":"All bounty state managed in PostgreSQL (no smart contracts)","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:32"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:49:59"}
+{"duration":"10ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/auth/github","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:50:24"}
+{"duration":"19ms","ip":"::1","level":"debug","message":"GET /auth/github","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:50:24"}
+{"duration":"5ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/auth/github","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:51:09"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"GET /auth/github","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:51:09"}
+{"level":"info","message":"Shutting down gracefully...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:35"}
+{"database":"fixflow","host":"fixflowdb.cluster-cvawiy6wy4zn.us-east-1.rds.amazonaws.com","level":"info","message":"Database configuration","port":"5432","service":"bounty-hunter-bot","ssl":"disabled","timestamp":"2026-01-01 14:54:48","user":"postgres"}
+{"level":"info","message":"AWS RDS detected - enabling SSL","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:48"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:48"}
+{"level":"info","message":"Starting FixFlow Bot Server...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:48"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:48"}
+{"LOG_LEVEL":"debug","NODE_ENV":"development","PORT":"3000","level":"info","message":"Environment","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:48"}
+{"level":"info","message":"Step 1/4: Connecting to database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:48"}
+{"level":"info","message":"Initializing database...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:48"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:50"}
+{"level":"info","message":"Connected to database, creating tables...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:50"}
+{"level":"info","message":"Database initialized successfully - all tables created/verified","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"Database client released","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"info","message":"✓ Database initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"info","message":"Step 2/4: Initializing bounty service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"duration":"216ms","level":"debug","message":"Database query executed","query":"SELECT MAX(bounty_id) as max_id FROM bounties","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"info","message":"Bounty service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"info","message":"✓ Bounty service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"info","message":"Step 3/4: Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"appId":"2445987","appName":"FixFlow","hasPrivateKey":false,"level":"debug","message":"GitHub App config","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"Initializing GitHub App service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"appId":"2445987","hasInlineKey":false,"hasWebhookSecret":true,"level":"debug","message":"GitHub App configuration","privateKeyPath":"./bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"Reading private key from file","path":"/home/tufstraka/Desktop/mnee/bounty-hunter/bot/bounty-hunter-bot.pem","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"length":1679,"level":"debug","message":"Private key loaded","service":"bounty-hunter-bot","startsWithBegin":true,"timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"Creating GitHub App instance...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"appId":"2445987","level":"info","message":"GitHub App service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"info","message":"✓ GitHub App service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"info","message":"Step 4/4: Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"botAddress":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","environment":"sandbox","hasApiKey":true,"hasWif":true,"level":"debug","message":"MNEE config","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"Initializing MNEE payment service...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"MNEE SDK loaded successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"environment":"sandbox","hasApiKey":true,"level":"debug","message":"Creating MNEE client","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"MNEE client created","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"level":"debug","message":"Fetching MNEE configuration...","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:51"}
+{"decimals":5,"feeAddress":"1H9wgHCTHjmgBw4PAbQ4PQBQhGFrHWhjbU","level":"info","message":"MNEE configuration loaded","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:53","tokenId":"833a7720966a2a435db28d967385e8aa7284b6150ebb39482cc5228b73e1703f_0"}
+{"level":"info","message":"MNEE payment service initialized successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:53"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"debug","message":"Fetching MNEE balance","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:53"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"debug","message":"MNEE balance retrieved","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"address":"163jN4jSfLaAauZqL4znAHAgC9N5f4FeRr","level":"info","message":"✓ MNEE wallet connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"level":"info","message":"✓ MNEE payment service initialized","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"level":"info","message":"Escalation scheduler started","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"level":"info","message":"✓ FixFlow Bot Server started successfully","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"environment":"development","level":"info","message":"Server details","port":"3000","service":"bounty-hunter-bot","startupTime":"5987ms","timestamp":"2026-01-01 14:54:54"}
+{"api":"GET /api/*","github":"GET /github/*","health":"GET /health","level":"info","message":"Available endpoints","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54","webhooks":"POST /webhooks/*"}
+{"level":"info","message":"GitHub App authentication enabled - users grant permissions via OAuth","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"level":"info","message":"All bounty state managed in PostgreSQL (no smart contracts)","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"level":"info","message":"============================================================","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:54:54"}
+{"duration":"19ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/auth/github","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:09"}
+{"duration":"30ms","ip":"::1","level":"debug","message":"GET /auth/github","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:55:09"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:21"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:26"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:26"}
+{"duration":"1968ms","level":"debug","message":"Database query executed","query":"SELECT * FROM users WHERE github_id = $1","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"duration":"247ms","level":"debug","message":"Database query executed","query":"\n        INSERT INTO users (\n          github_id, github_login, email, name, avatar_url, role,\n     ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"duration":"249ms","level":"debug","message":"Database query executed","query":"\n      INSERT INTO user_sessions (user_id, session_token, expires_at)\n      VALUES ($1, $2, $3)\n    ","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"level":"info","message":"User tufstraka logged in","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:27"}
+{"duration":"4314ms","ip":"::1","level":"debug","message":"GET /auth/github/callback","service":"bounty-hunter-bot","status":302,"timestamp":"2026-01-01 14:55:27"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:39"}
+{"duration":"10ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:39"}
+{"duration":"13ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:39"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:39"}
+{"duration":"14ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:39"}
+{"duration":"235ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:39"}
+{"duration":"269ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:55:39"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:39"}
+{"duration":"231ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:39"}
+{"duration":"263ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:40"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:40"}
+{"duration":"244ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:40"}
+{"duration":"262ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:40"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:40"}
+{"duration":"247ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:40"}
+{"duration":"267ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:40"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:40"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:40"}
+{"duration":"226ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:40"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:40"}
+{"duration":"230ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"237ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:41"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"230ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:41"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"248ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"277ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:41"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"238ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:41"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:41"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:42"}
+{"duration":"261ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:42"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:42"}
+{"duration":"227ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:42"}
+{"duration":"238ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:42"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:42"}
+{"duration":"247ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:42"}
+{"duration":"274ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:42"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:42"}
+{"duration":"281ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:42"}
+{"duration":"341ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:43"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:43"}
+{"duration":"260ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:43"}
+{"duration":"277ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:43"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:43"}
+{"duration":"244ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:44"}
+{"duration":"263ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:44"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:44"}
+{"duration":"229ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:44"}
+{"duration":"243ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:44"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:45"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:45"}
+{"duration":"229ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:45"}
+{"duration":"246ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:45"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:45"}
+{"duration":"225ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:46"}
+{"duration":"233ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:46"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:46"}
+{"duration":"225ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:46"}
+{"duration":"243ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:46"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:46"}
+{"duration":"244ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:46"}
+{"duration":"254ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:46"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:47"}
+{"duration":"226ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:47"}
+{"duration":"246ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:47"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:47"}
+{"duration":"231ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:47"}
+{"duration":"245ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:47"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:48"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:48"}
+{"duration":"230ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:48"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:49"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:49"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:49"}
+{"duration":"2ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:55:49"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:49"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:49"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:49"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:49"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:49"}
+{"duration":"242ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:49"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:49"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"duration":"930ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:55:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"duration":"226ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"duration":"227ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:50"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"923ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"230ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"2180ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"234ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"232ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"231ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"2649ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:55:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:51"}
+{"duration":"953ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:52"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"duration":"225ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"duration":"679ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"duration":"250ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:52"}
+{"duration":"229ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:53"}
+{"duration":"230ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:55:53"}
+{"duration":"757ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:55:53"}
+{"duration":"2ms","ip":"::1","level":"debug","message":"OPTIONS /api/admin/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:13"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/admin/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:13"}
+{"level":"error","message":"jwt malformed","name":"JsonWebTokenError","service":"bounty-hunter-bot","stack":"JsonWebTokenError: jwt malformed\n    at module.exports [as verify] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/jsonwebtoken/verify.js:70:17)\n    at authMiddleware (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/middleware/auth.js:20:25)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:346:12)\n    at next (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:280:10)\n    at urlencodedParser (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/body-parser/lib/types/urlencoded.js:91:7)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)","timestamp":"2026-01-01 14:56:13"}
+{"duration":"7ms","ip":"::1","level":"warn","message":"GET /bounties","service":"bounty-hunter-bot","status":401,"timestamp":"2026-01-01 14:56:13"}
+{"level":"error","message":"jwt malformed","name":"JsonWebTokenError","service":"bounty-hunter-bot","stack":"JsonWebTokenError: jwt malformed\n    at module.exports [as verify] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/jsonwebtoken/verify.js:70:17)\n    at authMiddleware (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/middleware/auth.js:20:25)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:346:12)\n    at next (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:280:10)\n    at urlencodedParser (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/body-parser/lib/types/urlencoded.js:91:7)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)","timestamp":"2026-01-01 14:56:13"}
+{"duration":"16ms","ip":"::1","level":"warn","message":"GET /bounties","service":"bounty-hunter-bot","status":401,"timestamp":"2026-01-01 14:56:13"}
+{"duration":"2ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:22"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:22"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:22"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:22"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:22"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:22"}
+{"duration":"230ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:22"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:22"}
+{"duration":"231ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:22"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:22"}
+{"duration":"242ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"duration":"955ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:56:23"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"duration":"233ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"duration":"232ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:23"}
+{"duration":"245ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:24"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:24"}
+{"duration":"217ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:24"}
+{"duration":"941ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:56:24"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:24"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:24"}
+{"duration":"2842ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"duration":"212ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"duration":"3307ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:56:25"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"duration":"230ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:25"}
+{"duration":"232ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:26"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:26"}
+{"duration":"231ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:26"}
+{"duration":"742ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:56:26"}
+{"duration":"4ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/repositories","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:28"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/repositories","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 14:56:28"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:28"}
+{"duration":"212ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:28"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:28"}
+{"duration":"239ms","level":"debug","message":"Database query executed","query":"\n      SELECT gi.repositories, gi.account_login\n      FROM github_installations gi\n      WHERE gi.ac...","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:29"}
+{"duration":"472ms","ip":"::1","level":"debug","message":"GET /me/repositories","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 14:56:29"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:29"}
+{"duration":"202ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:29"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:29"}
+{"duration":"211ms","level":"debug","message":"Database query executed","query":"\n      SELECT gi.repositories, gi.account_login\n      FROM github_installations gi\n      WHERE gi.ac...","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:29"}
+{"duration":"425ms","ip":"::1","level":"debug","message":"GET /me/repositories","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 14:56:29"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:54"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 14:56:59"}
+{"level":"info","message":"Running bounty escalation check...","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:00:00"}
+{"level":"info","message":"Starting bounty escalation check...","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:00:00"}
+{"level":"error","message":"Error during escalation check: Bounty.find(...).where is not a function","service":"bounty-hunter-bot","stack":"TypeError: Bounty.find(...).where is not a function\n    at EscalationService.checkAndEscalateBounties (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/services/escalation.js:19:10)\n    at Task._execution (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:191:31)\n    at Task.execute (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/task.js:17:25)\n    at ScheduledTask.now (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/scheduled-task.js:38:33)\n    at Scheduler.<anonymous> (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/scheduled-task.js:25:18)\n    at Scheduler.emit (node:events:519:28)\n    at Timeout.matchTime [as _onTimeout] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/scheduler.js:30:26)\n    at listOnTimeout (node:internal/timers:581:17)\n    at process.processTimers (node:internal/timers:519:7)","timestamp":"2026-01-01 15:00:00"}
+{"level":"error","message":"Escalation check error: Bounty.find(...).where is not a function","service":"bounty-hunter-bot","stack":"TypeError: Bounty.find(...).where is not a function\n    at EscalationService.checkAndEscalateBounties (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/services/escalation.js:19:10)\n    at Task._execution (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/index.js:191:31)\n    at Task.execute (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/task.js:17:25)\n    at ScheduledTask.now (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/scheduled-task.js:38:33)\n    at Scheduler.<anonymous> (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/scheduled-task.js:25:18)\n    at Scheduler.emit (node:events:519:28)\n    at Timeout.matchTime [as _onTimeout] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/node-cron/src/scheduler.js:30:26)\n    at listOnTimeout (node:internal/timers:581:17)\n    at process.processTimers (node:internal/timers:519:7)","timestamp":"2026-01-01 15:00:00"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:00:02"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:00:02"}
+{"duration":"2694ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE status = $1","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:00:03"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:00:33"}
+{"duration":"4ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:05:11"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:05:11"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:05:11"}
+{"duration":"4ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:05:11"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"duration":"2790ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"duration":"2819ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"duration":"211ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:14"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"231ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"3300ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:05:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"211ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"3469ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:05:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"241ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"215ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"206ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"228ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:15"}
+{"duration":"706ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:05:15"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:16"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:16"}
+{"duration":"4ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/logout","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:05:16"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:18"}
+{"duration":"2083ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:18"}
+{"duration":"2749ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:05:18"}
+{"duration":"227ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:18"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:18"}
+{"duration":"229ms","level":"debug","message":"Database query executed","query":"DELETE FROM user_sessions WHERE session_token = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:18"}
+{"duration":"2435ms","ip":"::1","level":"debug","message":"POST /logout","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:05:18"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:48"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:05:48"}
+{"duration":"5ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/auth/github","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:17:45"}
+{"duration":"12ms","ip":"::1","level":"debug","message":"GET /auth/github","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:17:45"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"duration":"2536ms","level":"debug","message":"Database query executed","query":"SELECT * FROM users WHERE github_id = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"duration":"230ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"duration":"232ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:50"}
+{"duration":"250ms","level":"debug","message":"Database query executed","query":"\n      INSERT INTO user_sessions (user_id, session_token, expires_at)\n      VALUES ($1, $2, $3)\n    ","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:51"}
+{"level":"info","message":"User tufstraka logged in","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:17:51"}
+{"duration":"5048ms","ip":"::1","level":"debug","message":"GET /auth/github/callback","service":"bounty-hunter-bot","status":302,"timestamp":"2026-01-01 15:17:51"}
+{"duration":"10ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:01"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:01"}
+{"duration":"13ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:01"}
+{"duration":"8ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:01"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:01"}
+{"duration":"241ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:01"}
+{"duration":"255ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:18:01"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:01"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"227ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:02"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"225ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"234ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:02"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"316ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"354ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:02"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"295ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"298ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:02"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:02"}
+{"duration":"270ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:03"}
+{"duration":"272ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:03"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:03"}
+{"duration":"430ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:03"}
+{"duration":"523ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:03"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:03"}
+{"duration":"344ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:04"}
+{"duration":"353ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:04"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:04"}
+{"duration":"449ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:04"}
+{"duration":"463ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:04"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:04"}
+{"duration":"387ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:05"}
+{"duration":"407ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:05"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:05"}
+{"duration":"297ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:05"}
+{"duration":"373ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:05"}
+{"duration":"22ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:05"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:05"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:05"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:05"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:05"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:05"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:06"}
+{"duration":"248ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:06"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:06"}
+{"duration":"353ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:06"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:06"}
+{"duration":"275ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:07"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:07"}
+{"duration":"247ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:07"}
+{"duration":"1165ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:07"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:07"}
+{"duration":"320ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:07"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:07"}
+{"duration":"303ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"duration":"328ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"duration":"399ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"duration":"1397ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:08"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:08"}
+{"duration":"2866ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"duration":"239ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"duration":"249ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"duration":"230ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"duration":"255ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"duration":"3438ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:09"}
+{"duration":"271ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:09"}
+{"duration":"380ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"1198ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:10"}
+{"duration":"398ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"218ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"236ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"232ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"907ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:10"}
+{"duration":"248ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"231ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:10"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:11"}
+{"duration":"986ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:11"}
+{"duration":"248ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:11"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:11"}
+{"duration":"227ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:11"}
+{"duration":"783ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:11"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:11"}
+{"duration":"313ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:11"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:11"}
+{"duration":"347ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:12"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:12"}
+{"duration":"227ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:12"}
+{"duration":"896ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:12"}
+{"duration":"2ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/repositories","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:21"}
+{"duration":"2ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/repositories","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:18:21"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:22"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:22"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:22"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n      SELECT gi.repositories, gi.account_login\n      FROM github_installations gi\n      WHERE gi.ac...","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:22"}
+{"duration":"464ms","ip":"::1","level":"debug","message":"GET /me/repositories","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:22"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:22"}
+{"duration":"227ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:22"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:22"}
+{"duration":"233ms","level":"debug","message":"Database query executed","query":"\n      SELECT gi.repositories, gi.account_login\n      FROM github_installations gi\n      WHERE gi.ac...","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:23"}
+{"duration":"496ms","ip":"::1","level":"debug","message":"GET /me/repositories","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:18:23"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:41"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:18:53"}
+{"duration":"17ms","ip":"::1","level":"debug","message":"OPTIONS /api/admin/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:39:26"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/admin/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:39:26"}
+{"level":"error","message":"jwt malformed","name":"JsonWebTokenError","service":"bounty-hunter-bot","stack":"JsonWebTokenError: jwt malformed\n    at module.exports [as verify] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/jsonwebtoken/verify.js:70:17)\n    at authMiddleware (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/middleware/auth.js:20:25)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:346:12)\n    at next (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:280:10)\n    at urlencodedParser (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/body-parser/lib/types/urlencoded.js:91:7)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)","timestamp":"2026-01-01 15:39:26"}
+{"duration":"20ms","ip":"::1","level":"warn","message":"GET /bounties","service":"bounty-hunter-bot","status":401,"timestamp":"2026-01-01 15:39:26"}
+{"level":"error","message":"jwt malformed","name":"JsonWebTokenError","service":"bounty-hunter-bot","stack":"JsonWebTokenError: jwt malformed\n    at module.exports [as verify] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/jsonwebtoken/verify.js:70:17)\n    at authMiddleware (file:///home/tufstraka/Desktop/mnee/bounty-hunter/bot/src/middleware/auth.js:20:25)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)\n    at /home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:286:9\n    at Function.process_params (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:346:12)\n    at next (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:280:10)\n    at urlencodedParser (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/body-parser/lib/types/urlencoded.js:91:7)\n    at Layer.handle [as handle_request] (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/layer.js:95:5)\n    at trim_prefix (/home/tufstraka/Desktop/mnee/bounty-hunter/node_modules/express/lib/router/index.js:328:13)","timestamp":"2026-01-01 15:39:26"}
+{"duration":"44ms","ip":"::1","level":"warn","message":"GET /bounties","service":"bounty-hunter-bot","status":401,"timestamp":"2026-01-01 15:39:26"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/repositories","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:39:56"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/repositories","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:39:56"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:00"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:00"}
+{"duration":"4854ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:01"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:01"}
+{"duration":"214ms","level":"debug","message":"Database query executed","query":"\n      SELECT gi.repositories, gi.account_login\n      FROM github_installations gi\n      WHERE gi.ac...","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:01"}
+{"duration":"5093ms","ip":"::1","level":"debug","message":"GET /me/repositories","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:40:01"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:01"}
+{"duration":"205ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:01"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:01"}
+{"duration":"203ms","level":"debug","message":"Database query executed","query":"\n      SELECT gi.repositories, gi.account_login\n      FROM github_installations gi\n      WHERE gi.ac...","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:02"}
+{"duration":"418ms","ip":"::1","level":"debug","message":"GET /me/repositories","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:40:02"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:40:32"}
+{"duration":"4ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/logout","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:42:18"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:42:20"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:42:20"}
+{"duration":"2067ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:42:20"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:42:20"}
+{"duration":"213ms","level":"debug","message":"Database query executed","query":"DELETE FROM user_sessions WHERE session_token = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:42:20"}
+{"duration":"2311ms","ip":"::1","level":"debug","message":"POST /logout","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:42:20"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:42:50"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/admin/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:43:38"}
+{"duration":"8ms","ip":"::1","level":"debug","message":"OPTIONS /api/admin/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:43:38"}
+{"duration":"2ms","ip":"::1","level":"warn","message":"GET /bounties","service":"bounty-hunter-bot","status":401,"timestamp":"2026-01-01 15:43:38"}
+{"duration":"3ms","ip":"::1","level":"warn","message":"GET /bounties","service":"bounty-hunter-bot","status":401,"timestamp":"2026-01-01 15:43:38"}
+{"duration":"5ms","ip":"::1","level":"debug","message":"OPTIONS /api/admin/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:15"}
+{"duration":"12ms","ip":"::1","level":"warn","message":"GET /bounties","service":"bounty-hunter-bot","status":401,"timestamp":"2026-01-01 15:47:15"}
+{"duration":"14ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/auth/github","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:28"}
+{"duration":"5ms","ip":"::1","level":"debug","message":"GET /auth/github","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:47:28"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:33"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:33"}
+{"duration":"2306ms","level":"debug","message":"Database query executed","query":"SELECT * FROM users WHERE github_id = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:33"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:33"}
+{"duration":"237ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:33"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:33"}
+{"duration":"229ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:34"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:34"}
+{"duration":"237ms","level":"debug","message":"Database query executed","query":"\n      INSERT INTO user_sessions (user_id, session_token, expires_at)\n      VALUES ($1, $2, $3)\n    ","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:34"}
+{"level":"info","message":"User tufstraka logged in","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:34"}
+{"duration":"4772ms","ip":"::1","level":"debug","message":"GET /auth/github/callback","service":"bounty-hunter-bot","status":302,"timestamp":"2026-01-01 15:47:34"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:44"}
+{"duration":"0ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:44"}
+{"duration":"5ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:44"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:44"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:44"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:44"}
+{"duration":"226ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:47:44"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:44"}
+{"duration":"227ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:44"}
+{"duration":"236ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:44"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"217ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"223ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:45"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"218ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"223ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:45"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"244ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"246ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:45"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:45"}
+{"duration":"236ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:46"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:46"}
+{"duration":"232ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:46"}
+{"duration":"238ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:46"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:46"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:46"}
+{"duration":"223ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:46"}
+{"duration":"4ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"duration":"6ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"duration":"12ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"duration":"5ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"duration":"5ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:47:49"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"duration":"228ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"duration":"228ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:50"}
+{"duration":"938ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:50"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"duration":"240ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"duration":"251ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"duration":"228ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:51"}
+{"duration":"1005ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"245ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"234ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"2214ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"224ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"226ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"941ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:52"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:52"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"2696ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"235ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"217ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"695ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"894ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:53"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:53"}
+{"duration":"216ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"duration":"218ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"duration":"665ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:54"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"duration":"218ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:54"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:47:55"}
+{"duration":"668ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:47:55"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:48:24"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:48:25"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:54:13"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:15"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:15"}
+{"duration":"2257ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:16"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:16"}
+{"duration":"228ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:16"}
+{"duration":"2583ms","ip":"::1","level":"debug","message":"PATCH /me","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:54:16"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:16"}
+{"duration":"225ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:16"}
+{"duration":"229ms","ip":"::1","level":"debug","message":"GET /me","service":"bounty-hunter-bot","status":200,"timestamp":"2026-01-01 15:54:16"}
+{"duration":"2ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:54:32"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:54:32"}
+{"duration":"3ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/stats","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:54:32"}
+{"duration":"1ms","ip":"::1","level":"debug","message":"OPTIONS /api/user/me/bounties","service":"bounty-hunter-bot","status":204,"timestamp":"2026-01-01 15:54:32"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:32"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"duration":"235ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"duration":"220ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"duration":"906ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:54:33"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:33"}
+{"duration":"222ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as bounties_claimed,\n        COALESCE(SUM(claimed_amount), 0) as tot...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"duration":"228ms","level":"debug","message":"Database query executed","query":"\n        UPDATE users SET\n          github_login = $1,\n          email = $2,\n          name = $3,\n  ...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"level":"debug","message":"New database client connected","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"duration":"221ms","level":"debug","message":"Database query executed","query":"\n      SELECT \n        COUNT(*) as total_claimed,\n        COALESCE(SUM(claimed_amount), 0) as total_...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"duration":"898ms","ip":"::1","level":"debug","message":"GET /me/stats","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:54:34"}
+{"duration":"1887ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:34"}
+{"duration":"228ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"duration":"2347ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:54:35"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"duration":"223ms","level":"debug","message":"Database query executed","query":"\n      SELECT u.* FROM users u\n      INNER JOIN user_sessions s ON u.id = s.user_id\n      WHERE s.se...","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"duration":"219ms","level":"debug","message":"Database query executed","query":"SELECT * FROM bounties WHERE solver = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3","rowCount":0,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"level":"debug","message":"Database client acquired from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:35"}
+{"duration":"226ms","level":"debug","message":"Database query executed","query":"SELECT COUNT(*) FROM bounties WHERE solver = $1","rowCount":1,"service":"bounty-hunter-bot","timestamp":"2026-01-01 15:54:36"}
+{"duration":"682ms","ip":"::1","level":"debug","message":"GET /me/bounties","service":"bounty-hunter-bot","status":304,"timestamp":"2026-01-01 15:54:36"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:55:05"}
+{"level":"debug","message":"Database client removed from pool","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:55:06"}
+{"level":"info","message":"Shutting down gracefully...","service":"bounty-hunter-bot","timestamp":"2026-01-01 15:55:35"}
