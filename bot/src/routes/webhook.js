@@ -172,7 +172,7 @@ ${errorLog ? errorLog.slice(0, 2000) : 'No error log provided'}
 ---
 *This issue was created by [FixFlow Bot](https://github.com/bounty-hunter/bounty-hunter)*`;
 
-        const { data: issue } = await octokit.issues.create({
+        const { data: issue } = await octokit.rest.issues.create({
           owner,
           repo,
           title: issueTitle,
@@ -215,7 +215,7 @@ ${errorLog ? errorLog.slice(0, 2000) : 'No error log provided'}
       const [owner, repo] = repository.split('/');
       const octokit = await githubAppService.getOctokitForRepo(owner, repo);
       
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number: finalIssueNumber,
@@ -304,7 +304,7 @@ router.post('/mnee-status', async (req, res) => {
         const [owner, repo] = bounty.repository.split('/');
         const octokit = await githubAppService.getOctokitForRepo(owner, repo);
         
-        await octokit.issues.createComment({
+        await octokit.rest.issues.createComment({
           owner,
           repo,
           issue_number: bounty.issueId,
@@ -326,7 +326,7 @@ router.post('/mnee-status', async (req, res) => {
         const [owner, repo] = bounty.repository.split('/');
         const octokit = await githubAppService.getOctokitForRepo(owner, repo);
         
-        await octokit.issues.createComment({
+        await octokit.rest.issues.createComment({
           owner,
           repo,
           issue_number: bounty.issueId,
@@ -448,7 +448,7 @@ async function handleWorkflowRun(event) {
         // Get full PR details
         const [owner, repo] = workflow_run.repository.full_name.split('/');
         logger.info(`[WORKFLOW-WEBHOOK] Fetching PR details for ${owner}/${repo}#${pr.number}...`);
-        const { data: pullRequest } = await octokit.pulls.get({
+        const { data: pullRequest } = await octokit.rest.pulls.get({
           owner,
           repo,
           pull_number: pr.number
@@ -599,7 +599,7 @@ async function checkAndClaimBounty(repository, issueNumber, pullRequest, install
     const [owner, repo] = repository.split('/');
     logger.info(`[CLAIM-BOUNTY] Step 3: Checking CI status for PR SHA: ${pullRequest.head?.sha}...`);
     
-    const { data: checkRuns } = await octokit.checks.listForRef({
+    const { data: checkRuns } = await octokit.rest.checks.listForRef({
       owner,
       repo,
       ref: pullRequest.head.sha
@@ -636,7 +636,7 @@ async function checkAndClaimBounty(repository, issueNumber, pullRequest, install
       logger.info(`[CLAIM-BOUNTY] Posting comment to request MNEE address...`);
       
       // Post comment asking for MNEE address
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number: pullRequest.number,
@@ -664,7 +664,7 @@ Once you've added your MNEE address, the bounty will be automatically released t
     
     if (!isValidAddress) {
       logger.warn(`[CLAIM-BOUNTY] ✗ Invalid MNEE address: ${solverAddress}`);
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number: pullRequest.number,
@@ -702,7 +702,7 @@ For help with MNEE wallets, visit [docs.mnee.io](https://docs.mnee.io).`
       logger.error(`[CLAIM-BOUNTY] Payment error details: ${error.message}`);
       logger.error(`[CLAIM-BOUNTY] Payment error stack: ${error.stack}`);
 
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number: issueNumber,
@@ -751,7 +751,7 @@ Please contact support if this persists.`
 
     // Post success comment
     logger.info(`[CLAIM-BOUNTY] Step 10: Posting success comment...`);
-    await octokit.issues.createComment({
+    await octokit.rest.issues.createComment({
       owner,
       repo,
       issue_number: issueNumber,
@@ -770,7 +770,7 @@ The payment should appear in your MNEE wallet shortly.`
 
     // Close the issue
     logger.info(`[CLAIM-BOUNTY] Step 11: Closing issue #${issueNumber}...`);
-    await octokit.issues.update({
+    await octokit.rest.issues.update({
       owner,
       repo,
       issue_number: issueNumber,
