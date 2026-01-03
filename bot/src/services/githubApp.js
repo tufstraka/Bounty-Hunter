@@ -66,7 +66,8 @@ class GitHubAppService {
         privateKey,
         webhooks: {
           secret: webhookSecret || 'development-secret'
-        }
+        },
+        Octokit: Octokit  // Use @octokit/rest for installation Octokit instances
       });
 
       this.initialized = true;
