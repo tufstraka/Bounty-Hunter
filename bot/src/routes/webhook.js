@@ -524,9 +524,10 @@ function extractReferencedIssues(body) {
   const issues = new Set();
 
   // Common patterns: fixes #123, closes #123, resolves #123
+  // Also handles "Fixes: #123" (with colon) variant
   const patterns = [
-    /(?:fixes|closes|resolves|fix|close|resolve)\s+#(\d+)/gi,
-    /(?:fixes|closes|resolves|fix|close|resolve)\s+(?:https?:\/\/github\.com\/[\w-]+\/[\w-]+\/issues\/)(\d+)/gi
+    /(?:fixes|closes|resolves|fix|close|resolve):?\s+#(\d+)/gi,
+    /(?:fixes|closes|resolves|fix|close|resolve):?\s+(?:https?:\/\/github\.com\/[\w-]+\/[\w-]+\/issues\/)(\d+)/gi
   ];
 
   for (let i = 0; i < patterns.length; i++) {
