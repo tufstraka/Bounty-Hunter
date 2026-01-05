@@ -32,7 +32,7 @@ describe('FixFlow Bounty Test', () => {
     // Simulating an auth bug
     // Fix: Set isAuthenticated to true when token is valid
     const token = 'valid-jwt-token';
-    const isAuthenticated = false; // Fixed: was false for valid token
+    const isAuthenticated = true; // Fixed: valid token should authenticate
     
     if (token === 'valid-jwt-token') {
       expect(isAuthenticated).toBe(true);
@@ -40,4 +40,3 @@ describe('FixFlow Bounty Test', () => {
   });
 
 });
-
