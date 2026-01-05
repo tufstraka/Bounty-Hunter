@@ -511,8 +511,9 @@ class EthereumPaymentService {
 
       // Get gas price
       const feeData = await this.provider.getFeeData();
-      logger.info(`[ETH-PAYMENT]   - Gas price: ${ethers.formatGwei(feeData.gasPrice || 0n)} gwei`);
-      const estimatedCost = (feeData.gasPrice || 0n) * gasEstimate;
+      const gasPrice = feeData.gasPrice || 0n;
+      logger.info(`[ETH-PAYMENT]   - Gas price: ${ethers.formatUnits(gasPrice, "gwei")} gwei`);
+      const estimatedCost = gasPrice * gasEstimate;
       logger.info(`[ETH-PAYMENT]   - Estimated cost: ${ethers.formatEther(estimatedCost)} ETH`);
 
       // Send transaction
