@@ -7,12 +7,20 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "lint": "eslint src/",
     "db:init": "node src/db.js --init",
     "db:migrate": "node src/db.js --init",
     "db:migrate:prod": "NODE_ENV=production node src/db.js --init",
     "db:reset": "node src/db.js --reset"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "moduleFileExtensions": ["js", "json"],
+    "testMatch": ["**/test/**/*.test.js"],
+    "verbose": true,
+    "testTimeout": 30000
   },
   "dependencies": {
     "@mnee/ts-sdk": "^1.0.3",
