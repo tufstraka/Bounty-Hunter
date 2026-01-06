@@ -1,7 +1,24 @@
-'use client';
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Shield, Lock, Eye, Database, Globe, Mail, Calendar, ArrowLeft, Zap } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Learn how FixFlow collects, uses, and protects your personal information. We are committed to transparency and data security.',
+  openGraph: {
+    title: 'Privacy Policy | FixFlow',
+    description: 'Learn how FixFlow handles your data with transparency and security.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Privacy Policy | FixFlow',
+    description: 'Learn how FixFlow handles your data with transparency and security.',
+  },
+  alternates: {
+    canonical: '/privacy',
+  },
+};
 
 export default function PrivacyPage() {
   const lastUpdated = 'January 6, 2026';

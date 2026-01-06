@@ -8,11 +8,64 @@ import {
   Users, Heart, Play, Terminal, GitPullRequest, Check
 } from 'lucide-react';
 
+// FAQ structured data for rich snippets
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I earn money fixing bugs with FixFlow?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When a test fails in a CI pipeline, FixFlow automatically creates a bounty. You fix the bug, submit a pull request with your wallet address, and once the PR is merged and tests pass, payment is sent instantly to your wallet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is MNEE and why do you use it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MNEE is a stablecoin pegged 1:1 to USD. We use it for instant, zero-fee payments with no volatility risk. 1 MNEE always equals $1."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are there any fees for receiving bounty payments?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, there are zero transaction fees. You keep 100% of the bounty amount when a payment is made."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How fast are bounty payments?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Payments are instant - they settle in less than a second. The moment your pull request is merged, the bounty is transferred to your wallet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is bounty escalation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Bounty escalation automatically increases unclaimed bounties over time. Bounties grow at 24 hours, 72 hours, and 1 week marks, incentivizing fixes for older issues."
+      }
+    }
+  ]
+};
+
 export default function HomePage() {
   const { user, login, enterDemoMode } = useAuth();
 
   return (
     <div className="min-h-screen">
+      {/* FAQ Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+      />
       {/* Hero Section */}
       <section className="relative pt-20 pb-24 lg:pt-28 lg:pb-32 overflow-hidden">
         {/* Background decorations */}

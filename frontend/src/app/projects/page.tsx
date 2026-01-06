@@ -119,7 +119,7 @@ export default function ProjectsPage() {
               Install the FixFlow GitHub App on your repositories to start creating automated bounties.
             </p>
             <a
-              href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME || 'bounty-hunter-bot'}/installations/new`}
+              href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME || 'fix-flow'}/installations/new`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary inline-flex"

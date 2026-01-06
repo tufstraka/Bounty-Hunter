@@ -1,11 +1,28 @@
-'use client';
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { 
-  FileText, Scale, AlertTriangle, Coins, Users, 
+import {
+  FileText, Scale, AlertTriangle, Coins, Users,
   Ban, Mail, Calendar, ArrowLeft, Zap,
   CheckCircle2, XCircle
 } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'Read the Terms of Service for FixFlow, the automated bug bounty platform. Understand your rights, responsibilities, and how our service works.',
+  openGraph: {
+    title: 'Terms of Service | FixFlow',
+    description: 'Terms and conditions for using the FixFlow automated bounty platform.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Terms of Service | FixFlow',
+    description: 'Terms and conditions for using the FixFlow automated bounty platform.',
+  },
+  alternates: {
+    canonical: '/terms',
+  },
+};
 
 export default function TermsPage() {
   const lastUpdated = 'January 6, 2026';
