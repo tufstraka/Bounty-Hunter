@@ -14,7 +14,7 @@ describe('FixFlow Bounty Test', () => {
   it('should always fail to trigger bounty creation', () => {
     // This test intentionally fails
     // Fix: Change false to true
-    const buggyCode = true;
+    const buggyCode = false;
     
     expect(buggyCode).toBe(true);
   });
