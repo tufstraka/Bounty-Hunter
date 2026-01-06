@@ -356,7 +356,7 @@ async function run() {
       ? failedSteps.map(step => `- Step "${step.name}" failed`).join('\n')
       : 'No specific step information available';
 
-    const issueBody = `## 🎯 Automated Bounty Created!
+    const issueBody = `## 🎯 Bounty Created!
 
 A test failure has been detected and a bounty of **${bountyAmount} MNEE** has been placed on fixing this issue.
 
@@ -412,7 +412,7 @@ ${failedStepsDetails}
       repo: context.repo.repo,
       title: issueTitle,
       body: issueBody,
-      labels: ['bounty', 'bug', 'automated']
+      labels: ['bounty', 'bug']
     });
 
     core.info(`Created issue #${issue.number}: ${issue.html_url}`);
