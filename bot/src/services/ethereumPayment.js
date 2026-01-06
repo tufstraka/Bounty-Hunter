@@ -46,6 +46,12 @@ class EthereumPaymentService {
     this.mneeToken = null;
     this.initialized = false;
     this.decimals = 18;
+    
+    // Payment queue for serializing transactions
+    this.paymentQueue = [];
+    this.isProcessingQueue = false;
+    this.currentNonce = null;
+    this.nonceInitialized = false;
   }
 
   async initialize() {
@@ -432,11 +438,88 @@ class EthereumPaymentService {
   }
 
   /**
+   * Initialize or get current nonce for the wallet
+   * This ensures we track nonces properly for sequential transactions
+   */
+  async initializeNonce() {
+    if (!this.nonceInitialized) {
+      this.currentNonce = await this.provider.getTransactionCount(this.wallet.address, 'pending');
+      this.nonceInitialized = true;
+      logger.info(`[ETH-PAYMENT] Initialized nonce tracker at: ${this.currentNonce}`);
+    }
+    return this.currentNonce;
+  }
+
+  /**
+   * Get and increment the nonce atomically
+   */
+  getNextNonce() {
+    const nonce = this.currentNonce;
+    this.currentNonce++;
+    logger.info(`[ETH-PAYMENT] Using nonce: ${nonce}, next will be: ${this.currentNonce}`);
+    return nonce;
+  }
+
+  /**
+   * Reset nonce to match the blockchain (use after errors)
+   */
+  async resetNonce() {
+    this.currentNonce = await this.provider.getTransactionCount(this.wallet.address, 'pending');
+    logger.info(`[ETH-PAYMENT] Reset nonce to: ${this.currentNonce}`);
+    return this.currentNonce;
+  }
+
+  /**
+   * Sleep helper for retry delays
+   */
+  sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Retry an async operation with exponential backoff
+   */
+  async retryWithBackoff(operation, maxRetries = 3, baseDelay = 1000) {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        return await operation();
+      } catch (error) {
+        const isRateLimit = error.message.includes('Too Many Requests') ||
+                           error.message.includes('-32005') ||
+                           error.message.includes('rate limit');
+        const isNonceError = error.message.includes('already known') ||
+                             error.message.includes('nonce too low') ||
+                             error.message.includes('replacement transaction');
+        
+        if (attempt === maxRetries) {
+          logger.error(`[ETH-PAYMENT] All ${maxRetries} retry attempts failed`);
+          throw error;
+        }
+
+        if (isRateLimit) {
+          const delay = baseDelay * Math.pow(2, attempt - 1);
+          logger.warn(`[ETH-PAYMENT] Rate limited, retrying in ${delay}ms (attempt ${attempt}/${maxRetries})`);
+          await this.sleep(delay);
+        } else if (isNonceError) {
+          logger.warn(`[ETH-PAYMENT] Nonce error, resetting and retrying (attempt ${attempt}/${maxRetries})`);
+          await this.resetNonce();
+          await this.sleep(500); // Small delay before retry
+        } else {
+          throw error; // Don't retry other errors
+        }
+      }
+    }
+  }
+
+  /**
    * Send direct MNEE payment (for compatibility with non-escrow flow)
    * This transfers tokens directly without the escrow contract
+   *
+   * This method queues payments and processes them sequentially to avoid
+   * nonce collisions when multiple payments are triggered simultaneously.
    */
   async sendPayment(recipientAddress, amount, bountyId) {
-    logger.info('[ETH-PAYMENT] ========== SEND PAYMENT ==========');
+    logger.info('[ETH-PAYMENT] ========== QUEUING PAYMENT ==========');
     logger.info(`[ETH-PAYMENT] Bounty ID: ${bountyId}`);
     logger.info(`[ETH-PAYMENT] Recipient: ${recipientAddress}`);
     logger.info(`[ETH-PAYMENT] Amount: ${amount} MNEE`);
@@ -453,17 +536,94 @@ class EthereumPaymentService {
       }
     }
 
-    try {
-      // Validate recipient address
-      logger.info('[ETH-PAYMENT] Step 1: Validating recipient address...');
-      if (!ethers.isAddress(recipientAddress)) {
-        logger.error(`[ETH-PAYMENT] ✗ Invalid Ethereum address: ${recipientAddress}`);
-        throw new Error(`Invalid Ethereum address: ${recipientAddress}`);
-      }
-      logger.info('[ETH-PAYMENT] ✓ Recipient address is valid');
+    // Validate recipient address upfront
+    if (!ethers.isAddress(recipientAddress)) {
+      logger.error(`[ETH-PAYMENT] ✗ Invalid Ethereum address: ${recipientAddress}`);
+      throw new Error(`Invalid Ethereum address: ${recipientAddress}`);
+    }
 
-      // Check current balance
-      logger.info('[ETH-PAYMENT] Step 2: Checking balances...');
+    // Queue the payment and return a promise that resolves when it's processed
+    return new Promise((resolve, reject) => {
+      this.paymentQueue.push({
+        recipientAddress,
+        amount,
+        bountyId,
+        resolve,
+        reject,
+        addedAt: Date.now()
+      });
+
+      logger.info(`[ETH-PAYMENT] Payment queued. Queue size: ${this.paymentQueue.length}`);
+
+      // Start processing if not already running
+      if (!this.isProcessingQueue) {
+        this.processPaymentQueue();
+      }
+    });
+  }
+
+  /**
+   * Process the payment queue sequentially
+   * This ensures only one transaction is sent at a time with proper nonce management
+   */
+  async processPaymentQueue() {
+    if (this.isProcessingQueue) {
+      logger.info('[ETH-PAYMENT] Queue processor already running');
+      return;
+    }
+
+    this.isProcessingQueue = true;
+    logger.info('[ETH-PAYMENT] ========== STARTING QUEUE PROCESSOR ==========');
+
+    try {
+      // Initialize nonce tracking
+      await this.initializeNonce();
+
+      while (this.paymentQueue.length > 0) {
+        const payment = this.paymentQueue.shift();
+        const { recipientAddress, amount, bountyId, resolve, reject, addedAt } = payment;
+        const waitTime = Date.now() - addedAt;
+
+        logger.info(`[ETH-PAYMENT] ========== PROCESSING PAYMENT ==========`);
+        logger.info(`[ETH-PAYMENT] Queue wait time: ${waitTime}ms`);
+        logger.info(`[ETH-PAYMENT] Remaining in queue: ${this.paymentQueue.length}`);
+        logger.info(`[ETH-PAYMENT] Bounty ID: ${bountyId}`);
+        logger.info(`[ETH-PAYMENT] Recipient: ${recipientAddress}`);
+        logger.info(`[ETH-PAYMENT] Amount: ${amount} MNEE`);
+
+        try {
+          const result = await this.executePayment(recipientAddress, amount, bountyId);
+          resolve(result);
+          
+          // Small delay between transactions to avoid rate limits
+          if (this.paymentQueue.length > 0) {
+            logger.info('[ETH-PAYMENT] Waiting 500ms before next payment...');
+            await this.sleep(500);
+          }
+        } catch (error) {
+          logger.error(`[ETH-PAYMENT] Payment failed for bounty ${bountyId}: ${error.message}`);
+          reject(error);
+          
+          // Reset nonce on failure in case it got out of sync
+          await this.resetNonce();
+        }
+      }
+    } finally {
+      this.isProcessingQueue = false;
+      logger.info('[ETH-PAYMENT] ========== QUEUE PROCESSOR STOPPED ==========');
+    }
+  }
+
+  /**
+   * Execute a single payment with retry logic and nonce management
+   * This is the internal method that does the actual transfer
+   */
+  async executePayment(recipientAddress, amount, bountyId) {
+    logger.info('[ETH-PAYMENT] ========== EXECUTING PAYMENT ==========');
+
+    return this.retryWithBackoff(async () => {
+      // Check current balance (with retry for rate limits)
+      logger.info('[ETH-PAYMENT] Step 1: Checking balances...');
       const tokenBalance = await this.mneeToken.balanceOf(this.wallet.address);
       const tokenBalanceFormatted = this.fromAtomicUnits(tokenBalance);
       logger.info(`[ETH-PAYMENT]   - Current MNEE balance: ${tokenBalanceFormatted}`);
@@ -494,18 +654,13 @@ class EthereumPaymentService {
       logger.info('[ETH-PAYMENT] ✓ Sufficient ETH for gas');
 
       // Estimate gas
-      logger.info('[ETH-PAYMENT] Step 3: Estimating gas...');
+      logger.info('[ETH-PAYMENT] Step 2: Estimating gas...');
       let gasEstimate;
       try {
         gasEstimate = await this.mneeToken.transfer.estimateGas(recipientAddress, atomicAmount);
         logger.info(`[ETH-PAYMENT]   - Estimated gas: ${gasEstimate.toString()}`);
       } catch (gasError) {
         logger.error(`[ETH-PAYMENT] ✗ Gas estimation failed: ${gasError.message}`);
-        logger.error('[ETH-PAYMENT]   This usually means the transaction will fail');
-        logger.error('[ETH-PAYMENT]   Possible reasons:');
-        logger.error('[ETH-PAYMENT]   1. Insufficient token balance');
-        logger.error('[ETH-PAYMENT]   2. Contract paused or restricted');
-        logger.error('[ETH-PAYMENT]   3. Recipient address blacklisted');
         throw new Error(`Gas estimation failed: ${gasError.message}`);
       }
 
@@ -513,17 +668,30 @@ class EthereumPaymentService {
       const feeData = await this.provider.getFeeData();
       const gasPrice = feeData.gasPrice || 0n;
       logger.info(`[ETH-PAYMENT]   - Gas price: ${ethers.formatUnits(gasPrice, "gwei")} gwei`);
-      const estimatedCost = gasPrice * gasEstimate;
-      logger.info(`[ETH-PAYMENT]   - Estimated cost: ${ethers.formatEther(estimatedCost)} ETH`);
 
-      // Send transaction
+      // Get the next nonce (managed internally)
+      const nonce = this.getNextNonce();
+      logger.info(`[ETH-PAYMENT] Step 3: Using nonce: ${nonce}`);
+
+      // Prepare transaction with explicit nonce
       logger.info('[ETH-PAYMENT] Step 4: Sending transaction...');
       logger.info(`[ETH-PAYMENT]   - From: ${this.wallet.address}`);
       logger.info(`[ETH-PAYMENT]   - To (token): ${await this.mneeToken.getAddress()}`);
       logger.info(`[ETH-PAYMENT]   - Transfer to: ${recipientAddress}`);
       logger.info(`[ETH-PAYMENT]   - Amount: ${amount} MNEE`);
+      logger.info(`[ETH-PAYMENT]   - Nonce: ${nonce}`);
 
-      const tx = await this.mneeToken.transfer(recipientAddress, atomicAmount);
+      // Build the transaction data manually to include nonce
+      const tokenAddress = await this.mneeToken.getAddress();
+      const transferData = this.mneeToken.interface.encodeFunctionData('transfer', [recipientAddress, atomicAmount]);
+      
+      const tx = await this.wallet.sendTransaction({
+        to: tokenAddress,
+        data: transferData,
+        nonce: nonce,
+        gasLimit: gasEstimate * 120n / 100n, // Add 20% buffer
+      });
+
       logger.info(`[ETH-PAYMENT] ✓ Transaction submitted!`);
       logger.info(`[ETH-PAYMENT]   - TX Hash: ${tx.hash}`);
       logger.info(`[ETH-PAYMENT]   - Nonce: ${tx.nonce}`);
@@ -541,13 +709,6 @@ class EthereumPaymentService {
         logger.error('[ETH-PAYMENT] ✗ Transaction failed on-chain!');
         throw new Error('Transaction failed on-chain');
       }
-
-      // Verify the transfer
-      logger.info('[ETH-PAYMENT] Step 6: Verifying transfer...');
-      const newBalance = await this.mneeToken.balanceOf(this.wallet.address);
-      const newBalanceFormatted = this.fromAtomicUnits(newBalance);
-      logger.info(`[ETH-PAYMENT]   - New balance: ${newBalanceFormatted} MNEE`);
-      logger.info(`[ETH-PAYMENT]   - Deducted: ${tokenBalanceFormatted - newBalanceFormatted} MNEE`);
 
       logger.info('[ETH-PAYMENT] ========== PAYMENT SUCCESSFUL ==========');
       logger.info(`[ETH-PAYMENT] Summary:`);
@@ -568,31 +729,7 @@ class EthereumPaymentService {
         blockNumber: receipt.blockNumber,
         gasUsed: receipt.gasUsed.toString()
       };
-    } catch (error) {
-      logger.error('[ETH-PAYMENT] ========== PAYMENT FAILED ==========');
-      logger.error(`[ETH-PAYMENT] Error: ${error.message}`);
-      logger.error(`[ETH-PAYMENT] Bounty ID: ${bountyId}`);
-      logger.error(`[ETH-PAYMENT] Recipient: ${recipientAddress}`);
-      logger.error(`[ETH-PAYMENT] Amount: ${amount} MNEE`);
-      
-      // Parse common error types
-      if (error.message.includes('insufficient funds')) {
-        logger.error('[ETH-PAYMENT] Diagnosis: Insufficient ETH for gas');
-      } else if (error.message.includes('nonce')) {
-        logger.error('[ETH-PAYMENT] Diagnosis: Nonce issue - pending transaction?');
-      } else if (error.message.includes('execution reverted')) {
-        logger.error('[ETH-PAYMENT] Diagnosis: Contract execution reverted');
-        logger.error('[ETH-PAYMENT]   - Check token balance');
-        logger.error('[ETH-PAYMENT]   - Check if token is paused');
-        logger.error('[ETH-PAYMENT]   - Check for transfer restrictions');
-      } else if (error.message.includes('network')) {
-        logger.error('[ETH-PAYMENT] Diagnosis: Network connectivity issue');
-      }
-
-      logger.error(`[ETH-PAYMENT] Stack: ${error.stack}`);
-      logger.error('[ETH-PAYMENT] ==========================================');
-      throw error;
-    }
+    }, 3, 2000); // 3 retries with 2 second base delay
   }
 
   /**
