@@ -1,1 +1,0 @@
-Make sure before bounty is created,the balance of the owner wallet is above the maximum threshold for the bounty

@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
+import { api } from '@/lib/api';
 
 // Types for the Web3 context
 interface WalletInfo {
@@ -145,6 +146,25 @@ export function Web3Provider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // Sync wallet address to backend database
+  const syncWalletToBackend = useCallback(async (address: string) => {
+    try {
+      // Check if user is authenticated (has session token)
+      const token = api.getToken();
+      if (!token) {
+        console.log('[Web3] User not authenticated, skipping wallet sync to backend');
+        return;
+      }
+
+      console.log(`[Web3] Syncing wallet address to backend: ${address}`);
+      await api.updateProfile({ mneeAddress: address });
+      console.log('[Web3] Wallet address synced to backend successfully');
+    } catch (err) {
+      // Don't throw - just log the error. User might not be authenticated
+      console.warn('[Web3] Failed to sync wallet to backend:', err);
+    }
+  }, []);
+
   // Connect wallet and automatically switch to target network
   const connect = async () => {
     if (typeof window === 'undefined' || !window.ethereum) {
@@ -157,7 +177,7 @@ export function Web3Provider({ children }: { children: ReactNode }) {
 
     try {
       // Request account access
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = (await window.ethereum.request({ method: 'eth_requestAccounts' })) as string[];
       
       // Check current chain and switch to target network if needed
       const chainIdHex = (await window.ethereum.request({ method: 'eth_chainId' })) as string;
@@ -169,6 +189,11 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       }
       
       await updateWalletInfo();
+      
+      // Sync wallet address to backend if user is authenticated
+      if (accounts.length > 0) {
+        await syncWalletToBackend(accounts[0]);
+      }
       
       if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, 'true');
@@ -274,6 +299,8 @@ export function Web3Provider({ children }: { children: ReactNode }) {
         disconnect();
       } else {
         updateWalletInfo();
+        // Also sync the new account to backend
+        syncWalletToBackend(accounts[0]);
       }
     };
 
