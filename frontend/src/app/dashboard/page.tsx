@@ -38,11 +38,9 @@ export default function DashboardPage() {
   }, [user, isDemo]);
 
   const loadData = async () => {
-    // Use mock data in demo mode
     if (isDemo) {
       await simulateDelay(500);
       setStats(MOCK_STATS);
-      // Get bounties claimed by the current demo user (solver field)
       const userBounties = MOCK_BOUNTIES.filter(b =>
         b.solver === user?.githubLogin || b.status === 'active'
       ).slice(0, 10);
@@ -69,149 +67,188 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-honey-400 to-honey-600 flex items-center justify-center animate-pulse">
-            <Target className="w-8 h-8 text-white" />
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 
+            flex items-center justify-center animate-pulse shadow-lg">
+            <Target className="w-7 h-7 text-white" />
           </div>
-          <p className="text-warm-500 animate-pulse">Loading your dashboard...</p>
+          <p className="text-gray-500 animate-pulse">Loading your dashboard...</p>
         </div>
       </div>
     );
   }
 
-  const getStatusBadge = (status: string) => {
+  const getStatusConfig = (status: string) => {
     switch (status) {
-      case 'active': return 'badge-active';
-      case 'claimed': return 'badge-claimed';
-      case 'pending': return 'badge-pending';
-      case 'cancelled': return 'badge-cancelled';
-      default: return 'badge-active';
+      case 'active': 
+        return { 
+          className: 'bg-secondary-50 text-secondary-700 border border-secondary-200', 
+          icon: Target 
+        };
+      case 'claimed': 
+        return { 
+          className: 'bg-green-50 text-green-700 border border-green-200', 
+          icon: CheckCircle 
+        };
+      case 'pending': 
+        return { 
+          className: 'bg-primary-50 text-primary-700 border border-primary-200', 
+          icon: Clock 
+        };
+      case 'cancelled': 
+        return { 
+          className: 'bg-gray-100 text-gray-600 border border-gray-200', 
+          icon: AlertCircle 
+        };
+      default: 
+        return { 
+          className: 'bg-gray-100 text-gray-600 border border-gray-200', 
+          icon: Target 
+        };
     }
   };
 
   return (
-    <div className="min-h-screen pb-20">
-      {/* Header with greeting */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-12">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div className="flex items-center gap-4">
-            {user.avatarUrl ? (
-              <Image src={user.avatarUrl} alt={user.name || user.githubLogin} width={64} height={64} className="rounded-2xl ring-4 ring-white shadow-glass" />
-            ) : (
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-honey-400 to-honey-600 flex items-center justify-center text-white text-2xl font-bold shadow-honey">
-                {user.githubLogin[0].toUpperCase()}
-              </div>
-            )}
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl sm:text-3xl font-bold text-warm-900">
+    <div className="min-h-screen pb-20 bg-gray-50/50">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div className="flex items-center gap-4">
+              {user.avatarUrl ? (
+                <Image 
+                  src={user.avatarUrl} 
+                  alt={user.name || user.githubLogin} 
+                  width={56} 
+                  height={56} 
+                  className="rounded-xl ring-2 ring-gray-100 shadow-sm" 
+                />
+              ) : (
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 
+                  flex items-center justify-center text-white text-xl font-semibold shadow-md">
+                  {user.githubLogin[0].toUpperCase()}
+                </div>
+              )}
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">
                   Welcome back, {user.name?.split(' ')[0] || user.githubLogin}
                 </h1>
-                <span className="text-2xl">👋</span>
+                <p className="text-gray-500 mt-0.5">Here&apos;s your bounty activity</p>
               </div>
-              <p className="text-warm-500 mt-1">Here&apos;s what&apos;s happening with your bounties</p>
             </div>
+            
+            <Link href="/bounties" className="btn-primary self-start md:self-auto">
+              <Sparkles className="w-4 h-4" />
+              <span>Find Bounties</span>
+            </Link>
           </div>
-          
-          <Link href="/bounties" className="btn-primary self-start md:self-auto">
-            <Sparkles className="w-4 h-4" />
-            <span>Find Bounties</span>
-          </Link>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
-          <div className="stat-card-honey">
-            <div className="flex items-start justify-between mb-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-honey-400 to-honey-600 flex items-center justify-center shadow-honey">
-                <Coins className="w-6 h-6 text-white" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {/* Total Earned */}
+          <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100
+            hover:shadow-md transition-shadow duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center">
+                <Coins className="w-5 h-5 text-primary-600" />
               </div>
               {!loadingData && stats && stats.totalEarned > 0 && (
-                <span className="badge-success text-xs">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full 
+                  bg-green-100 text-green-700 text-xs font-medium">
                   <TrendingUp className="w-3 h-3" />
                   Earning
                 </span>
               )}
             </div>
-            <div className="bounty-amount text-3xl">{loadingData ? '...' : stats?.totalEarned?.toFixed(0) || '0'}</div>
-            <p className="text-warm-500 text-sm mt-1">Total MNEE Earned</p>
-            <div className="text-xs text-warm-400 mt-2">≈ ${loadingData ? '...' : stats?.totalEarned?.toFixed(2) || '0.00'} USD</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {loadingData ? '—' : stats?.totalEarned?.toFixed(0) || '0'}
+            </div>
+            <p className="text-gray-500 text-sm mt-1">MNEE Earned</p>
           </div>
 
-          <div className="stat-card-ocean">
-            <div className="flex items-start justify-between mb-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-ocean-400 to-ocean-600 flex items-center justify-center shadow-ocean">
-                <CheckCircle className="w-6 h-6 text-white" />
+          {/* Bounties Completed */}
+          <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100
+            hover:shadow-md transition-shadow duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-lg bg-secondary-100 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-secondary-600" />
               </div>
             </div>
-            <div className="text-3xl font-bold text-ocean-600">{loadingData ? '...' : stats?.totalClaimed || 0}</div>
-            <p className="text-warm-500 text-sm mt-1">Bounties Completed</p>
-            <div className="text-xs text-warm-400 mt-2">Bugs squashed 🐛</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {loadingData ? '—' : stats?.totalClaimed || 0}
+            </div>
+            <p className="text-gray-500 text-sm mt-1">Completed</p>
           </div>
 
-          <div className="stat-card-grape">
-            <div className="flex items-start justify-between mb-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-grape-400 to-grape-600 flex items-center justify-center shadow-grape">
-                <GitPullRequest className="w-6 h-6 text-white" />
+          {/* Projects Helped */}
+          <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100
+            hover:shadow-md transition-shadow duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-lg bg-accent-100 flex items-center justify-center">
+                <GitPullRequest className="w-5 h-5 text-accent-600" />
               </div>
             </div>
-            <div className="text-3xl font-bold text-grape-600">{loadingData ? '...' : stats?.repositoriesContributed || 0}</div>
-            <p className="text-warm-500 text-sm mt-1">Projects Helped</p>
-            <div className="text-xs text-warm-400 mt-2">Open source hero 🦸</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {loadingData ? '—' : stats?.repositoriesContributed || 0}
+            </div>
+            <p className="text-gray-500 text-sm mt-1">Projects</p>
           </div>
 
-          <div className="glass-card p-6">
-            <div className="flex items-start justify-between mb-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-warm-400 to-warm-600 flex items-center justify-center">
-                <Clock className="w-6 h-6 text-white" />
+          {/* Time Hunting */}
+          <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100
+            hover:shadow-md transition-shadow duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
+                <Clock className="w-5 h-5 text-gray-600" />
               </div>
             </div>
-            <div className="text-lg font-bold text-warm-800">
-              {loadingData ? '...' : stats?.memberSince ? formatDistanceToNow(new Date(stats.memberSince)) : 'New'}
+            <div className="text-lg font-bold text-gray-900">
+              {loadingData ? '—' : stats?.memberSince ? formatDistanceToNow(new Date(stats.memberSince)) : 'New'}
             </div>
-            <p className="text-warm-500 text-sm mt-1">Time Hunting</p>
-            <div className="text-xs text-warm-400 mt-2">Keep it up! 💪</div>
+            <p className="text-gray-500 text-sm mt-1">Time Hunting</p>
           </div>
         </div>
 
-        {/* MNEE Address Section */}
-        <div className="glass-card p-6 mb-8">
+        {/* Wallet Section */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-honey-100 flex items-center justify-center">
-              <Wallet className="w-5 h-5 text-honey-600" />
+            <div className="w-9 h-9 rounded-lg bg-primary-100 flex items-center justify-center">
+              <Wallet className="w-4.5 h-4.5 text-primary-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-warm-800">Payment Wallet</h2>
-              <p className="text-sm text-warm-500">Where your bounties land</p>
+              <h2 className="text-base font-semibold text-gray-900">Payment Wallet</h2>
+              <p className="text-sm text-gray-500">Where your bounties land</p>
             </div>
           </div>
           
           {user.mneeAddress ? (
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-gradient-to-r from-ocean-50 to-honey-50 border border-ocean-100">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 
+              p-4 rounded-lg bg-gray-50 border border-gray-200">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-ocean-100 flex items-center justify-center flex-shrink-0">
-                  <CheckCircle className="w-4 h-4 text-ocean-600" />
+                <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs text-warm-500 uppercase tracking-wide font-medium">MNEE Address</p>
-                  <p className="font-mono text-warm-800 text-sm truncate">{user.mneeAddress}</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">MNEE Address</p>
+                  <p className="font-mono text-gray-800 text-sm truncate">{user.mneeAddress}</p>
                 </div>
               </div>
               <Link href="/settings" className="btn-secondary text-sm flex-shrink-0">
-                Update Address
+                Update
               </Link>
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-gradient-to-r from-honey-50 to-honey-100 border border-honey-200">
+            <div className="p-4 rounded-lg bg-primary-50 border border-primary-200">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-honey-200 flex items-center justify-center animate-pulse">
-                    <AlertCircle className="w-5 h-5 text-honey-700" />
+                  <div className="w-9 h-9 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <AlertCircle className="w-5 h-5 text-primary-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-honey-800">No wallet connected</p>
-                    <p className="text-sm text-honey-600">Add your MNEE address to receive payments</p>
+                    <p className="font-medium text-primary-900">No wallet connected</p>
+                    <p className="text-sm text-primary-700">Add your MNEE address to receive payments</p>
                   </div>
                 </div>
                 <Link href="/settings" className="btn-primary text-sm flex-shrink-0">
@@ -223,40 +260,46 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* Recent Bounties */}
-        <div className="glass-card overflow-hidden">
-          <div className="p-6 border-b border-warm-100">
+        {/* Bounty History */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="p-6 border-b border-gray-100">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-grape-100 flex items-center justify-center">
-                  <Trophy className="w-5 h-5 text-grape-600" />
+                <div className="w-9 h-9 rounded-lg bg-accent-100 flex items-center justify-center">
+                  <Trophy className="w-4.5 h-4.5 text-accent-600" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-warm-800">Your Bounty History</h2>
-                  <p className="text-sm text-warm-500">Recent claims and completions</p>
+                  <h2 className="text-base font-semibold text-gray-900">Bounty History</h2>
+                  <p className="text-sm text-gray-500">Your recent activity</p>
                 </div>
               </div>
-              <Link href="/bounties" className="inline-flex items-center gap-1 text-honey-600 hover:text-honey-700 font-medium text-sm group">
-                Browse all bounties
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <Link href="/bounties" className="inline-flex items-center gap-1.5 text-primary-600 
+                hover:text-primary-700 font-medium text-sm transition-colors group">
+                Browse all
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 
+                  group-hover:-translate-y-0.5" />
               </Link>
             </div>
           </div>
 
           {loadingData ? (
             <div className="p-12 text-center">
-              <div className="w-12 h-12 rounded-xl bg-warm-100 flex items-center justify-center mx-auto mb-4 animate-pulse">
-                <Zap className="w-6 h-6 text-warm-400" />
+              <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center 
+                mx-auto mb-3 animate-pulse">
+                <Zap className="w-5 h-5 text-gray-400" />
               </div>
-              <p className="text-warm-500">Loading your bounties...</p>
+              <p className="text-gray-500 text-sm">Loading bounties...</p>
             </div>
           ) : bounties.length === 0 ? (
             <div className="p-12 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-honey-100 flex items-center justify-center mx-auto mb-4">
-                <Target className="w-8 h-8 text-honey-500" />
+              <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center 
+                mx-auto mb-4">
+                <Target className="w-7 h-7 text-gray-400" />
               </div>
-              <h3 className="text-lg font-semibold text-warm-800 mb-2">No bounties yet</h3>
-              <p className="text-warm-500 mb-6 max-w-sm mx-auto">Your bounty hunting journey starts here. Find your first bug to fix!</p>
+              <h3 className="text-base font-semibold text-gray-900 mb-1">No bounties yet</h3>
+              <p className="text-gray-500 text-sm mb-6 max-w-xs mx-auto">
+                Start hunting! Find an issue to fix and earn your first bounty.
+              </p>
               <Link href="/bounties" className="btn-primary">
                 <Sparkles className="w-4 h-4" />
                 Explore Bounties
@@ -264,62 +307,90 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="table-modern">
+              <table className="w-full">
                 <thead>
-                  <tr>
-                    <th>Repository</th>
-                    <th>Issue</th>
-                    <th>Reward</th>
-                    <th>Status</th>
-                    <th>When</th>
-                    <th></th>
+                  <tr className="border-b border-gray-100">
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider 
+                      px-6 py-3 bg-gray-50/50">Repository</th>
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider 
+                      px-6 py-3 bg-gray-50/50">Issue</th>
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider 
+                      px-6 py-3 bg-gray-50/50">Reward</th>
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider 
+                      px-6 py-3 bg-gray-50/50">Status</th>
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider 
+                      px-6 py-3 bg-gray-50/50">When</th>
+                    <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider 
+                      px-6 py-3 bg-gray-50/50"></th>
                   </tr>
                 </thead>
-                <tbody>
-                  {bounties.map((bounty, index) => (
-                    <tr key={bounty.bountyId} className="animate-slide-up" style={{ animationDelay: `${index * 50}ms` }}>
-                      <td>
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-lg bg-warm-100 flex items-center justify-center">
-                            <GitPullRequest className="w-4 h-4 text-warm-500" />
+                <tbody className="divide-y divide-gray-100">
+                  {bounties.map((bounty) => {
+                    const statusConfig = getStatusConfig(bounty.status);
+                    const StatusIcon = statusConfig.icon;
+                    
+                    return (
+                      <tr key={bounty.bountyId} className="hover:bg-gray-50/50 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                              <GitPullRequest className="w-4 h-4 text-gray-500" />
+                            </div>
+                            <span className="font-medium text-gray-900 truncate max-w-[200px]">
+                              {bounty.repository.split('/')[1] || bounty.repository}
+                            </span>
                           </div>
-                          <span className="font-medium text-warm-800">{bounty.repository.split('/')[1] || bounty.repository}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <a href={bounty.issueUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-honey-600 hover:text-honey-700 font-medium">
-                          #{bounty.issueId}
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </td>
-                      <td>
-                        <div className="flex items-baseline gap-1">
-                          <span className="font-bold text-warm-800">{bounty.claimedAmount || bounty.currentAmount}</span>
-                          <span className="text-xs text-warm-500">MNEE</span>
-                        </div>
-                      </td>
-                      <td>
-                        <span className={getStatusBadge(bounty.status)}>
-                          {bounty.status === 'claimed' && <CheckCircle className="w-3 h-3" />}
-                          {bounty.status.charAt(0).toUpperCase() + bounty.status.slice(1)}
-                        </span>
-                      </td>
-                      <td>
-                        <span className="text-sm text-warm-500">
-                          {bounty.claimedAt
-                            ? formatDistanceToNow(new Date(bounty.claimedAt), { addSuffix: true })
-                            : formatDistanceToNow(new Date(bounty.createdAt), { addSuffix: true })}
-                        </span>
-                      </td>
-                      <td>
-                        {bounty.pullRequestUrl && (
-                          <a href={bounty.pullRequestUrl} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-lg hover:bg-warm-100 flex items-center justify-center text-warm-400 hover:text-warm-600 transition-colors">
-                            <ExternalLink className="w-4 h-4" />
+                        </td>
+                        <td className="px-6 py-4">
+                          <a 
+                            href={bounty.issueUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="inline-flex items-center gap-1.5 text-primary-600 hover:text-primary-700 
+                              font-medium transition-colors"
+                          >
+                            #{bounty.issueId}
+                            <ExternalLink className="w-3 h-3" />
                           </a>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-baseline gap-1">
+                            <span className="font-semibold text-gray-900">
+                              {bounty.claimedAmount || bounty.currentAmount}
+                            </span>
+                            <span className="text-xs text-gray-500">MNEE</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full 
+                            text-xs font-medium ${statusConfig.className}`}>
+                            <StatusIcon className="w-3 h-3" />
+                            {bounty.status.charAt(0).toUpperCase() + bounty.status.slice(1)}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className="text-sm text-gray-500">
+                            {bounty.claimedAt
+                              ? formatDistanceToNow(new Date(bounty.claimedAt), { addSuffix: true })
+                              : formatDistanceToNow(new Date(bounty.createdAt), { addSuffix: true })}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          {bounty.pullRequestUrl && (
+                            <a 
+                              href={bounty.pullRequestUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center 
+                                text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

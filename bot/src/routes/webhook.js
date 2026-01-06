@@ -7,6 +7,7 @@ import Bounty from '../models/Bounty.js';
 import User from '../models/User.js';
 import bountyService from '../services/bountyService.js';
 import mneeService from '../services/mnee.js';
+import ethereumPaymentService from '../services/ethereumPayment.js';
 import githubAppService from '../services/githubApp.js';
 import db from '../db.js';
 
@@ -304,11 +305,20 @@ router.post('/mnee-status', async (req, res) => {
         const [owner, repo] = bounty.repository.split('/');
         const octokit = await githubAppService.getOctokitForRepo(owner, repo);
         
+        // Generate explorer link for MNEE (BSV-based)
+        const explorerUrl = `https://whatsonchain.com/tx/${tx_id}`;
+        
         await octokit.rest.issues.createComment({
           owner,
           repo,
           issue_number: bounty.issueId,
-          body: `✅ **Payment Confirmed!**\n\nTransaction ID: \`${tx_id}\`\n\nThe MNEE payment has been successfully processed.`
+          body: `✅ **Payment Confirmed!**
+
+🔗 **[View Transaction on WhatsOnChain](${explorerUrl})**
+
+Transaction Hash: \`${tx_id}\`
+
+The MNEE payment has been successfully processed.`
         });
       } catch (error) {
         logger.warn('Failed to post payment confirmation comment:', error.message);
@@ -405,10 +415,29 @@ async function handlePullRequest(event) {
         logger.warn(`[PR-WEBHOOK] ⚠ No issue references found in PR body. PR body was: "${pull_request.body?.substring(0, 200) || '(empty)'}"`);
       }
 
-      for (const issueNumber of referencedIssues) {
-        logger.info(`[PR-WEBHOOK] Processing issue #${issueNumber}...`);
-        await checkAndClaimBounty(repository.full_name, issueNumber, pull_request, installation?.id);
-      }
+      // Process ALL referenced issues - use Promise.allSettled to ensure all are processed
+      // even if some fail
+      const results = await Promise.allSettled(
+        referencedIssues.map(async (issueNumber) => {
+          logger.info(`[PR-WEBHOOK] Processing issue #${issueNumber}...`);
+          await checkAndClaimBounty(repository.full_name, issueNumber, pull_request, installation?.id);
+          return issueNumber;
+        })
+      );
+      
+      // Log results for each issue
+      results.forEach((result, index) => {
+        const issueNumber = referencedIssues[index];
+        if (result.status === 'fulfilled') {
+          logger.info(`[PR-WEBHOOK] ✓ Issue #${issueNumber} processed successfully`);
+        } else {
+          logger.error(`[PR-WEBHOOK] ✗ Issue #${issueNumber} processing failed: ${result.reason?.message || result.reason}`);
+        }
+      });
+      
+      const successCount = results.filter(r => r.status === 'fulfilled').length;
+      const failCount = results.filter(r => r.status === 'rejected').length;
+      logger.info(`[PR-WEBHOOK] Processed ${referencedIssues.length} issues: ${successCount} succeeded, ${failCount} failed`);
       
       logger.info(`[PR-WEBHOOK] ========== PR EVENT PROCESSING COMPLETE ==========`);
     } else {
@@ -459,10 +488,29 @@ async function handleWorkflowRun(event) {
         const referencedIssues = extractReferencedIssues(pullRequest.body || '');
         logger.info(`[WORKFLOW-WEBHOOK] Referenced issues: ${referencedIssues.length > 0 ? referencedIssues.join(', ') : 'NONE'}`);
 
-        for (const issueNumber of referencedIssues) {
-          logger.info(`[WORKFLOW-WEBHOOK] Checking bounty for issue #${issueNumber}...`);
-          await checkAndClaimBounty(workflow_run.repository.full_name, issueNumber, pullRequest, installation?.id);
-        }
+        // Process ALL referenced issues - use Promise.allSettled to ensure all are processed
+        // even if some fail
+        const results = await Promise.allSettled(
+          referencedIssues.map(async (issueNumber) => {
+            logger.info(`[WORKFLOW-WEBHOOK] Checking bounty for issue #${issueNumber}...`);
+            await checkAndClaimBounty(workflow_run.repository.full_name, issueNumber, pullRequest, installation?.id);
+            return issueNumber;
+          })
+        );
+        
+        // Log results for each issue
+        results.forEach((result, index) => {
+          const issueNumber = referencedIssues[index];
+          if (result.status === 'fulfilled') {
+            logger.info(`[WORKFLOW-WEBHOOK] ✓ Issue #${issueNumber} processed successfully`);
+          } else {
+            logger.error(`[WORKFLOW-WEBHOOK] ✗ Issue #${issueNumber} processing failed: ${result.reason?.message || result.reason}`);
+          }
+        });
+        
+        const successCount = results.filter(r => r.status === 'fulfilled').length;
+        const failCount = results.filter(r => r.status === 'rejected').length;
+        logger.info(`[WORKFLOW-WEBHOOK] Processed ${referencedIssues.length} issues: ${successCount} succeeded, ${failCount} failed`);
       } else {
         logger.info(`[WORKFLOW-WEBHOOK] ✗ No PRs associated with this workflow run`);
       }
@@ -523,21 +571,44 @@ function extractReferencedIssues(body) {
   
   const issues = new Set();
 
-  // Common patterns: fixes #123, closes #123, resolves #123
-  // Also handles "Fixes: #123" (with colon) variant
-  const patterns = [
-    /(?:fixes|closes|resolves|fix|close|resolve):?\s+#(\d+)/gi,
-    /(?:fixes|closes|resolves|fix|close|resolve):?\s+(?:https?:\/\/github\.com\/[\w-]+\/[\w-]+\/issues\/)(\d+)/gi
-  ];
+  // Pattern 1: Single issue references like "fixes #123", "closes #123"
+  const singleIssuePattern = /(?:fixes|closes|resolves|fix|close|resolve):?\s+#(\d+)/gi;
+  
+  // Pattern 2: Full URL references
+  const urlPattern = /(?:fixes|closes|resolves|fix|close|resolve):?\s+(?:https?:\/\/github\.com\/[\w-]+\/[\w-]+\/issues\/)(\d+)/gi;
+  
+  // Pattern 3: Multiple issues after one keyword - "Fixes #52 #53 #54" or "Fixes #52, #53, #54"
+  // This matches the keyword followed by a chain of issue numbers
+  const multiIssuePattern = /(?:fixes|closes|resolves|fix|close|resolve):?\s+((?:#\d+[\s,and]*)+)/gi;
 
-  for (let i = 0; i < patterns.length; i++) {
-    const pattern = patterns[i];
+  // First, handle the multi-issue pattern
+  let multiMatch;
+  while ((multiMatch = multiIssuePattern.exec(body)) !== null) {
+    const issueChain = multiMatch[1];
+    logger.info(`[EXTRACT-ISSUES] ✓ Found issue chain: "${issueChain}"`);
+    
+    // Extract all issue numbers from the chain
+    const issueNumbers = issueChain.match(/#(\d+)/g);
+    if (issueNumbers) {
+      issueNumbers.forEach(num => {
+        const issueNum = parseInt(num.replace('#', ''));
+        logger.info(`[EXTRACT-ISSUES] ✓ Extracted issue #${issueNum} from chain`);
+        issues.add(issueNum);
+      });
+    }
+  }
+
+  // Also try single patterns as fallback (in case format is different)
+  const singlePatterns = [singleIssuePattern, urlPattern];
+  for (let i = 0; i < singlePatterns.length; i++) {
+    const pattern = singlePatterns[i];
     let match;
-    // Reset lastIndex since we're reusing patterns
     pattern.lastIndex = 0;
     while ((match = pattern.exec(body)) !== null) {
-      logger.info(`[EXTRACT-ISSUES] ✓ Found issue reference: #${match[1]} (pattern ${i + 1}, match: "${match[0]}")`);
-      issues.add(parseInt(match[1]));
+      if (!issues.has(parseInt(match[1]))) {
+        logger.info(`[EXTRACT-ISSUES] ✓ Found issue reference: #${match[1]} (pattern ${i + 1}, match: "${match[0]}")`);
+        issues.add(parseInt(match[1]));
+      }
     }
   }
 
@@ -627,79 +698,131 @@ async function checkAndClaimBounty(repository, issueNumber, pullRequest, install
     
     logger.info(`[CLAIM-BOUNTY] ✓ All ${checkRuns.check_runs.length} checks passing`);
 
-    // Get PR author's MNEE address (from PR description or user profile)
-    logger.info(`[CLAIM-BOUNTY] Step 4: Extracting MNEE address from PR...`);
-    const solverAddress = await extractMneeAddress(pullRequest);
+    // Get PR author's payment address (from PR description or user profile)
+    // Can be MNEE (Bitcoin-style) or Ethereum address when USE_BLOCKCHAIN is enabled
+    const isBlockchainMode = process.env.USE_BLOCKCHAIN === 'true';
+    logger.info(`[CLAIM-BOUNTY] Step 4: Extracting payment address from PR... (blockchain mode: ${isBlockchainMode})`);
+    const solverAddress = await extractPaymentAddress(pullRequest, isBlockchainMode);
     logger.info(`[CLAIM-BOUNTY] Extracted address: ${solverAddress || '(none found)'}`);
 
     if (!solverAddress) {
-      logger.warn(`[CLAIM-BOUNTY] ✗ No MNEE address found in PR description`);
-      logger.info(`[CLAIM-BOUNTY] Posting comment to request MNEE address...`);
+      logger.warn(`[CLAIM-BOUNTY] ✗ No payment address found in PR description`);
+      logger.info(`[CLAIM-BOUNTY] Posting comment to request payment address...`);
       
-      // Post comment asking for MNEE address
+      // Post comment asking for payment address
+      const addressInstructions = isBlockchainMode
+        ? `To claim your bounty, please add your Ethereum address to your PR description in the following format:
+\`\`\`
+ETH: 0xYourEthereumAddressHere
+\`\`\`
+
+Or use the traditional MNEE format:
+\`\`\`
+MNEE: 1YourMneeAddressHere
+\`\`\`
+
+**Note:** Ethereum addresses start with \`0x\`. MNEE addresses are Bitcoin-style (start with \`1\` or \`3\`).`
+        : `To claim your bounty, please add your MNEE address to your PR description in the following format:
+\`\`\`
+MNEE: 1YourMneeAddressHere
+\`\`\`
+
+**Note:** MNEE uses Bitcoin-style addresses. If you need help setting up an MNEE wallet, visit [docs.mnee.io](https://docs.mnee.io).`;
+
       await octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number: pullRequest.number,
         body: `🎉 **Congratulations!** Your PR fixes issue #${issueNumber} which has a bounty of **${bounty.currentAmount} MNEE**!
 
-To claim your bounty, please add your MNEE address to your PR description in the following format:
-\`\`\`
-MNEE: 1YourMneeAddressHere
-\`\`\`
+${addressInstructions}
 
-Once you've added your MNEE address, the bounty will be automatically released to you.
-
-**Note:** MNEE uses Bitcoin-style addresses. If you need help setting up an MNEE wallet, visit [docs.mnee.io](https://docs.mnee.io).`
+Once you've added your payment address, the bounty will be automatically released to you.`
       });
 
-      logger.info(`[CLAIM-BOUNTY] ✓ Comment posted, requested MNEE address from ${pullRequest.user.login}`);
+      logger.info(`[CLAIM-BOUNTY] ✓ Comment posted, requested payment address from ${pullRequest.user.login}`);
       logger.info(`[CLAIM-BOUNTY] ========== CLAIM CHECK COMPLETE (AWAITING ADDRESS) ==========`);
       return;
     }
 
-    // Validate MNEE address
-    logger.info(`[CLAIM-BOUNTY] Step 5: Validating MNEE address: ${solverAddress}`);
-    const isValidAddress = await mneeService.validateAddress(solverAddress);
+    // Validate payment address
+    const isEthereumAddress = solverAddress.startsWith('0x') && solverAddress.length === 42;
+    logger.info(`[CLAIM-BOUNTY] Step 5: Validating payment address: ${solverAddress} (Ethereum: ${isEthereumAddress})`);
+    
+    let isValidAddress = false;
+    if (isEthereumAddress) {
+      // Basic Ethereum address validation
+      isValidAddress = /^0x[a-fA-F0-9]{40}$/.test(solverAddress);
+    } else {
+      // MNEE Bitcoin-style address validation
+      isValidAddress = await mneeService.validateAddress(solverAddress);
+    }
     logger.info(`[CLAIM-BOUNTY] Address validation result: ${isValidAddress}`);
     
     if (!isValidAddress) {
-      logger.warn(`[CLAIM-BOUNTY] ✗ Invalid MNEE address: ${solverAddress}`);
-      await octokit.rest.issues.createComment({
-        owner,
-        repo,
-        issue_number: pullRequest.number,
-        body: `⚠️ **Invalid MNEE Address**
+      logger.warn(`[CLAIM-BOUNTY] ✗ Invalid payment address: ${solverAddress}`);
+      const errorMessage = isEthereumAddress
+        ? `⚠️ **Invalid Ethereum Address**
+
+The Ethereum address you provided appears to be invalid. Please check and update it in your PR description.
+
+Ethereum addresses should be 42 characters starting with \`0x\`, like: \`0x1234567890123456789012345678901234567890\``
+        : `⚠️ **Invalid MNEE Address**
 
 The MNEE address you provided appears to be invalid. Please check and update it in your PR description.
 
 MNEE addresses should look like: \`1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\`
 
-For help with MNEE wallets, visit [docs.mnee.io](https://docs.mnee.io).`
+For help with MNEE wallets, visit [docs.mnee.io](https://docs.mnee.io).`;
+
+      await octokit.rest.issues.createComment({
+        owner,
+        repo,
+        issue_number: pullRequest.number,
+        body: errorMessage
       });
       logger.info(`[CLAIM-BOUNTY] ========== CLAIM CHECK COMPLETE (INVALID ADDRESS) ==========`);
       return;
     }
     
-    logger.info(`[CLAIM-BOUNTY] ✓ MNEE address is valid`);
+    logger.info(`[CLAIM-BOUNTY] ✓ Payment address is valid`);
 
-    // Send MNEE payment
-    logger.info(`[CLAIM-BOUNTY] Step 6: Sending MNEE payment...`);
+    // Send payment (MNEE SDK or Blockchain depending on address type and mode)
+    logger.info(`[CLAIM-BOUNTY] Step 6: Sending payment...`);
     logger.info(`[CLAIM-BOUNTY]   - To: ${solverAddress}`);
     logger.info(`[CLAIM-BOUNTY]   - Amount: ${bounty.currentAmount} MNEE`);
     logger.info(`[CLAIM-BOUNTY]   - Bounty ID: ${bounty.bountyId}`);
+    logger.info(`[CLAIM-BOUNTY]   - Payment method: ${isEthereumAddress ? 'Blockchain (ERC-20)' : 'MNEE SDK'}`);
     
     let paymentResult;
     try {
-      paymentResult = await mneeService.sendPayment(
-        solverAddress,
-        bounty.currentAmount,
-        bounty.bountyId
-      );
+      if (isEthereumAddress && process.env.USE_BLOCKCHAIN === 'true') {
+        // Use Ethereum payment service for ERC-20 transfers
+        logger.info(`[CLAIM-BOUNTY] Using Ethereum payment service for ERC-20 transfer`);
+        
+        // Initialize if not already
+        if (!ethereumPaymentService.initialized) {
+          await ethereumPaymentService.initialize();
+        }
+        
+        paymentResult = await ethereumPaymentService.sendPayment(
+          solverAddress,
+          bounty.currentAmount,
+          bounty.bountyId
+        );
+      } else {
+        // Use MNEE SDK for Bitcoin-style addresses
+        logger.info(`[CLAIM-BOUNTY] Using MNEE SDK for payment`);
+        paymentResult = await mneeService.sendPayment(
+          solverAddress,
+          bounty.currentAmount,
+          bounty.bountyId
+        );
+      }
       logger.info(`[CLAIM-BOUNTY] ✓ Payment sent successfully!`);
       logger.info(`[CLAIM-BOUNTY]   - Transaction ID: ${paymentResult.transactionId}`);
     } catch (error) {
-      logger.error(`[CLAIM-BOUNTY] ✗ Failed to send MNEE payment for bounty ${bounty.bountyId}:`, error);
+      logger.error(`[CLAIM-BOUNTY] ✗ Failed to send payment for bounty ${bounty.bountyId}:`, error);
       logger.error(`[CLAIM-BOUNTY] Payment error details: ${error.message}`);
       logger.error(`[CLAIM-BOUNTY] Payment error stack: ${error.stack}`);
 
@@ -709,7 +832,7 @@ For help with MNEE wallets, visit [docs.mnee.io](https://docs.mnee.io).`
         issue_number: issueNumber,
         body: `❌ **Payment Failed**
 
-There was an error sending your MNEE payment. Our team has been notified and will resolve this issue.
+There was an error sending your ${isEthereumAddress ? 'ERC-20 token' : 'MNEE'} payment. Our team has been notified and will resolve this issue.
 
 Error: ${error.message}
 
@@ -748,22 +871,44 @@ Please contact support if this persists.`
       logger.warn(`[CLAIM-BOUNTY] Failed to update user stats for ${pullRequest.user.login}:`, statsError.message);
     }
 
-    // Post success comment
+    // Post success comment with explorer link
     logger.info(`[CLAIM-BOUNTY] Step 10: Posting success comment...`);
+    
+    // Generate explorer link based on payment method
+    let explorerUrl;
+    let explorerName;
+    if (isEthereumAddress) {
+      // Determine if mainnet or testnet based on environment
+      const isTestnet = process.env.ETHEREUM_RPC_URL?.includes('sepolia') ||
+                        process.env.ETHEREUM_RPC_URL?.includes('goerli') ||
+                        process.env.ETHEREUM_NETWORK === 'sepolia';
+      if (isTestnet) {
+        explorerUrl = `https://sepolia.etherscan.io/tx/${paymentResult.transactionId}`;
+        explorerName = 'Sepolia Etherscan';
+      } else {
+        explorerUrl = `https://etherscan.io/tx/${paymentResult.transactionId}`;
+        explorerName = 'Etherscan';
+      }
+    } else {
+      // MNEE uses BSV/Bitcoin - use WhatsOnChain
+      explorerUrl = `https://whatsonchain.com/tx/${paymentResult.transactionId}`;
+      explorerName = 'WhatsOnChain';
+    }
+    
     await octokit.rest.issues.createComment({
       owner,
       repo,
       issue_number: issueNumber,
       body: `✅ **Bounty Claimed!**
 
-The bounty of **${bounty.currentAmount} MNEE** has been successfully transferred to ${solverAddress}.
+The bounty of **${bounty.currentAmount} MNEE** has been successfully transferred to \`${solverAddress}\`.
 
-MNEE Transaction ID: \`${paymentResult.transactionId}\`
+🔗 **[View Transaction on ${explorerName}](${explorerUrl})**
+
+Transaction Hash: \`${paymentResult.transactionId}\`
 Pull Request: #${pullRequest.number}
 
-Thank you for your contribution! 🚀
-
-The payment should appear in your MNEE wallet shortly.`
+Thank you for your contribution! 🚀`
     });
     logger.info(`[CLAIM-BOUNTY] ✓ Success comment posted`);
 
@@ -786,14 +931,34 @@ The payment should appear in your MNEE wallet shortly.`
   }
 }
 
-// Extract MNEE address from PR description
-async function extractMneeAddress(pullRequest) {
+// Extract payment address from PR description
+// Supports both MNEE (Bitcoin-style) and Ethereum addresses
+async function extractPaymentAddress(pullRequest, isBlockchainMode = false) {
   const body = pullRequest.body || '';
-  logger.debug(`[EXTRACT-ADDRESS] Extracting MNEE address from PR body (${body.length} chars)`);
+  logger.debug(`[EXTRACT-ADDRESS] Extracting payment address from PR body (${body.length} chars)`);
   logger.debug(`[EXTRACT-ADDRESS] Body preview: "${body.substring(0, 200)}"`);
+  logger.debug(`[EXTRACT-ADDRESS] Blockchain mode: ${isBlockchainMode}`);
 
-  // Look for MNEE address in PR description
-  // MNEE uses Bitcoin-style addresses
+  // First, check for Ethereum addresses (when blockchain mode is enabled)
+  if (isBlockchainMode) {
+    // Look for ETH: 0x... pattern
+    const ethPattern = /(?:eth|ethereum):\s*(0x[a-fA-F0-9]{40})/i;
+    const ethMatch = body.match(ethPattern);
+    if (ethMatch) {
+      logger.info(`[EXTRACT-ADDRESS] ✓ Found Ethereum address: ${ethMatch[1]}`);
+      return ethMatch[1];
+    }
+
+    // Also check for MNEE: 0x... pattern (user may use MNEE prefix with ETH address)
+    const mneeEthPattern = /mnee:\s*(0x[a-fA-F0-9]{40})/i;
+    const mneeEthMatch = body.match(mneeEthPattern);
+    if (mneeEthMatch) {
+      logger.info(`[EXTRACT-ADDRESS] ✓ Found Ethereum address with MNEE prefix: ${mneeEthMatch[1]}`);
+      return mneeEthMatch[1];
+    }
+  }
+
+  // Look for MNEE address in PR description (Bitcoin-style addresses)
   const mneePattern = /mnee:\s*([13][a-km-zA-HJ-NP-Z1-9]{25,34})/i;
   const match = body.match(mneePattern);
 
@@ -817,7 +982,7 @@ async function extractMneeAddress(pullRequest) {
     }
   }
 
-  logger.info(`[EXTRACT-ADDRESS] ✗ No MNEE address found in PR body`);
+  logger.info(`[EXTRACT-ADDRESS] ✗ No payment address found in PR body`);
   return null;
 }
 

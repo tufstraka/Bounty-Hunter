@@ -29,13 +29,12 @@ WORKDIR /app
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy source code
+# Copy source code (including .env file if present)
 COPY . .
 
 # Set build-time environment variables
-# These can be overridden at build time with --build-arg
-ARG NEXT_PUBLIC_API_URL=http://localhost:3000
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+# Priority: 1. Build args (from docker-compose), 2. .env file, 3. defaults
+# NEXT_PUBLIC_* must be available at build time for Next.js
 
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -44,6 +43,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN mkdir -p public
 
 # Build the Next.js application
+# The .env file is automatically read by Next.js during build
+# This ensures NEXT_PUBLIC_* variables are baked into the client bundle
 RUN npm run build
 
 # ============================================

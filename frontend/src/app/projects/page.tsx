@@ -28,7 +28,6 @@ export default function ProjectsPage() {
   }, [user, isDemo]);
 
   const loadRepositories = async () => {
-    // Use mock data in demo mode
     if (isDemo) {
       await simulateDelay(400);
       setRepositories(DEMO_REPOSITORIES as Repository[]);
@@ -50,66 +49,74 @@ export default function ProjectsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-grape-400 to-grape-600 flex items-center justify-center animate-pulse">
-            <FolderKanban className="w-8 h-8 text-white" />
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 
+            flex items-center justify-center animate-pulse shadow-lg">
+            <FolderKanban className="w-7 h-7 text-white" />
           </div>
-          <p className="text-warm-500 animate-pulse">Loading projects...</p>
+          <p className="text-gray-500 animate-pulse">Loading projects...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 bg-gray-50/50">
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 pb-6">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-grape-100 text-grape-700 text-sm font-medium mb-4">
-              <GitBranch className="w-4 h-4" />
-              <span>GitHub Repositories</span>
+      <div className="bg-white border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full 
+                bg-accent-100 text-accent-700 text-sm font-medium mb-3">
+                <GitBranch className="w-4 h-4" />
+                <span>Repositories</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">My Projects</h1>
+              <p className="text-gray-500">Manage your repositories with FixFlow installed</p>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-warm-900 mb-2">My Projects</h1>
-            <p className="text-warm-600 text-lg">Repositories with Bounty Hunter installed</p>
+            
+            <a
+              href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME || 'bounty-hunter-bot'}/installations/new`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary self-start md:self-auto"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add Repository</span>
+            </a>
           </div>
-          
-          <a
-            href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME || 'bounty-hunter-bot'}/installations/new`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary self-start md:self-auto"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Repository</span>
-          </a>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {loadingData ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="glass-card p-6 animate-pulse">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-xl skeleton" />
+              <div key={i} className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm animate-pulse">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-11 h-11 rounded-lg bg-gray-200" />
                   <div className="flex-1">
-                    <div className="skeleton-title mb-2" />
-                    <div className="skeleton-text w-1/2" />
+                    <div className="h-4 w-32 bg-gray-200 rounded mb-2" />
+                    <div className="h-3 w-20 bg-gray-100 rounded" />
                   </div>
                 </div>
-                <div className="skeleton h-24 mb-4" />
-                <div className="skeleton h-10" />
+                <div className="grid grid-cols-3 gap-3 mb-5">
+                  <div className="h-16 bg-gray-100 rounded-lg" />
+                  <div className="h-16 bg-gray-100 rounded-lg" />
+                  <div className="h-16 bg-gray-100 rounded-lg" />
+                </div>
+                <div className="h-10 bg-gray-100 rounded-lg" />
               </div>
             ))}
           </div>
         ) : repositories.length === 0 ? (
-          <div className="glass-card p-12 text-center">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-grape-100 to-honey-100 flex items-center justify-center mx-auto mb-6">
-              <FolderKanban className="w-10 h-10 text-grape-500" />
+          <div className="bg-white rounded-xl p-12 text-center border border-gray-100 shadow-sm">
+            <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mx-auto mb-5">
+              <FolderKanban className="w-8 h-8 text-gray-400" />
             </div>
-            <h2 className="text-2xl font-bold text-warm-800 mb-3">No projects yet</h2>
-            <p className="text-warm-600 mb-8 max-w-md mx-auto">
-              Install the Bounty Hunter GitHub App on your repositories to start creating automated bounties.
+            <h2 className="text-xl font-bold text-gray-900 mb-2">No projects yet</h2>
+            <p className="text-gray-500 mb-8 max-w-md mx-auto">
+              Install the FixFlow GitHub App on your repositories to start creating automated bounties.
             </p>
             <a
               href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME || 'bounty-hunter-bot'}/installations/new`}
@@ -121,95 +128,111 @@ export default function ProjectsPage() {
               <span>Install GitHub App</span>
             </a>
             
-            <div className="mt-10 p-6 rounded-xl bg-warm-50 border border-warm-100 text-left max-w-lg mx-auto">
-              <h3 className="font-semibold text-warm-800 mb-3 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-honey-500" />
+            <div className="mt-10 p-5 rounded-xl bg-gray-50 border border-gray-200 text-left max-w-lg mx-auto">
+              <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-primary-500" />
                 How it works
               </h3>
-              <ol className="space-y-2 text-sm text-warm-600">
-                <li className="flex gap-2">
-                  <span className="w-5 h-5 rounded-full bg-honey-100 text-honey-700 text-xs flex items-center justify-center font-bold flex-shrink-0">1</span>
+              <ol className="space-y-3 text-sm text-gray-600">
+                <li className="flex gap-3">
+                  <span className="w-6 h-6 rounded-full bg-primary-100 text-primary-700 text-xs 
+                    flex items-center justify-center font-semibold flex-shrink-0">1</span>
                   <span>Install the GitHub App on your repository</span>
                 </li>
-                <li className="flex gap-2">
-                  <span className="w-5 h-5 rounded-full bg-honey-100 text-honey-700 text-xs flex items-center justify-center font-bold flex-shrink-0">2</span>
-                  <span>Add the Bounty Hunter workflow to your CI</span>
+                <li className="flex gap-3">
+                  <span className="w-6 h-6 rounded-full bg-primary-100 text-primary-700 text-xs 
+                    flex items-center justify-center font-semibold flex-shrink-0">2</span>
+                  <span>Add the FixFlow workflow to your CI pipeline</span>
                 </li>
-                <li className="flex gap-2">
-                  <span className="w-5 h-5 rounded-full bg-honey-100 text-honey-700 text-xs flex items-center justify-center font-bold flex-shrink-0">3</span>
+                <li className="flex gap-3">
+                  <span className="w-6 h-6 rounded-full bg-primary-100 text-primary-700 text-xs 
+                    flex items-center justify-center font-semibold flex-shrink-0">3</span>
                   <span>When tests fail, bounties are created automatically</span>
                 </li>
               </ol>
             </div>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {repositories.map((repo, index) => (
               <div
                 key={repo.repository}
-                className="glass-card-interactive p-6 group animate-slide-up"
+                className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm
+                  hover:shadow-md hover:border-gray-200 transition-all duration-200 group"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 {/* Header */}
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-5">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-grape-400 to-grape-600 flex items-center justify-center shadow-grape group-hover:scale-110 transition-transform">
-                      <GitBranch className="w-6 h-6 text-white" />
+                    <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-gray-700 to-gray-900 
+                      flex items-center justify-center shadow-sm 
+                      group-hover:scale-105 transition-transform duration-200">
+                      <GitBranch className="w-5 h-5 text-white" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-semibold text-warm-800 truncate">{repo.repository.split('/')[1]}</h3>
-                      <p className="text-sm text-warm-500 truncate">{repo.repository.split('/')[0]}</p>
+                      <h3 className="font-semibold text-gray-900 truncate">
+                        {repo.repository.split('/')[1]}
+                      </h3>
+                      <p className="text-sm text-gray-500 truncate">{repo.repository.split('/')[0]}</p>
                     </div>
                   </div>
                   <a
                     href={`https://github.com/${repo.repository}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-8 h-8 rounded-lg hover:bg-warm-100 flex items-center justify-center text-warm-400 hover:text-warm-600 transition-colors"
+                    className="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center 
+                      text-gray-400 hover:text-gray-600 transition-colors"
                   >
                     <ExternalLink className="w-4 h-4" />
                   </a>
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-3 gap-3 mb-4">
-                  <div className="p-3 rounded-xl bg-warm-50 text-center">
-                    <p className="text-2xl font-bold text-warm-800">{repo.totalBounties}</p>
-                    <p className="text-xs text-warm-500">Total</p>
+                <div className="grid grid-cols-3 gap-3 mb-5">
+                  <div className="p-3 rounded-lg bg-gray-50 text-center">
+                    <p className="text-xl font-bold text-gray-900">{repo.totalBounties}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">Total</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-ocean-50 text-center">
-                    <p className="text-2xl font-bold text-ocean-600">{repo.activeBounties}</p>
-                    <p className="text-xs text-ocean-600">Active</p>
+                  <div className="p-3 rounded-lg bg-secondary-50 text-center">
+                    <p className="text-xl font-bold text-secondary-700">{repo.activeBounties}</p>
+                    <p className="text-xs text-secondary-600 mt-0.5">Active</p>
                   </div>
-                  <div className="p-3 rounded-xl bg-green-50 text-center">
-                    <p className="text-2xl font-bold text-green-600">{repo.claimedBounties}</p>
-                    <p className="text-xs text-green-600">Claimed</p>
+                  <div className="p-3 rounded-lg bg-green-50 text-center">
+                    <p className="text-xl font-bold text-green-700">{repo.claimedBounties}</p>
+                    <p className="text-xs text-green-600 mt-0.5">Done</p>
                   </div>
                 </div>
 
                 {/* Locked Amount */}
-                <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-honey-50 to-honey-100 border border-honey-200 mb-4">
+                <div className="flex items-center justify-between p-3 rounded-lg bg-primary-50 
+                  border border-primary-100 mb-5">
                   <div className="flex items-center gap-2">
-                    <Coins className="w-4 h-4 text-honey-600" />
-                    <span className="text-sm text-honey-700">Locked</span>
+                    <Coins className="w-4 h-4 text-primary-600" />
+                    <span className="text-sm text-primary-700 font-medium">Locked</span>
                   </div>
-                  <span className="font-bold text-honey-700">{repo.totalLocked?.toFixed(0) || 0} MNEE</span>
+                  <span className="font-bold text-primary-700">
+                    {repo.totalLocked?.toFixed(0) || 0} MNEE
+                  </span>
                 </div>
 
                 {/* Actions */}
                 <div className="flex gap-2">
                   <Link
                     href={`/bounties?repo=${repo.repository}`}
-                    className="flex-1 btn-secondary text-sm justify-center"
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 
+                      rounded-lg bg-gray-900 text-white text-sm font-medium
+                      hover:bg-gray-800 transition-colors"
                   >
                     <Target className="w-4 h-4" />
-                    <span>Bounties</span>
+                    <span>View Bounties</span>
                   </Link>
                   <a
                     href={`https://github.com/${repo.repository}/settings/installations`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-ghost text-sm px-3"
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-lg 
+                      border border-gray-200 text-gray-500 hover:text-gray-700 
+                      hover:bg-gray-50 hover:border-gray-300 transition-colors"
                   >
                     <Settings className="w-4 h-4" />
                   </a>
@@ -221,26 +244,27 @@ export default function ProjectsPage() {
 
         {/* Add More Section */}
         {repositories.length > 0 && (
-          <div className="mt-10">
-            <div className="glass-card p-6 bg-gradient-to-r from-grape-50/50 to-honey-50/50">
+          <div className="mt-8">
+            <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-grape-100 flex items-center justify-center">
-                    <Plus className="w-6 h-6 text-grape-600" />
+                  <div className="w-11 h-11 rounded-lg bg-gray-100 flex items-center justify-center">
+                    <Plus className="w-5 h-5 text-gray-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-warm-800">Add more repositories</h3>
-                    <p className="text-sm text-warm-600">Extend Bounty Hunter to your other projects</p>
+                    <h3 className="font-semibold text-gray-900">Add more repositories</h3>
+                    <p className="text-sm text-gray-500">Extend FixFlow to your other projects</p>
                   </div>
                 </div>
                 <a
-                  href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME || 'bounty-hunter-bot'}/installations/new`}
+                  href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME || 'fix-flow'}/installations/new`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-secondary self-start sm:self-auto group"
                 >
                   <span>Configure GitHub App</span>
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight className="w-4 h-4 transition-transform 
+                    group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               </div>
             </div>

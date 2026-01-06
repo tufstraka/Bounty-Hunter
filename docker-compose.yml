@@ -34,12 +34,16 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
+        # Build-time environment variables (NEXT_PUBLIC_* must be available at build time)
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-https://fixflow-api.locsafe.org}
+        NEXT_PUBLIC_USE_BLOCKCHAIN: ${NEXT_PUBLIC_USE_BLOCKCHAIN:-false}
+        NEXT_PUBLIC_ETHEREUM_NETWORK: ${NEXT_PUBLIC_ETHEREUM_NETWORK:-sepolia}
+        NEXT_PUBLIC_MNEE_TOKEN_ADDRESS: ${NEXT_PUBLIC_MNEE_TOKEN_ADDRESS:-0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF}
+        NEXT_PUBLIC_BOUNTY_ESCROW_ADDRESS: ${NEXT_PUBLIC_BOUNTY_ESCROW_ADDRESS:-}
     container_name: fixflow-frontend
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://fixflow-api.locsafe.org}
+    # Note: NEXT_PUBLIC_* variables are baked at build time via build args above
+    # Runtime env vars are only needed for server-side Next.js features
     depends_on:
       - bot
     ports:

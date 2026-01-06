@@ -1,14 +1,37 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { Web3Provider } from '@/contexts/Web3Context';
 import { Navigation } from '@/components/Navigation';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
-  title: 'FixFlow - Automated Bug Bounties',
-  description: 'Automated debugging bounty system powered by MNEE stablecoin',
+  title: 'FixFlow — Automated Bug Bounties',
+  description: 'Fix bugs, get paid instantly. Automated debugging bounty system powered by MNEE stablecoin.',
+  keywords: ['bug bounty', 'open source', 'MNEE', 'stablecoin', 'ethereum', 'developer', 'rewards'],
+  authors: [{ name: 'FixFlow' }],
+  openGraph: {
+    title: 'FixFlow — Automated Bug Bounties',
+    description: 'Fix bugs, get paid instantly. Automated debugging bounty system.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FixFlow — Automated Bug Bounties',
+    description: 'Fix bugs, get paid instantly.',
+  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#ff9500',
 };
 
 export default function RootLayout({
@@ -17,21 +40,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={inter.variable}>
+      <body className="font-sans antialiased">
         <AuthProvider>
-          <div className="min-h-screen flex flex-col">
-            <Navigation />
-            <main className="flex-1">
-              {children}
-            </main>
-            <footer className="bg-gray-800 text-gray-400 py-8 mt-auto">
-              <div className="max-w-7xl mx-auto px-4 text-center">
-                <p>FixFlow — Automated Bug Bounties</p>
-                <p className="text-sm mt-2">Powered by MNEE Stablecoin</p>
-              </div>
-            </footer>
-          </div>
+          <Web3Provider>
+            <div className="min-h-screen flex flex-col">
+              <Navigation />
+              <main className="flex-1">
+                {children}
+              </main>
+            </div>
+          </Web3Provider>
         </AuthProvider>
       </body>
     </html>
