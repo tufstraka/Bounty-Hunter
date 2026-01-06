@@ -42,6 +42,36 @@ export interface Repository {
   totalLocked: number;
 }
 
+export interface ProjectSettings {
+  id: number;
+  repository: string;
+  ownerGithubLogin: string;
+  fundingMode: 'owner' | 'platform' | 'disabled';
+  defaultBountyAmount: number;
+  maxBountyAmount: number;
+  autoCreateBounties: boolean;
+  escalationEnabled: boolean;
+  escalationSchedule: number[];
+  escalationMultipliers: number[];
+  fundingWalletAddress: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface FundingInfo {
+  escrowContractAddress: string | null;
+  mneeTokenAddress: string;
+  useBlockchain: boolean;
+  chainId: string;
+  network: string;
+}
+
+export interface WalletNonce {
+  nonce: string;
+  timestamp: number;
+  message: string;
+}
+
 export interface PaginatedResponse<T> {
   bounties?: T[];
   users?: T[];
@@ -229,6 +259,73 @@ class ApiClient {
 
   async getEligibleForEscalation(): Promise<Bounty[]> {
     return this.request('/api/admin/escalation/eligible');
+  }
+
+  // Project settings endpoints
+  async getProjectSettings(owner: string, repo: string): Promise<ProjectSettings> {
+    return this.request(`/api/projects/${owner}/${repo}/settings`);
+  }
+
+  async updateProjectSettings(owner: string, repo: string, data: Partial<ProjectSettings>): Promise<ProjectSettings> {
+    return this.request(`/api/projects/${owner}/${repo}/settings`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async getMyProjects(): Promise<{ projects: ProjectSettings[] }> {
+    return this.request('/api/projects');
+  }
+
+  async getProjectBounties(owner: string, repo: string, options: { status?: string; page?: number; limit?: number } = {}): Promise<PaginatedResponse<Bounty>> {
+    const params = new URLSearchParams();
+    if (options.status) params.set('status', options.status);
+    if (options.page) params.set('page', options.page.toString());
+    if (options.limit) params.set('limit', options.limit.toString());
+    return this.request(`/api/projects/${owner}/${repo}/bounties?${params}`);
+  }
+
+  async getProjectStats(owner: string, repo: string): Promise<{
+    totalBounties: number;
+    activeBounties: number;
+    claimedBounties: number;
+    totalLocked: number;
+    totalPaid: number;
+  }> {
+    return this.request(`/api/projects/${owner}/${repo}/stats`);
+  }
+
+  // Wallet linking
+  async getWalletNonce(): Promise<WalletNonce> {
+    return this.request('/api/projects/wallet-nonce');
+  }
+
+  async linkWallet(address: string, signature: string, message: string): Promise<{ success: boolean; message: string; ethereumAddress: string }> {
+    return this.request('/api/projects/link-wallet', {
+      method: 'POST',
+      body: JSON.stringify({ address, signature, message }),
+    });
+  }
+
+  // Funding info for on-chain bounty creation
+  async getFundingInfo(): Promise<FundingInfo> {
+    return this.request('/api/projects/funding-info');
+  }
+
+  // Record on-chain bounty
+  async recordOnChainBounty(owner: string, repo: string, data: {
+    issueId: number;
+    issueUrl?: string;
+    amount: number;
+    maxAmount?: number;
+    transactionHash: string;
+    onChainBountyId?: number;
+    creatorWalletAddress?: string;
+  }): Promise<{ success: boolean; bounty: Bounty }> {
+    return this.request(`/api/projects/${owner}/${repo}/bounties/on-chain`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
   }
 }
 

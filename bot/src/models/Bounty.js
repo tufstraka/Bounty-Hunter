@@ -10,7 +10,7 @@ class Bounty {
     this.currentAmount = data.currentAmount;
     this.maxAmount = data.maxAmount;
     this.status = data.status || 'active';
-    this.solver = data.solver || null; // MNEE wallet address
+    this.solver = data.solver || null; // MNEE/Ethereum wallet address
     this.solverGithubLogin = data.solverGithubLogin || null; // GitHub username
     this.claimedAmount = data.claimedAmount || null;
     this.transactionHash = data.transactionHash;
@@ -23,6 +23,11 @@ class Bounty {
     this.claimedAt = data.claimedAt ? new Date(data.claimedAt) : null;
     this.createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
     this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
+
+    // Owner-funded bounty fields
+    this.creatorWalletAddress = data.creatorWalletAddress || null; // Who funded the bounty
+    this.fundingSource = data.fundingSource || 'platform'; // 'platform', 'owner', 'sponsor'
+    this.onChainBountyId = data.onChainBountyId || null; // ID from smart contract
 
     // Internal ID for DB updates
     this.id = data.id;
@@ -92,7 +97,10 @@ class Bounty {
       metadata: row.metadata,
       claimedAt: row.claimed_at,
       createdAt: row.created_at,
-      updatedAt: row.updated_at
+      updatedAt: row.updated_at,
+      creatorWalletAddress: row.creator_wallet_address,
+      fundingSource: row.funding_source,
+      onChainBountyId: row.on_chain_bounty_id
     });
   }
 
@@ -144,9 +152,10 @@ class Bounty {
           current_amount, max_amount, status, solver, solver_github_login, claimed_amount,
           transaction_hash, claim_transaction_hash, block_number,
           pull_request_url, escalation_count, last_escalation, metadata,
-          claimed_at, created_at, updated_at
+          claimed_at, created_at, updated_at,
+          creator_wallet_address, funding_source, on_chain_bounty_id
         ) VALUES (
-          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24
         ) RETURNING *
       `;
       const values = [
@@ -170,7 +179,10 @@ class Bounty {
         this.metadata,
         this.claimedAt,
         this.createdAt,
-        this.updatedAt
+        this.updatedAt,
+        this.creatorWalletAddress,
+        this.fundingSource,
+        this.onChainBountyId
       ];
 
       const { rows } = await db.query(text, values);

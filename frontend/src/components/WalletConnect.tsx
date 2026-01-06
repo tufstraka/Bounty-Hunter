@@ -139,7 +139,7 @@ export default function WalletConnect({ variant = 'full', className = '' }: Wall
         <div>
           <h3 className="font-semibold text-warm-800">Ethereum Wallet</h3>
           <p className="text-sm text-warm-500">
-            {isConnected ? 'Connected' : 'Connect to receive payments'}
+            {isConnected ? 'Connected' : 'Connect to fund bounties'}
           </p>
         </div>
         {isConnected && (
@@ -190,8 +190,8 @@ export default function WalletConnect({ variant = 'full', className = '' }: Wall
           {/* Balance & Network */}
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3 rounded-xl bg-gradient-to-br from-ocean-50 to-ocean-100 border border-ocean-200">
-              <span className="text-xs text-ocean-600 uppercase tracking-wide font-medium">ETH Balance</span>
-              <p className="font-bold text-ocean-700 mt-1">{walletInfo.balance} ETH</p>
+              <span className="text-xs text-ocean-600 uppercase tracking-wide font-medium">MNEE Balance</span>
+              <p className="font-bold text-ocean-700 mt-1">{walletInfo.balance} MNEE</p>
             </div>
             <div className="p-3 rounded-xl bg-gradient-to-br from-grape-50 to-grape-100 border border-grape-200">
               <span className="text-xs text-grape-600 uppercase tracking-wide font-medium">Network</span>
@@ -226,7 +226,7 @@ export default function WalletConnect({ variant = 'full', className = '' }: Wall
       ) : (
         <div className="space-y-4">
           <p className="text-sm text-warm-600">
-            Connect your Ethereum wallet to receive bounty payments in MNEE tokens on the blockchain.
+            Connect your Ethereum wallet to fund bounties and receive payments in MNEE tokens on the blockchain.
           </p>
           
           <button
@@ -307,7 +307,7 @@ function WalletDropdown({
           <div className="flex items-center justify-between px-1">
             <div>
               <span className="text-xs text-warm-500">Balance</span>
-              <p className="font-semibold text-warm-800">{walletInfo.balance} ETH</p>
+              <p className="font-semibold text-warm-800">{walletInfo.balance} MNEE</p>
             </div>
             <div className="text-right">
               <span className="text-xs text-warm-500">Network</span>

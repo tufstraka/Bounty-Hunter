@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
+import { ethers } from 'ethers';
 import { api } from '@/lib/api';
 
 // Types for the Web3 context
@@ -32,7 +33,7 @@ interface Web3ContextType {
 const Web3Context = createContext<Web3ContextType | undefined>(undefined);
 
 const MNEE_TOKEN = {
-  address: '0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF',
+  address: process.env.NEXT_PUBLIC_MNEE_TOKEN_ADDRESS || '0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF',
   symbol: 'MNEE',
   decimals: 18,
 };
@@ -126,11 +127,23 @@ export function Web3Provider({ children }: { children: ReactNode }) {
       const address = accounts[0];
       const chainIdHex = (await window.ethereum.request({ method: 'eth_chainId' })) as string;
       const chainId = parseInt(chainIdHex, 16);
-      const balanceHex = (await window.ethereum.request({
-        method: 'eth_getBalance',
-        params: [address, 'latest'],
-      })) as string;
-      const balance = (parseInt(balanceHex, 16) / 1e18).toFixed(4);
+
+      // Get MNEE token balance instead of ETH balance
+      let balance = '0';
+      try {
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const tokenContract = new ethers.Contract(
+          MNEE_TOKEN.address,
+          ['function balanceOf(address) view returns (uint256)'],
+          provider
+        );
+        const tokenBalance = await tokenContract.balanceOf(address);
+        balance = ethers.formatUnits(tokenBalance, MNEE_TOKEN.decimals);
+      } catch (tokenError) {
+        console.warn('Failed to fetch MNEE token balance:', tokenError);
+        // Fallback to 0 if token balance fetch fails
+        balance = '0';
+      }
 
       setWalletInfo({
         address,

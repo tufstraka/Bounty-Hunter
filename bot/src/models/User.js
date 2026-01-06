@@ -10,6 +10,9 @@ class User {
     this.avatarUrl = data.avatarUrl;
     this.role = data.role || 'user';
     this.mneeAddress = data.mneeAddress;
+    this.ethereumAddress = data.ethereumAddress;
+    this.ethAddressVerified = data.ethAddressVerified || false;
+    this.ethVerificationNonce = data.ethVerificationNonce;
     this.accessToken = data.accessToken;
     this.refreshToken = data.refreshToken;
     this.tokenExpiresAt = data.tokenExpiresAt ? new Date(data.tokenExpiresAt) : null;
@@ -30,6 +33,9 @@ class User {
       avatarUrl: row.avatar_url,
       role: row.role,
       mneeAddress: row.mnee_address,
+      ethereumAddress: row.ethereum_address,
+      ethAddressVerified: row.eth_address_verified,
+      ethVerificationNonce: row.eth_verification_nonce,
       accessToken: row.access_token,
       refreshToken: row.refresh_token,
       tokenExpiresAt: row.token_expires_at,
@@ -50,6 +56,8 @@ class User {
       avatarUrl: this.avatarUrl,
       role: this.role,
       mneeAddress: this.mneeAddress,
+      ethereumAddress: this.ethereumAddress,
+      ethAddressVerified: this.ethAddressVerified,
       totalEarned: this.totalEarned,
       bountiesClaimed: this.bountiesClaimed,
       createdAt: this.createdAt,
@@ -86,13 +94,16 @@ class User {
           avatar_url = $4,
           role = $5,
           mnee_address = $6,
-          access_token = $7,
-          refresh_token = $8,
-          token_expires_at = $9,
-          total_earned = $10,
-          bounties_claimed = $11,
-          updated_at = $12
-        WHERE id = $13
+          ethereum_address = $7,
+          eth_address_verified = $8,
+          eth_verification_nonce = $9,
+          access_token = $10,
+          refresh_token = $11,
+          token_expires_at = $12,
+          total_earned = $13,
+          bounties_claimed = $14,
+          updated_at = $15
+        WHERE id = $16
         RETURNING *
       `;
       const values = [
@@ -102,6 +113,9 @@ class User {
         this.avatarUrl,
         this.role,
         this.mneeAddress,
+        this.ethereumAddress,
+        this.ethAddressVerified,
+        this.ethVerificationNonce,
         this.accessToken,
         this.refreshToken,
         this.tokenExpiresAt,
@@ -116,9 +130,10 @@ class User {
       const text = `
         INSERT INTO users (
           github_id, github_login, email, name, avatar_url, role,
-          mnee_address, access_token, refresh_token, token_expires_at,
+          mnee_address, ethereum_address, eth_address_verified, eth_verification_nonce,
+          access_token, refresh_token, token_expires_at,
           total_earned, bounties_claimed, created_at, updated_at
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
         RETURNING *
       `;
       const values = [
@@ -129,6 +144,9 @@ class User {
         this.avatarUrl,
         this.role,
         this.mneeAddress,
+        this.ethereumAddress,
+        this.ethAddressVerified,
+        this.ethVerificationNonce,
         this.accessToken,
         this.refreshToken,
         this.tokenExpiresAt,
