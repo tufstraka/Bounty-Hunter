@@ -14,7 +14,7 @@ describe('FixFlow Bounty Test', () => {
   it('should always fail to trigger bounty creation', () => {
     // This test intentionally fails
     // Fix: Change false to true
-    const buggyCode = false;
+    const buggyCode = true;
     
     expect(buggyCode).toBe(true);
   });
@@ -32,7 +32,7 @@ describe('FixFlow Bounty Test', () => {
     // Simulating an auth bug
     // Fix: Set isAuthenticated to true when token is valid
     const token = 'valid-jwt-token';
-    const isAuthenticated = false; // Fixed: was false for valid token
+    const isAuthenticated = true; // Fixed: was false for valid token
     
     if (token === 'valid-jwt-token') {
       expect(isAuthenticated).toBe(true);
