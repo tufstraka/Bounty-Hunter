@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' npx jest",
     "lint": "eslint src/",
     "db:init": "node src/db.js --init",
     "db:migrate": "node src/db.js --init",
