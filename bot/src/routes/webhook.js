@@ -305,11 +305,20 @@ router.post('/mnee-status', async (req, res) => {
         const [owner, repo] = bounty.repository.split('/');
         const octokit = await githubAppService.getOctokitForRepo(owner, repo);
         
+        // Generate explorer link for MNEE (BSV-based)
+        const explorerUrl = `https://whatsonchain.com/tx/${tx_id}`;
+        
         await octokit.rest.issues.createComment({
           owner,
           repo,
           issue_number: bounty.issueId,
-          body: `✅ **Payment Confirmed!**\n\nTransaction ID: \`${tx_id}\`\n\nThe MNEE payment has been successfully processed.`
+          body: `✅ **Payment Confirmed!**
+
+🔗 **[View Transaction on WhatsOnChain](${explorerUrl})**
+
+Transaction Hash: \`${tx_id}\`
+
+The MNEE payment has been successfully processed.`
         });
       } catch (error) {
         logger.warn('Failed to post payment confirmation comment:', error.message);
@@ -801,22 +810,44 @@ Please contact support if this persists.`
       logger.warn(`[CLAIM-BOUNTY] Failed to update user stats for ${pullRequest.user.login}:`, statsError.message);
     }
 
-    // Post success comment
+    // Post success comment with explorer link
     logger.info(`[CLAIM-BOUNTY] Step 10: Posting success comment...`);
+    
+    // Generate explorer link based on payment method
+    let explorerUrl;
+    let explorerName;
+    if (isEthereumAddress) {
+      // Determine if mainnet or testnet based on environment
+      const isTestnet = process.env.ETHEREUM_RPC_URL?.includes('sepolia') ||
+                        process.env.ETHEREUM_RPC_URL?.includes('goerli') ||
+                        process.env.ETHEREUM_NETWORK === 'sepolia';
+      if (isTestnet) {
+        explorerUrl = `https://sepolia.etherscan.io/tx/${paymentResult.transactionId}`;
+        explorerName = 'Sepolia Etherscan';
+      } else {
+        explorerUrl = `https://etherscan.io/tx/${paymentResult.transactionId}`;
+        explorerName = 'Etherscan';
+      }
+    } else {
+      // MNEE uses BSV/Bitcoin - use WhatsOnChain
+      explorerUrl = `https://whatsonchain.com/tx/${paymentResult.transactionId}`;
+      explorerName = 'WhatsOnChain';
+    }
+    
     await octokit.rest.issues.createComment({
       owner,
       repo,
       issue_number: issueNumber,
       body: `✅ **Bounty Claimed!**
 
-The bounty of **${bounty.currentAmount} MNEE** has been successfully transferred to ${solverAddress}.
+The bounty of **${bounty.currentAmount} MNEE** has been successfully transferred to \`${solverAddress}\`.
 
-MNEE Transaction ID: \`${paymentResult.transactionId}\`
+🔗 **[View Transaction on ${explorerName}](${explorerUrl})**
+
+Transaction Hash: \`${paymentResult.transactionId}\`
 Pull Request: #${pullRequest.number}
 
-Thank you for your contribution! 🚀
-
-The payment should appear in your MNEE wallet shortly.`
+Thank you for your contribution! 🚀`
     });
     logger.info(`[CLAIM-BOUNTY] ✓ Success comment posted`);
 
