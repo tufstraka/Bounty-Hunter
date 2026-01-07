@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import cron from 'node-cron';
 
 import logger from './utils/logger.js';
-import authMiddleware from './middleware/auth.js';
+import authMiddleware, { adminAuth } from './middleware/auth.js';
 import bountyRoutes from './routes/bounty.js';
 import webhookRoutes from './routes/webhook.js';
 import adminRoutes from './routes/admin.js';
