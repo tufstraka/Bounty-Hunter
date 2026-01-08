@@ -6,7 +6,6 @@ node_modules
 .bounty-hunter-bot.pem
 .DS_Store
 .vscode
-dist
 build
 artifacts
 

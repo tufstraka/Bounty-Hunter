@@ -10,7 +10,7 @@ class Bounty {
     this.currentAmount = data.currentAmount;
     this.maxAmount = data.maxAmount;
     this.status = data.status || 'active';
-    this.solver = data.solver || null; // MNEE wallet address
+    this.solver = data.solver || null; // MNEE/Ethereum wallet address
     this.solverGithubLogin = data.solverGithubLogin || null; // GitHub username
     this.claimedAmount = data.claimedAmount || null;
     this.transactionHash = data.transactionHash;
@@ -23,6 +23,11 @@ class Bounty {
     this.claimedAt = data.claimedAt ? new Date(data.claimedAt) : null;
     this.createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
     this.updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
+
+    // Owner-funded bounty fields
+    this.creatorWalletAddress = data.creatorWalletAddress || null; // Who funded the bounty
+    this.fundingSource = data.fundingSource || 'platform'; // 'platform', 'owner', 'sponsor'
+    this.onChainBountyId = data.onChainBountyId || null; // ID from smart contract
 
     // Internal ID for DB updates
     this.id = data.id;
@@ -92,7 +97,11 @@ class Bounty {
       metadata: row.metadata,
       claimedAt: row.claimed_at,
       createdAt: row.created_at,
-      updatedAt: row.updated_at
+      updatedAt: row.updated_at,
+      // Owner-funded bounty fields
+      creatorWalletAddress: row.creator_wallet_address,
+      fundingSource: row.funding_source,
+      onChainBountyId: row.on_chain_bounty_id
     });
   }
 
@@ -104,27 +113,36 @@ class Bounty {
       // Update
       const text = `
         UPDATE bounties SET
-          current_amount = $1,
-          status = $2,
-          solver = $3,
-          solver_github_login = $4,
-          claimed_amount = $5,
-          claim_transaction_hash = $6,
-          pull_request_url = $7,
-          escalation_count = $8,
-          last_escalation = $9,
-          metadata = $10,
-          claimed_at = $11,
-          updated_at = $12
-        WHERE id = $13
+          initial_amount = $1,
+          current_amount = $2,
+          max_amount = $3,
+          status = $4,
+          solver = $5,
+          solver_github_login = $6,
+          claimed_amount = $7,
+          transaction_hash = $8,
+          claim_transaction_hash = $9,
+          pull_request_url = $10,
+          escalation_count = $11,
+          last_escalation = $12,
+          metadata = $13,
+          claimed_at = $14,
+          updated_at = $15,
+          creator_wallet_address = $16,
+          funding_source = $17,
+          on_chain_bounty_id = $18
+        WHERE id = $19
         RETURNING *
       `;
       const values = [
+        this.initialAmount,
         this.currentAmount,
+        this.maxAmount,
         this.status,
         this.solver,
         this.solverGithubLogin,
         this.claimedAmount,
+        this.transactionHash,
         this.claimTransactionHash,
         this.pullRequestUrl,
         this.escalationCount,
@@ -132,6 +150,9 @@ class Bounty {
         this.metadata,
         this.claimedAt,
         this.updatedAt,
+        this.creatorWalletAddress,
+        this.fundingSource,
+        this.onChainBountyId,
         this.id
       ];
       const { rows } = await db.query(text, values);
@@ -144,9 +165,10 @@ class Bounty {
           current_amount, max_amount, status, solver, solver_github_login, claimed_amount,
           transaction_hash, claim_transaction_hash, block_number,
           pull_request_url, escalation_count, last_escalation, metadata,
-          claimed_at, created_at, updated_at
+          claimed_at, created_at, updated_at,
+          creator_wallet_address, funding_source, on_chain_bounty_id
         ) VALUES (
-          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24
         ) RETURNING *
       `;
       const values = [
@@ -170,7 +192,10 @@ class Bounty {
         this.metadata,
         this.claimedAt,
         this.createdAt,
-        this.updatedAt
+        this.updatedAt,
+        this.creatorWalletAddress,
+        this.fundingSource,
+        this.onChainBountyId
       ];
 
       const { rows } = await db.query(text, values);
@@ -186,11 +211,9 @@ class Bounty {
     return Bounty.fromRow(rows[0]);
   }
 
-  static async find(query = {}) {
-    // This returns a pseudo-promise that has sort/limit/skip methods if we want to chain
-    // But for simplicity, let's implement a chainable builder or just basic query
-    // The existing code uses .sort().limit().skip()
-    // We should implement a query builder
+  static find(query = {}) {
+    // Returns a chainable QueryBuilder that can be awaited
+    // Supports: .sort(), .limit(), .skip(), .where()
     return new QueryBuilder(query);
   }
 

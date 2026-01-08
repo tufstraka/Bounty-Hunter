@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useAuth } from '@/contexts/AuthContext';
 import { api, Bounty, Metrics, User } from '@/lib/api';
 import { MOCK_BOUNTIES, MOCK_USERS, MOCK_METRICS, simulateDelay } from '@/lib/mockData';
-import { Coins, Users, Activity, Database, RefreshCw, AlertTriangle, Shield, Wallet, TrendingUp, Clock, Zap, Target, GitBranch, ExternalLink, Server, Award } from 'lucide-react';
+import { Coins, Users, Activity, Database, RefreshCw, AlertTriangle, Shield, Wallet, TrendingUp, Clock, Zap, Target, GitBranch, ExternalLink, Server, Award, Link2, Box } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 export default function AdminPage() {
@@ -168,16 +168,89 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Wallet Section */}
+        {/* Escrow Contract Section - Show when blockchain mode is enabled */}
+        {metrics?.escrow?.enabled && (
+          <div className="glass-card p-6 mb-8 border-2 border-ocean-200 bg-gradient-to-r from-ocean-50/50 to-grape-50/50">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-ocean-400 to-ocean-600 flex items-center justify-center">
+                <Box className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-warm-800">Escrow Contract</h2>
+                <p className="text-sm text-warm-500">On-chain bounty funds</p>
+              </div>
+              <span className="ml-auto badge-active">On-Chain</span>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="p-4 rounded-xl bg-white/80 border border-ocean-100">
+                <p className="text-xs text-warm-500 uppercase tracking-wide font-medium mb-1">Contract Address</p>
+                <div className="flex items-center gap-2">
+                  <p className="font-mono text-warm-800 text-sm truncate" title={metrics.escrow.contract_address || ''}>
+                    {metrics.escrow.contract_address
+                      ? `${metrics.escrow.contract_address.slice(0, 8)}...${metrics.escrow.contract_address.slice(-6)}`
+                      : 'Not configured'}
+                  </p>
+                  {metrics.escrow.contract_address && (
+                    <a
+                      href={`https://sepolia.etherscan.io/address/${metrics.escrow.contract_address}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-ocean-500 hover:text-ocean-700"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+              
+              <div className="p-4 rounded-xl bg-gradient-to-r from-ocean-100 to-grape-100 border border-ocean-200">
+                <p className="text-xs text-warm-500 uppercase tracking-wide font-medium mb-1">Escrow Balance</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold text-ocean-700">{metrics.escrow.balance?.toFixed(2) || '0'}</span>
+                  <span className="text-ocean-600 font-medium">MNEE</span>
+                </div>
+                <p className="text-xs text-warm-500 mt-1">Funds locked in active bounties</p>
+              </div>
+              
+              <div className="p-4 rounded-xl bg-white/80 border border-ocean-100">
+                <p className="text-xs text-warm-500 uppercase tracking-wide font-medium mb-1">On-Chain Bounties</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-bold text-grape-700">{metrics.bounties.on_chain || 0}</span>
+                  <span className="text-warm-500 text-sm">bounties</span>
+                </div>
+                <p className="text-xs text-warm-500 mt-1">Owner-funded via smart contract</p>
+              </div>
+            </div>
+            
+            {metrics.escrow.error && (
+              <div className="mt-4 p-3 rounded-lg bg-red-50 border border-red-200">
+                <div className="flex items-center gap-2 text-red-700">
+                  <AlertTriangle className="w-4 h-4" />
+                  <span className="text-sm">Error: {metrics.escrow.error}</span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Legacy Wallet Section - Show when blockchain mode is disabled or as secondary info */}
         <div className="glass-card p-6 mb-8">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-honey-100 flex items-center justify-center">
               <Wallet className="w-5 h-5 text-honey-600" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-warm-800">Bot Wallet</h2>
-              <p className="text-sm text-warm-500">System treasury status</p>
+              <h2 className="text-lg font-semibold text-warm-800">
+                {metrics?.system.blockchain_mode ? 'Legacy MNEE Wallet' : 'Bot Wallet'}
+              </h2>
+              <p className="text-sm text-warm-500">
+                {metrics?.system.blockchain_mode ? 'MNEE SDK wallet (for direct payments)' : 'System treasury status'}
+              </p>
             </div>
+            {!metrics?.system.blockchain_mode && (
+              <span className="ml-auto text-xs text-warm-500 bg-warm-100 px-2 py-1 rounded">Off-chain mode</span>
+            )}
           </div>
           
           <div className="grid md:grid-cols-2 gap-4">

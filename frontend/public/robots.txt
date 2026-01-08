@@ -1,0 +1,44 @@
+# FixFlow Robots.txt
+# https://fixflow.locsafe.org/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth/
+Disallow: /_next/
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /admin/
+
+# Crawl-delay for rate limiting (optional)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://fixflow.locsafe.org/sitemap.xml
+
+# Specific bot rules
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# Allow Google Images
+User-agent: Googlebot-Image
+Allow: /
+
+# Allow social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /

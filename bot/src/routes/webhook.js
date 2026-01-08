@@ -7,17 +7,17 @@ import Bounty from '../models/Bounty.js';
 import User from '../models/User.js';
 import bountyService from '../services/bountyService.js';
 import mneeService from '../services/mnee.js';
+import ethereumPaymentService from '../services/ethereumPayment.js';
 import githubAppService from '../services/githubApp.js';
 import db from '../db.js';
 
-// Verify GitHub webhook signature
-function verifyWebhookSignature(payload, signature) {
-  const secret = process.env.GITHUB_WEBHOOK_SECRET;
-  if (!secret) {
+function verifyWebhookSignature(payload, signature, secret = null) {
+  const webhookSecret = secret || process.env.GITHUB_WEBHOOK_SECRET;
+  if (!webhookSecret) {
     logger.warn('GITHUB_WEBHOOK_SECRET not configured');
     return false;
   }
-  const hmac = crypto.createHmac('sha256', secret);
+  const hmac = crypto.createHmac('sha256', webhookSecret);
   const digest = 'sha256=' + hmac.update(payload).digest('hex');
   try {
     return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
@@ -26,16 +26,13 @@ function verifyWebhookSignature(payload, signature) {
   }
 }
 
-// Verify API key for GitHub Actions
 function verifyApiKey(req) {
   const apiKey = req.headers['x-api-key'] || req.headers['authorization']?.replace('Bearer ', '');
   return apiKey && apiKey === process.env.API_KEY;
 }
 
-// GitHub webhook endpoint - receives events from GitHub
 router.post('/github', async (req, res) => {
   try {
-    // Verify signature
     const signature = req.headers['x-hub-signature-256'];
     if (!signature) {
       return res.status(401).json({ error: 'Missing signature' });
@@ -51,7 +48,6 @@ router.post('/github', async (req, res) => {
 
     logger.info(`Received GitHub webhook: ${eventType}`);
 
-    // Handle different event types
     switch (eventType) {
       case 'installation':
         await handleInstallation(event);
@@ -304,11 +300,20 @@ router.post('/mnee-status', async (req, res) => {
         const [owner, repo] = bounty.repository.split('/');
         const octokit = await githubAppService.getOctokitForRepo(owner, repo);
         
+        // Generate explorer link for MNEE (BSV-based)
+        const explorerUrl = `https://whatsonchain.com/tx/${tx_id}`;
+        
         await octokit.rest.issues.createComment({
           owner,
           repo,
           issue_number: bounty.issueId,
-          body: `✅ **Payment Confirmed!**\n\nTransaction ID: \`${tx_id}\`\n\nThe MNEE payment has been successfully processed.`
+          body: `✅ **Payment Confirmed!**
+
+🔗 **[View Transaction on WhatsOnChain](${explorerUrl})**
+
+Transaction Hash: \`${tx_id}\`
+
+The MNEE payment has been successfully processed.`
         });
       } catch (error) {
         logger.warn('Failed to post payment confirmation comment:', error.message);
@@ -345,6 +350,339 @@ router.post('/mnee-status', async (req, res) => {
     res.status(500).json({ error: 'Internal error' });
   }
 });
+
+/**
+ * GitHub Marketplace Webhook - Receives subscription events from GitHub Marketplace
+ *
+ * POST /webhooks/marketplace
+ *
+ * This endpoint handles GitHub Marketplace events for app purchases and subscriptions:
+ * - purchased: User purchased a plan
+ * - pending_change: User requested a plan change (requires approval)
+ * - pending_change_cancelled: User cancelled a pending plan change
+ * - changed: Plan was changed
+ * - cancelled: User cancelled their subscription
+ *
+ * Required Headers:
+ * - X-Hub-Signature-256: HMAC signature for verification
+ * - X-GitHub-Event: Should be 'marketplace_purchase'
+ *
+ * Request Body (example):
+ * {
+ *   "action": "purchased",
+ *   "effective_date": "2026-01-06T00:00:00+00:00",
+ *   "sender": { "login": "username", "id": 123 },
+ *   "marketplace_purchase": {
+ *     "account": { "login": "org_name", "id": 456, "type": "Organization" },
+ *     "billing_cycle": "monthly",
+ *     "unit_count": 1,
+ *     "on_free_trial": false,
+ *     "free_trial_ends_on": null,
+ *     "next_billing_date": "2026-02-06T00:00:00+00:00",
+ *     "plan": {
+ *       "id": 1234,
+ *       "name": "Pro Plan",
+ *       "description": "Pro plan with unlimited bounties",
+ *       "monthly_price_in_cents": 2900,
+ *       "yearly_price_in_cents": 29900,
+ *       "price_model": "FLAT_RATE",
+ *       "has_free_trial": true,
+ *       "unit_name": null,
+ *       "bullets": ["Unlimited bounties", "Priority support", "Custom escalation rules"]
+ *     }
+ *   },
+ *   "previous_marketplace_purchase": null
+ * }
+ */
+router.post('/marketplace', async (req, res) => {
+  try {
+    // Verify signature using marketplace secret (or fall back to regular webhook secret)
+    const signature = req.headers['x-hub-signature-256'];
+    if (!signature) {
+      logger.warn('[MARKETPLACE] Missing signature header');
+      return res.status(401).json({ error: 'Missing signature' });
+    }
+
+    const payload = JSON.stringify(req.body);
+    const marketplaceSecret = process.env.GITHUB_MARKETPLACE_SECRET || process.env.GITHUB_WEBHOOK_SECRET;
+    
+    if (!verifyWebhookSignature(payload, signature, marketplaceSecret)) {
+      logger.error('[MARKETPLACE] Invalid webhook signature');
+      return res.status(401).json({ error: 'Invalid signature' });
+    }
+
+    const eventType = req.headers['x-github-event'];
+    
+    if (eventType !== 'marketplace_purchase') {
+      logger.info(`[MARKETPLACE] Ignoring non-marketplace event: ${eventType}`);
+      return res.status(200).json({ received: true, ignored: true });
+    }
+
+    const event = req.body;
+    const { action, effective_date, sender, marketplace_purchase, previous_marketplace_purchase } = event;
+
+    logger.info('[MARKETPLACE] ========== MARKETPLACE EVENT ==========');
+    logger.info(`[MARKETPLACE] Action: ${action}`);
+    logger.info(`[MARKETPLACE] Effective Date: ${effective_date}`);
+    logger.info(`[MARKETPLACE] Sender: ${sender?.login} (ID: ${sender?.id})`);
+    
+    if (marketplace_purchase) {
+      const { account, billing_cycle, unit_count, on_free_trial, plan } = marketplace_purchase;
+      logger.info(`[MARKETPLACE] Account: ${account?.login} (${account?.type}, ID: ${account?.id})`);
+      logger.info(`[MARKETPLACE] Billing Cycle: ${billing_cycle}`);
+      logger.info(`[MARKETPLACE] Unit Count: ${unit_count}`);
+      logger.info(`[MARKETPLACE] Free Trial: ${on_free_trial}`);
+      logger.info(`[MARKETPLACE] Plan: ${plan?.name} (ID: ${plan?.id})`);
+      logger.info(`[MARKETPLACE] Plan Price: $${(plan?.monthly_price_in_cents / 100).toFixed(2)}/month`);
+    }
+
+    // Handle different marketplace actions
+    await handleMarketplaceEvent(action, event);
+
+    logger.info('[MARKETPLACE] ========== MARKETPLACE EVENT COMPLETE ==========');
+    res.status(200).json({ received: true, action });
+  } catch (error) {
+    logger.error('[MARKETPLACE] Error processing marketplace webhook:', error);
+    logger.error(`[MARKETPLACE] Error stack: ${error.stack}`);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+/**
+ * Handle GitHub Marketplace events
+ */
+async function handleMarketplaceEvent(action, event) {
+  const { marketplace_purchase, previous_marketplace_purchase, sender, effective_date } = event;
+  const account = marketplace_purchase?.account;
+  const plan = marketplace_purchase?.plan;
+
+  try {
+    switch (action) {
+      case 'purchased':
+        await handlePurchase(account, plan, marketplace_purchase, sender, effective_date);
+        break;
+      case 'pending_change':
+        await handlePendingChange(account, plan, marketplace_purchase, previous_marketplace_purchase);
+        break;
+      case 'pending_change_cancelled':
+        await handlePendingChangeCancelled(account, marketplace_purchase);
+        break;
+      case 'changed':
+        await handlePlanChange(account, plan, marketplace_purchase, previous_marketplace_purchase);
+        break;
+      case 'cancelled':
+        await handleCancellation(account, marketplace_purchase, effective_date);
+        break;
+      default:
+        logger.warn(`[MARKETPLACE] Unknown action: ${action}`);
+    }
+  } catch (error) {
+    logger.error(`[MARKETPLACE] Error handling ${action}:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Handle new subscription purchase
+ */
+async function handlePurchase(account, plan, purchase, sender, effectiveDate) {
+  logger.info(`[MARKETPLACE-PURCHASE] New subscription for ${account.login}`);
+  logger.info(`[MARKETPLACE-PURCHASE] Plan: ${plan.name}, Billing: ${purchase.billing_cycle}`);
+  logger.info(`[MARKETPLACE-PURCHASE] Free trial: ${purchase.on_free_trial}, Trial ends: ${purchase.free_trial_ends_on || 'N/A'}`);
+
+  try {
+    // Check if account already exists
+    const { rows: existingRows } = await db.query(
+      'SELECT * FROM marketplace_subscriptions WHERE github_account_id = $1',
+      [account.id]
+    );
+
+    const subscriptionData = {
+      github_account_id: account.id,
+      github_account_login: account.login,
+      github_account_type: account.type,
+      plan_id: plan.id,
+      plan_name: plan.name,
+      billing_cycle: purchase.billing_cycle,
+      unit_count: purchase.unit_count,
+      on_free_trial: purchase.on_free_trial,
+      free_trial_ends_on: purchase.free_trial_ends_on,
+      next_billing_date: purchase.next_billing_date,
+      status: 'active',
+      purchased_by: sender.login,
+      effective_date: effectiveDate,
+      metadata: JSON.stringify({
+        plan_description: plan.description,
+        monthly_price_cents: plan.monthly_price_in_cents,
+        yearly_price_cents: plan.yearly_price_in_cents,
+        price_model: plan.price_model,
+        bullets: plan.bullets
+      })
+    };
+
+    if (existingRows.length > 0) {
+      // Update existing subscription
+      await db.query(`
+        UPDATE marketplace_subscriptions SET
+          plan_id = $1, plan_name = $2, billing_cycle = $3, unit_count = $4,
+          on_free_trial = $5, free_trial_ends_on = $6, next_billing_date = $7,
+          status = $8, purchased_by = $9, effective_date = $10, metadata = $11,
+          updated_at = NOW()
+        WHERE github_account_id = $12
+      `, [
+        subscriptionData.plan_id, subscriptionData.plan_name, subscriptionData.billing_cycle,
+        subscriptionData.unit_count, subscriptionData.on_free_trial, subscriptionData.free_trial_ends_on,
+        subscriptionData.next_billing_date, subscriptionData.status, subscriptionData.purchased_by,
+        subscriptionData.effective_date, subscriptionData.metadata, account.id
+      ]);
+      logger.info(`[MARKETPLACE-PURCHASE] ✓ Updated subscription for ${account.login}`);
+    } else {
+      // Create new subscription
+      await db.query(`
+        INSERT INTO marketplace_subscriptions (
+          github_account_id, github_account_login, github_account_type,
+          plan_id, plan_name, billing_cycle, unit_count,
+          on_free_trial, free_trial_ends_on, next_billing_date,
+          status, purchased_by, effective_date, metadata, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, NOW(), NOW())
+      `, [
+        subscriptionData.github_account_id, subscriptionData.github_account_login,
+        subscriptionData.github_account_type, subscriptionData.plan_id, subscriptionData.plan_name,
+        subscriptionData.billing_cycle, subscriptionData.unit_count, subscriptionData.on_free_trial,
+        subscriptionData.free_trial_ends_on, subscriptionData.next_billing_date, subscriptionData.status,
+        subscriptionData.purchased_by, subscriptionData.effective_date, subscriptionData.metadata
+      ]);
+      logger.info(`[MARKETPLACE-PURCHASE] ✓ Created new subscription for ${account.login}`);
+    }
+  } catch (dbError) {
+    // If table doesn't exist, log the subscription info but don't fail
+    if (dbError.code === '42P01') {
+      logger.warn('[MARKETPLACE-PURCHASE] marketplace_subscriptions table does not exist');
+      logger.info('[MARKETPLACE-PURCHASE] Subscription data:', JSON.stringify({
+        account: account.login,
+        plan: plan.name,
+        billing: purchase.billing_cycle,
+        free_trial: purchase.on_free_trial
+      }));
+    } else {
+      throw dbError;
+    }
+  }
+}
+
+/**
+ * Handle pending plan change (user requested upgrade/downgrade)
+ */
+async function handlePendingChange(account, newPlan, purchase, previousPurchase) {
+  const oldPlan = previousPurchase?.plan;
+  
+  logger.info(`[MARKETPLACE-PENDING] Pending plan change for ${account.login}`);
+  logger.info(`[MARKETPLACE-PENDING] From: ${oldPlan?.name || 'Unknown'} -> To: ${newPlan.name}`);
+  logger.info(`[MARKETPLACE-PENDING] Will take effect at next billing cycle`);
+
+  try {
+    await db.query(`
+      UPDATE marketplace_subscriptions SET
+        pending_plan_id = $1, pending_plan_name = $2,
+        pending_change_effective_date = $3, updated_at = NOW()
+      WHERE github_account_id = $4
+    `, [newPlan.id, newPlan.name, purchase.next_billing_date, account.id]);
+    logger.info(`[MARKETPLACE-PENDING] ✓ Recorded pending change for ${account.login}`);
+  } catch (dbError) {
+    if (dbError.code === '42P01' || dbError.code === '42703') {
+      logger.warn('[MARKETPLACE-PENDING] Could not update subscription (table/column may not exist)');
+    } else {
+      throw dbError;
+    }
+  }
+}
+
+/**
+ * Handle pending change cancellation
+ */
+async function handlePendingChangeCancelled(account, purchase) {
+  logger.info(`[MARKETPLACE-PENDING-CANCEL] Pending change cancelled for ${account.login}`);
+  logger.info(`[MARKETPLACE-PENDING-CANCEL] Staying on current plan: ${purchase.plan?.name}`);
+
+  try {
+    await db.query(`
+      UPDATE marketplace_subscriptions SET
+        pending_plan_id = NULL, pending_plan_name = NULL,
+        pending_change_effective_date = NULL, updated_at = NOW()
+      WHERE github_account_id = $1
+    `, [account.id]);
+    logger.info(`[MARKETPLACE-PENDING-CANCEL] ✓ Cleared pending change for ${account.login}`);
+  } catch (dbError) {
+    if (dbError.code === '42P01' || dbError.code === '42703') {
+      logger.warn('[MARKETPLACE-PENDING-CANCEL] Could not update subscription');
+    } else {
+      throw dbError;
+    }
+  }
+}
+
+/**
+ * Handle plan change (immediate or scheduled)
+ */
+async function handlePlanChange(account, newPlan, purchase, previousPurchase) {
+  const oldPlan = previousPurchase?.plan;
+  
+  logger.info(`[MARKETPLACE-CHANGE] Plan changed for ${account.login}`);
+  logger.info(`[MARKETPLACE-CHANGE] From: ${oldPlan?.name || 'Unknown'} -> To: ${newPlan.name}`);
+  logger.info(`[MARKETPLACE-CHANGE] New billing cycle: ${purchase.billing_cycle}`);
+
+  try {
+    await db.query(`
+      UPDATE marketplace_subscriptions SET
+        plan_id = $1, plan_name = $2, billing_cycle = $3,
+        unit_count = $4, next_billing_date = $5,
+        pending_plan_id = NULL, pending_plan_name = NULL,
+        pending_change_effective_date = NULL,
+        metadata = metadata || $6::jsonb, updated_at = NOW()
+      WHERE github_account_id = $7
+    `, [
+      newPlan.id, newPlan.name, purchase.billing_cycle,
+      purchase.unit_count, purchase.next_billing_date,
+      JSON.stringify({
+        previous_plan: oldPlan?.name,
+        changed_at: new Date().toISOString()
+      }),
+      account.id
+    ]);
+    logger.info(`[MARKETPLACE-CHANGE] ✓ Updated plan for ${account.login}`);
+  } catch (dbError) {
+    if (dbError.code === '42P01') {
+      logger.warn('[MARKETPLACE-CHANGE] marketplace_subscriptions table does not exist');
+    } else {
+      throw dbError;
+    }
+  }
+}
+
+/**
+ * Handle subscription cancellation
+ */
+async function handleCancellation(account, purchase, effectiveDate) {
+  logger.info(`[MARKETPLACE-CANCEL] Subscription cancelled for ${account.login}`);
+  logger.info(`[MARKETPLACE-CANCEL] Effective date: ${effectiveDate}`);
+  logger.info(`[MARKETPLACE-CANCEL] Plan was: ${purchase.plan?.name}`);
+
+  try {
+    await db.query(`
+      UPDATE marketplace_subscriptions SET
+        status = 'cancelled', cancelled_at = $1,
+        cancellation_effective_date = $2, updated_at = NOW()
+      WHERE github_account_id = $3
+    `, [new Date().toISOString(), effectiveDate, account.id]);
+    logger.info(`[MARKETPLACE-CANCEL] ✓ Marked subscription as cancelled for ${account.login}`);
+  } catch (dbError) {
+    if (dbError.code === '42P01' || dbError.code === '42703') {
+      logger.warn('[MARKETPLACE-CANCEL] Could not update subscription');
+    } else {
+      throw dbError;
+    }
+  }
+}
 
 // Handle installation webhook events
 async function handleInstallation(event) {
@@ -405,10 +743,29 @@ async function handlePullRequest(event) {
         logger.warn(`[PR-WEBHOOK] ⚠ No issue references found in PR body. PR body was: "${pull_request.body?.substring(0, 200) || '(empty)'}"`);
       }
 
-      for (const issueNumber of referencedIssues) {
-        logger.info(`[PR-WEBHOOK] Processing issue #${issueNumber}...`);
-        await checkAndClaimBounty(repository.full_name, issueNumber, pull_request, installation?.id);
-      }
+      // Process ALL referenced issues - use Promise.allSettled to ensure all are processed
+      // even if some fail
+      const results = await Promise.allSettled(
+        referencedIssues.map(async (issueNumber) => {
+          logger.info(`[PR-WEBHOOK] Processing issue #${issueNumber}...`);
+          await checkAndClaimBounty(repository.full_name, issueNumber, pull_request, installation?.id);
+          return issueNumber;
+        })
+      );
+      
+      // Log results for each issue
+      results.forEach((result, index) => {
+        const issueNumber = referencedIssues[index];
+        if (result.status === 'fulfilled') {
+          logger.info(`[PR-WEBHOOK] ✓ Issue #${issueNumber} processed successfully`);
+        } else {
+          logger.error(`[PR-WEBHOOK] ✗ Issue #${issueNumber} processing failed: ${result.reason?.message || result.reason}`);
+        }
+      });
+      
+      const successCount = results.filter(r => r.status === 'fulfilled').length;
+      const failCount = results.filter(r => r.status === 'rejected').length;
+      logger.info(`[PR-WEBHOOK] Processed ${referencedIssues.length} issues: ${successCount} succeeded, ${failCount} failed`);
       
       logger.info(`[PR-WEBHOOK] ========== PR EVENT PROCESSING COMPLETE ==========`);
     } else {
@@ -459,10 +816,29 @@ async function handleWorkflowRun(event) {
         const referencedIssues = extractReferencedIssues(pullRequest.body || '');
         logger.info(`[WORKFLOW-WEBHOOK] Referenced issues: ${referencedIssues.length > 0 ? referencedIssues.join(', ') : 'NONE'}`);
 
-        for (const issueNumber of referencedIssues) {
-          logger.info(`[WORKFLOW-WEBHOOK] Checking bounty for issue #${issueNumber}...`);
-          await checkAndClaimBounty(workflow_run.repository.full_name, issueNumber, pullRequest, installation?.id);
-        }
+        // Process ALL referenced issues - use Promise.allSettled to ensure all are processed
+        // even if some fail
+        const results = await Promise.allSettled(
+          referencedIssues.map(async (issueNumber) => {
+            logger.info(`[WORKFLOW-WEBHOOK] Checking bounty for issue #${issueNumber}...`);
+            await checkAndClaimBounty(workflow_run.repository.full_name, issueNumber, pullRequest, installation?.id);
+            return issueNumber;
+          })
+        );
+        
+        // Log results for each issue
+        results.forEach((result, index) => {
+          const issueNumber = referencedIssues[index];
+          if (result.status === 'fulfilled') {
+            logger.info(`[WORKFLOW-WEBHOOK] ✓ Issue #${issueNumber} processed successfully`);
+          } else {
+            logger.error(`[WORKFLOW-WEBHOOK] ✗ Issue #${issueNumber} processing failed: ${result.reason?.message || result.reason}`);
+          }
+        });
+        
+        const successCount = results.filter(r => r.status === 'fulfilled').length;
+        const failCount = results.filter(r => r.status === 'rejected').length;
+        logger.info(`[WORKFLOW-WEBHOOK] Processed ${referencedIssues.length} issues: ${successCount} succeeded, ${failCount} failed`);
       } else {
         logger.info(`[WORKFLOW-WEBHOOK] ✗ No PRs associated with this workflow run`);
       }
@@ -523,21 +899,44 @@ function extractReferencedIssues(body) {
   
   const issues = new Set();
 
-  // Common patterns: fixes #123, closes #123, resolves #123
-  // Also handles "Fixes: #123" (with colon) variant
-  const patterns = [
-    /(?:fixes|closes|resolves|fix|close|resolve):?\s+#(\d+)/gi,
-    /(?:fixes|closes|resolves|fix|close|resolve):?\s+(?:https?:\/\/github\.com\/[\w-]+\/[\w-]+\/issues\/)(\d+)/gi
-  ];
+  // Pattern 1: Single issue references like "fixes #123", "closes #123"
+  const singleIssuePattern = /(?:fixes|closes|resolves|fix|close|resolve):?\s+#(\d+)/gi;
+  
+  // Pattern 2: Full URL references
+  const urlPattern = /(?:fixes|closes|resolves|fix|close|resolve):?\s+(?:https?:\/\/github\.com\/[\w-]+\/[\w-]+\/issues\/)(\d+)/gi;
+  
+  // Pattern 3: Multiple issues after one keyword - "Fixes #52 #53 #54" or "Fixes #52, #53, #54"
+  // This matches the keyword followed by a chain of issue numbers
+  const multiIssuePattern = /(?:fixes|closes|resolves|fix|close|resolve):?\s+((?:#\d+[\s,and]*)+)/gi;
 
-  for (let i = 0; i < patterns.length; i++) {
-    const pattern = patterns[i];
+  // First, handle the multi-issue pattern
+  let multiMatch;
+  while ((multiMatch = multiIssuePattern.exec(body)) !== null) {
+    const issueChain = multiMatch[1];
+    logger.info(`[EXTRACT-ISSUES] ✓ Found issue chain: "${issueChain}"`);
+    
+    // Extract all issue numbers from the chain
+    const issueNumbers = issueChain.match(/#(\d+)/g);
+    if (issueNumbers) {
+      issueNumbers.forEach(num => {
+        const issueNum = parseInt(num.replace('#', ''));
+        logger.info(`[EXTRACT-ISSUES] ✓ Extracted issue #${issueNum} from chain`);
+        issues.add(issueNum);
+      });
+    }
+  }
+
+  // Also try single patterns as fallback (in case format is different)
+  const singlePatterns = [singleIssuePattern, urlPattern];
+  for (let i = 0; i < singlePatterns.length; i++) {
+    const pattern = singlePatterns[i];
     let match;
-    // Reset lastIndex since we're reusing patterns
     pattern.lastIndex = 0;
     while ((match = pattern.exec(body)) !== null) {
-      logger.info(`[EXTRACT-ISSUES] ✓ Found issue reference: #${match[1]} (pattern ${i + 1}, match: "${match[0]}")`);
-      issues.add(parseInt(match[1]));
+      if (!issues.has(parseInt(match[1]))) {
+        logger.info(`[EXTRACT-ISSUES] ✓ Found issue reference: #${match[1]} (pattern ${i + 1}, match: "${match[0]}")`);
+        issues.add(parseInt(match[1]));
+      }
     }
   }
 
@@ -627,79 +1026,164 @@ async function checkAndClaimBounty(repository, issueNumber, pullRequest, install
     
     logger.info(`[CLAIM-BOUNTY] ✓ All ${checkRuns.check_runs.length} checks passing`);
 
-    // Get PR author's MNEE address (from PR description or user profile)
-    logger.info(`[CLAIM-BOUNTY] Step 4: Extracting MNEE address from PR...`);
-    const solverAddress = await extractMneeAddress(pullRequest);
+    // Get PR author's payment address (from PR description or user profile)
+    // Can be MNEE (Bitcoin-style) or Ethereum address when USE_BLOCKCHAIN is enabled
+    const isBlockchainMode = process.env.USE_BLOCKCHAIN === 'true';
+    logger.info(`[CLAIM-BOUNTY] Step 4: Extracting payment address from PR... (blockchain mode: ${isBlockchainMode})`);
+    const solverAddress = await extractPaymentAddress(pullRequest, isBlockchainMode);
     logger.info(`[CLAIM-BOUNTY] Extracted address: ${solverAddress || '(none found)'}`);
 
     if (!solverAddress) {
-      logger.warn(`[CLAIM-BOUNTY] ✗ No MNEE address found in PR description`);
-      logger.info(`[CLAIM-BOUNTY] Posting comment to request MNEE address...`);
+      logger.warn(`[CLAIM-BOUNTY] ✗ No payment address found in PR description`);
+      logger.info(`[CLAIM-BOUNTY] Posting comment to request payment address...`);
       
-      // Post comment asking for MNEE address
+      // Post comment asking for payment address
+      const addressInstructions = isBlockchainMode
+        ? `To claim your bounty, please add your Ethereum address to your PR description in the following format:
+\`\`\`
+ETH: 0xYourEthereumAddressHere
+\`\`\`
+
+Or use the traditional MNEE format:
+\`\`\`
+MNEE: 1YourMneeAddressHere
+\`\`\`
+
+**Note:** Ethereum addresses start with \`0x\`. MNEE addresses are Bitcoin-style (start with \`1\` or \`3\`).`
+        : `To claim your bounty, please add your MNEE address to your PR description in the following format:
+\`\`\`
+MNEE: 1YourMneeAddressHere
+\`\`\`
+
+**Note:** MNEE uses Bitcoin-style addresses. If you need help setting up an MNEE wallet, visit [docs.mnee.io](https://docs.mnee.io).`;
+
       await octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number: pullRequest.number,
         body: `🎉 **Congratulations!** Your PR fixes issue #${issueNumber} which has a bounty of **${bounty.currentAmount} MNEE**!
 
-To claim your bounty, please add your MNEE address to your PR description in the following format:
-\`\`\`
-MNEE: 1YourMneeAddressHere
-\`\`\`
+${addressInstructions}
 
-Once you've added your MNEE address, the bounty will be automatically released to you.
-
-**Note:** MNEE uses Bitcoin-style addresses. If you need help setting up an MNEE wallet, visit [docs.mnee.io](https://docs.mnee.io).`
+Once you've added your payment address, the bounty will be automatically released to you.`
       });
 
-      logger.info(`[CLAIM-BOUNTY] ✓ Comment posted, requested MNEE address from ${pullRequest.user.login}`);
+      logger.info(`[CLAIM-BOUNTY] ✓ Comment posted, requested payment address from ${pullRequest.user.login}`);
       logger.info(`[CLAIM-BOUNTY] ========== CLAIM CHECK COMPLETE (AWAITING ADDRESS) ==========`);
       return;
     }
 
-    // Validate MNEE address
-    logger.info(`[CLAIM-BOUNTY] Step 5: Validating MNEE address: ${solverAddress}`);
-    const isValidAddress = await mneeService.validateAddress(solverAddress);
+    // Validate payment address
+    const isEthereumAddress = solverAddress.startsWith('0x') && solverAddress.length === 42;
+    logger.info(`[CLAIM-BOUNTY] Step 5: Validating payment address: ${solverAddress} (Ethereum: ${isEthereumAddress})`);
+    
+    let isValidAddress = false;
+    if (isEthereumAddress) {
+      // Basic Ethereum address validation
+      isValidAddress = /^0x[a-fA-F0-9]{40}$/.test(solverAddress);
+    } else {
+      // MNEE Bitcoin-style address validation
+      isValidAddress = await mneeService.validateAddress(solverAddress);
+    }
     logger.info(`[CLAIM-BOUNTY] Address validation result: ${isValidAddress}`);
     
     if (!isValidAddress) {
-      logger.warn(`[CLAIM-BOUNTY] ✗ Invalid MNEE address: ${solverAddress}`);
-      await octokit.rest.issues.createComment({
-        owner,
-        repo,
-        issue_number: pullRequest.number,
-        body: `⚠️ **Invalid MNEE Address**
+      logger.warn(`[CLAIM-BOUNTY] ✗ Invalid payment address: ${solverAddress}`);
+      const errorMessage = isEthereumAddress
+        ? `⚠️ **Invalid Ethereum Address**
+
+The Ethereum address you provided appears to be invalid. Please check and update it in your PR description.
+
+Ethereum addresses should be 42 characters starting with \`0x\`, like: \`0x1234567890123456789012345678901234567890\``
+        : `⚠️ **Invalid MNEE Address**
 
 The MNEE address you provided appears to be invalid. Please check and update it in your PR description.
 
 MNEE addresses should look like: \`1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\`
 
-For help with MNEE wallets, visit [docs.mnee.io](https://docs.mnee.io).`
+For help with MNEE wallets, visit [docs.mnee.io](https://docs.mnee.io).`;
+
+      await octokit.rest.issues.createComment({
+        owner,
+        repo,
+        issue_number: pullRequest.number,
+        body: errorMessage
       });
       logger.info(`[CLAIM-BOUNTY] ========== CLAIM CHECK COMPLETE (INVALID ADDRESS) ==========`);
       return;
     }
     
-    logger.info(`[CLAIM-BOUNTY] ✓ MNEE address is valid`);
+    logger.info(`[CLAIM-BOUNTY] ✓ Payment address is valid`);
 
-    // Send MNEE payment
-    logger.info(`[CLAIM-BOUNTY] Step 6: Sending MNEE payment...`);
+    // Send payment (MNEE SDK or Blockchain depending on address type and mode)
+    logger.info(`[CLAIM-BOUNTY] Step 6: Sending payment...`);
     logger.info(`[CLAIM-BOUNTY]   - To: ${solverAddress}`);
     logger.info(`[CLAIM-BOUNTY]   - Amount: ${bounty.currentAmount} MNEE`);
     logger.info(`[CLAIM-BOUNTY]   - Bounty ID: ${bounty.bountyId}`);
+    logger.info(`[CLAIM-BOUNTY]   - On-Chain Bounty ID: ${bounty.onChainBountyId || 'N/A'}`);
+    logger.info(`[CLAIM-BOUNTY]   - Funding Source: ${bounty.fundingSource || 'platform'}`);
+    
+    // Determine payment method based on:
+    // 1. If bounty has onChainBountyId -> use releaseBounty (escrow contract releases funds)
+    // 2. If Ethereum address without onChainBountyId -> direct transfer from bot wallet
+    // 3. If MNEE address -> use MNEE SDK
+    const hasOnChainBounty = bounty.onChainBountyId && process.env.USE_BLOCKCHAIN === 'true';
+    logger.info(`[CLAIM-BOUNTY]   - Has on-chain bounty: ${hasOnChainBounty}`);
+    logger.info(`[CLAIM-BOUNTY]   - Payment method: ${hasOnChainBounty ? 'Escrow Release' : (isEthereumAddress ? 'Direct ERC-20 Transfer' : 'MNEE SDK')}`);
     
     let paymentResult;
     try {
-      paymentResult = await mneeService.sendPayment(
-        solverAddress,
-        bounty.currentAmount,
-        bounty.bountyId
-      );
+      if (hasOnChainBounty && isEthereumAddress) {
+        // Bounty was funded through escrow contract - use releaseBounty to release from contract
+        logger.info(`[CLAIM-BOUNTY] Using escrow contract releaseBounty for on-chain bounty ${bounty.onChainBountyId}`);
+        
+        // Initialize if not already
+        if (!ethereumPaymentService.initialized) {
+          await ethereumPaymentService.initialize();
+        }
+        
+        paymentResult = await ethereumPaymentService.releaseBounty(
+          bounty.onChainBountyId,
+          solverAddress,
+          pullRequest.user.login,
+          pullRequest.html_url
+        );
+        
+        // Map the result to expected format
+        paymentResult = {
+          success: paymentResult.success,
+          transactionId: paymentResult.transactionId,
+          amount: paymentResult.amount,
+          recipient: solverAddress
+        };
+      } else if (isEthereumAddress && process.env.USE_BLOCKCHAIN === 'true') {
+        // Ethereum address but no on-chain bounty - direct transfer from bot wallet
+        // This is for backwards compatibility with bounties created before escrow
+        logger.info(`[CLAIM-BOUNTY] Using direct ERC-20 transfer (no on-chain bounty)`);
+        
+        // Initialize if not already
+        if (!ethereumPaymentService.initialized) {
+          await ethereumPaymentService.initialize();
+        }
+        
+        paymentResult = await ethereumPaymentService.sendPayment(
+          solverAddress,
+          bounty.currentAmount,
+          bounty.bountyId
+        );
+      } else {
+        // Use MNEE SDK for Bitcoin-style addresses
+        logger.info(`[CLAIM-BOUNTY] Using MNEE SDK for payment`);
+        paymentResult = await mneeService.sendPayment(
+          solverAddress,
+          bounty.currentAmount,
+          bounty.bountyId
+        );
+      }
       logger.info(`[CLAIM-BOUNTY] ✓ Payment sent successfully!`);
       logger.info(`[CLAIM-BOUNTY]   - Transaction ID: ${paymentResult.transactionId}`);
     } catch (error) {
-      logger.error(`[CLAIM-BOUNTY] ✗ Failed to send MNEE payment for bounty ${bounty.bountyId}:`, error);
+      logger.error(`[CLAIM-BOUNTY] ✗ Failed to send payment for bounty ${bounty.bountyId}:`, error);
       logger.error(`[CLAIM-BOUNTY] Payment error details: ${error.message}`);
       logger.error(`[CLAIM-BOUNTY] Payment error stack: ${error.stack}`);
 
@@ -709,7 +1193,7 @@ For help with MNEE wallets, visit [docs.mnee.io](https://docs.mnee.io).`
         issue_number: issueNumber,
         body: `❌ **Payment Failed**
 
-There was an error sending your MNEE payment. Our team has been notified and will resolve this issue.
+There was an error sending your ${isEthereumAddress ? 'ERC-20 token' : 'MNEE'} payment. Our team has been notified and will resolve this issue.
 
 Error: ${error.message}
 
@@ -748,22 +1232,44 @@ Please contact support if this persists.`
       logger.warn(`[CLAIM-BOUNTY] Failed to update user stats for ${pullRequest.user.login}:`, statsError.message);
     }
 
-    // Post success comment
+    // Post success comment with explorer link
     logger.info(`[CLAIM-BOUNTY] Step 10: Posting success comment...`);
+    
+    // Generate explorer link based on payment method
+    let explorerUrl;
+    let explorerName;
+    if (isEthereumAddress) {
+      // Determine if mainnet or testnet based on environment
+      const isTestnet = process.env.ETHEREUM_RPC_URL?.includes('sepolia') ||
+                        process.env.ETHEREUM_RPC_URL?.includes('goerli') ||
+                        process.env.ETHEREUM_NETWORK === 'sepolia';
+      if (isTestnet) {
+        explorerUrl = `https://sepolia.etherscan.io/tx/${paymentResult.transactionId}`;
+        explorerName = 'Sepolia Etherscan';
+      } else {
+        explorerUrl = `https://etherscan.io/tx/${paymentResult.transactionId}`;
+        explorerName = 'Etherscan';
+      }
+    } else {
+      // MNEE uses BSV/Bitcoin - use WhatsOnChain
+      explorerUrl = `https://whatsonchain.com/tx/${paymentResult.transactionId}`;
+      explorerName = 'WhatsOnChain';
+    }
+    
     await octokit.rest.issues.createComment({
       owner,
       repo,
       issue_number: issueNumber,
       body: `✅ **Bounty Claimed!**
 
-The bounty of **${bounty.currentAmount} MNEE** has been successfully transferred to ${solverAddress}.
+The bounty of **${bounty.currentAmount} MNEE** has been successfully transferred to \`${solverAddress}\`.
 
-MNEE Transaction ID: \`${paymentResult.transactionId}\`
+🔗 **[View Transaction on ${explorerName}](${explorerUrl})**
+
+Transaction Hash: \`${paymentResult.transactionId}\`
 Pull Request: #${pullRequest.number}
 
-Thank you for your contribution! 🚀
-
-The payment should appear in your MNEE wallet shortly.`
+Thank you for your contribution! 🚀`
     });
     logger.info(`[CLAIM-BOUNTY] ✓ Success comment posted`);
 
@@ -786,14 +1292,34 @@ The payment should appear in your MNEE wallet shortly.`
   }
 }
 
-// Extract MNEE address from PR description
-async function extractMneeAddress(pullRequest) {
+// Extract payment address from PR description
+// Supports both MNEE (Bitcoin-style) and Ethereum addresses
+async function extractPaymentAddress(pullRequest, isBlockchainMode = false) {
   const body = pullRequest.body || '';
-  logger.debug(`[EXTRACT-ADDRESS] Extracting MNEE address from PR body (${body.length} chars)`);
+  logger.debug(`[EXTRACT-ADDRESS] Extracting payment address from PR body (${body.length} chars)`);
   logger.debug(`[EXTRACT-ADDRESS] Body preview: "${body.substring(0, 200)}"`);
+  logger.debug(`[EXTRACT-ADDRESS] Blockchain mode: ${isBlockchainMode}`);
 
-  // Look for MNEE address in PR description
-  // MNEE uses Bitcoin-style addresses
+  // First, check for Ethereum addresses (when blockchain mode is enabled)
+  if (isBlockchainMode) {
+    // Look for ETH: 0x... pattern
+    const ethPattern = /(?:eth|ethereum):\s*(0x[a-fA-F0-9]{40})/i;
+    const ethMatch = body.match(ethPattern);
+    if (ethMatch) {
+      logger.info(`[EXTRACT-ADDRESS] ✓ Found Ethereum address: ${ethMatch[1]}`);
+      return ethMatch[1];
+    }
+
+    // Also check for MNEE: 0x... pattern (user may use MNEE prefix with ETH address)
+    const mneeEthPattern = /mnee:\s*(0x[a-fA-F0-9]{40})/i;
+    const mneeEthMatch = body.match(mneeEthPattern);
+    if (mneeEthMatch) {
+      logger.info(`[EXTRACT-ADDRESS] ✓ Found Ethereum address with MNEE prefix: ${mneeEthMatch[1]}`);
+      return mneeEthMatch[1];
+    }
+  }
+
+  // Look for MNEE address in PR description (Bitcoin-style addresses)
   const mneePattern = /mnee:\s*([13][a-km-zA-HJ-NP-Z1-9]{25,34})/i;
   const match = body.match(mneePattern);
 
@@ -817,7 +1343,7 @@ async function extractMneeAddress(pullRequest) {
     }
   }
 
-  logger.info(`[EXTRACT-ADDRESS] ✗ No MNEE address found in PR body`);
+  logger.info(`[EXTRACT-ADDRESS] ✗ No payment address found in PR body`);
   return null;
 }
 
