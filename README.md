@@ -96,7 +96,7 @@ That's it. The next time your tests fail, FixFlow will create a bounty automatic
 
 The default configuration works well for most projects, but you can customize everything.
 
-Create a `.bounty-hunter.yml` file in your repository root:
+Create a `.fixflow.yml` file in your repository root:
 
 ```yaml
 bounty_config:
