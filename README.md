@@ -54,10 +54,10 @@ createdb FixFlow
 Then clone the repository, install dependencies, and configure your environment:
 
 ```bash
-cd bounty-hunter/bot
+cd fixflow/bot
 npm install
 cp .env.example .env
-# Edit .env with your database connection, GitHub App credentials, and MNEE API key
+# Edit .env with your database connection and GitHub App credentials
 
 # Initialize the database tables
 npm run db:init
@@ -69,25 +69,62 @@ npm start
 Finally, add the FixFlow workflow to your repository. Create `.github/workflows/bounty-hunter.yml`:
 
 ```yaml
-name: FixFlow
+name: Create Bounty on Failure
 
 on:
   workflow_run:
     workflows: ["Tests"]
     types: [completed]
 
+# Required permissions for workflow_run triggered workflows
+permissions:
+  contents: read
+  issues: write
+  actions: read
+
 jobs:
   create-bounty:
+    name: Create FixFlow Bounty
     runs-on: ubuntu-latest
+    # Only run if the triggering workflow failed
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     
     steps:
-      - uses: bounty-hunter/bounty-hunter-action@v1
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      
+      - name: Create FixFlow Bounty
+        uses: tufstraka/fixflow/github-action@main
+        id: bounty
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          bot_server_url: ${{ secrets.BOUNTY_HUNTER_URL }}
+          bot_server_url: ${{ secrets.BOUNTY_HUNTER_SERVER_URL }}
           bot_api_key: ${{ secrets.BOUNTY_HUNTER_API_KEY }}
-          bounty_amount: 50
+          bounty_amount: 5
+          max_bounty: 20
+          config_file: .fixflow.yml
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: us-east-1
+          bedrock_model_id: anthropic.claude-3-sonnet-20240229-v1:0
+      
+      - name: Bounty Creation Summary
+        if: steps.bounty.outputs.bounty_created == 'true'
+        run: |
+          echo "🎯 FixFlow Bounty Created!"
+          echo "================================"
+          echo "Issue URL: ${{ steps.bounty.outputs.issue_url }}"
+          echo "Bounty ID: ${{ steps.bounty.outputs.bounty_id }}"
+          echo "Issue Number: ${{ steps.bounty.outputs.issue_number }}"
+          echo ""
+          echo "Triggered by workflow run: ${{ github.event.workflow_run.html_url }}"
+          echo ""
+          echo "A developer can now claim this bounty by:"
+          echo "1. Fixing the failing test"
+          echo "2. Submitting a PR with 'MNEE: their_wallet_address'"
+          echo "3. Getting the PR merged"
 ```
 
 That's it. The next time your tests fail, FixFlow will create a bounty automatically.
