@@ -184,8 +184,6 @@ For detailed technical documentation, see:
 
 We welcome contributions. Whether it's fixing a bug, improving documentation, or suggesting new features, all of it helps.
 
-See our Contributing Guide for details on how to get involved.
-
 ## License
 
 MIT License. Use this however you want.
