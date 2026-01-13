@@ -246,7 +246,7 @@ router.get('/installations/:id', async (req, res) => {
  * URL: GET /github/install
  */
 router.get('/install', (req, res) => {
-  const appName = process.env.GITHUB_APP_NAME || 'bounty-hunter-bot';
+  const appName = process.env.GITHUB_APP_NAME || 'fix-flow';
   const installUrl = `https://github.com/apps/${appName}/installations/new`;
   
   res.json({

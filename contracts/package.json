@@ -1,5 +1,5 @@
 {
-  "name": "@bounty-hunter/contracts",
+  "name": "@fix-flow/contracts",
   "version": "1.0.0",
   "description": "Ethereum smart contracts for FixFlow bounty escrow using MNEE token",
   "scripts": {

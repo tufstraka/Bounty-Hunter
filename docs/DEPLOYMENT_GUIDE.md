@@ -148,13 +148,13 @@ postgresql://fixflow:your_password@fixflow-db.xxxxxxxxx.us-east-1.rds.amazonaws.
 
 ```bash
 cd /home/ubuntu
-git clone https://github.com/your-org/bounty-hunter.git
-cd bounty-hunter
+git clone < repo >
+cd fix-flow
 ```
 
 #### 2. Create Production Environment File
 
-Create a `.env` file in the `bounty-hunter` directory:
+Create a `.env` file in the `fix-flow` directory:
 
 ```bash
 nano .env
@@ -252,7 +252,7 @@ nano secrets/github-app.pem
 #### 1. Build Docker Images
 
 ```bash
-cd /home/ubuntu/bounty-hunter
+cd /home/ubuntu/fix-flow
 
 # Build all services
 docker compose build
@@ -653,8 +653,8 @@ If you prefer not to use Docker, follow these steps:
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/bounty-hunter.git
-cd bounty-hunter/bot
+git clone < repo >
+cd fix-flow/bot
 
 # Install dependencies
 npm install --production
@@ -898,7 +898,7 @@ Monitor for:
 ### Updating the Application
 
 ```bash
-cd /home/ubuntu/bounty-hunter
+cd /home/ubuntu/fix-flow
 
 # Pull latest changes
 git pull origin main
@@ -1032,6 +1032,6 @@ SELECT pg_size_pretty(pg_database_size('fixflow'));
 
 For deployment issues:
 - Documentation: https://docs.fixflow.io
-- GitHub Issues: https://github.com/your-org/bounty-hunter/issues
+- GitHub Issues: https://github.com/tufstraka/fixflow/issues
 - Discord: https://discord.gg/fixflow
-- Email: support@fixflow.io
+- Email: support@locsafe.org

@@ -72,7 +72,7 @@ This issue has been open for ${bounty.hoursElapsed} hours. ${this.getNextEscalat
 **Maximum possible bounty:** ${bounty.maxAmount} MNEE
 
 ---
-*Escalation ${bounty.escalationCount} triggered by [FixFlow](https://github.com/bounty-hunter/bounty-hunter)*`;
+*Escalation ${bounty.escalationCount} triggered by [FixFlow](https://github.com/tufstraka/fix-flow)*`;
 
       // Use GitHub App authentication instead of personal token
       const octokit = await githubAppService.getOctokitForRepo(owner, repo);

@@ -50,7 +50,7 @@ GRANT ALL PRIVILEGES ON DATABASE FixFlow TO bounty_user;
 
 **Basic Information:**
 - Name: `FixFlow Bot`
-- Homepage URL: `https://github.com/bounty-hunter/bounty-hunter`
+- Homepage URL: `https://github.com/fix-flow/fix-flow`
 - Webhook URL: `https://your-bot-server.com/webhook`
 - Webhook secret: Generate a secure random string
 
@@ -79,7 +79,7 @@ After creating the app:
 ### 3.1 Set Up Environment
 
 ```bash
-cd bounty-hunter/bot
+cd fix-flow/bot
 cp .env.example .env
 ```
 
@@ -167,7 +167,7 @@ npm start
 
 ### 4.2 Add FixFlow Action
 
-Create `.github/workflows/bounty-hunter.yml`:
+Create `.github/workflows/fix-flow.yml`:
 
 ```yaml
 name: FixFlow
@@ -207,7 +207,7 @@ For self-hosted instances, optionally set:
 
 ### 4.4 (Optional) Add Configuration File
 
-Create `.bounty-hunter.yml` in repository root:
+Create `.fix-flow.yml` in repository root:
 
 ```yaml
 bounty_config:
@@ -333,6 +333,6 @@ describe('Bounty Test', () => {
 
 ## Support
 
-- GitHub Issues: [bounty-hunter/bounty-hunter](https://github.com/bounty-hunter/bounty-hunter/issues)
-- Documentation: [docs/](https://github.com/bounty-hunter/bounty-hunter/tree/main/docs)
-- Discord: [Join our server](https://discord.gg/bounty-hunter)
+- GitHub Issues: [fix-flow/fix-flow](https://github.com/fix-flow/fix-flow/issues)
+- Documentation: [docs/](https://github.com/fix-flow/fix-flow/tree/main/docs)
+- Discord: [Join our server](https://discord.gg/fix-flow)

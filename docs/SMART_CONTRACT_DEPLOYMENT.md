@@ -75,7 +75,7 @@ npm --version
 ### Step 1: Install Dependencies
 
 ```bash
-cd bounty-hunter/contracts
+cd fix-flow/contracts
 npm install
 ```
 
@@ -269,7 +269,7 @@ npm run verify:sepolia -- 0xEscrowContractAddress \
 
 ### Step 6: Update Bot Configuration
 
-Add to `bounty-hunter/bot/.env`:
+Add to `fix-flow/bot/.env`:
 
 ```env
 # Blockchain Configuration
@@ -283,7 +283,7 @@ SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/YOUR_KEY
 
 ### Step 7: Update Frontend Configuration
 
-Add to `bounty-hunter/frontend/.env.local`:
+Add to `fix-flow/frontend/.env.local`:
 
 ```env
 NEXT_PUBLIC_USE_BLOCKCHAIN=true
@@ -541,7 +541,7 @@ Error: nonce has already been used
 
 ```bash
 # 1. Install dependencies
-cd bounty-hunter/contracts && npm install
+cd fix-flow/contracts && npm install
 
 # 2. Configure .env
 cp .env.example .env

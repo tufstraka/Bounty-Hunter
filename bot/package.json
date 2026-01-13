@@ -1,5 +1,5 @@
 {
-  "name": "@bounty-hunter/bot",
+  "name": "@fix-flow/bot",
   "version": "1.0.0",
   "description": "Backend bot for FixFlow system",
   "main": "src/index.js",

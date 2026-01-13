@@ -568,6 +568,6 @@ async function testPaymentFlow() {
 ## See Also
 
 - [MNEE SDK Documentation](https://docs.mnee.io)
-- [FixFlow Architecture](./bounty-hunter-architecture.md)
+- [FixFlow Architecture](./fix-flow-architecture.md)
 - [Database Schema](./DATABASE_SCHEMA.md)
 - [GitHub Integration](./GITHUB_INTEGRATION.md)

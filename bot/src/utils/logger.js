@@ -16,7 +16,7 @@ const logger = winston.createLogger({
     winston.format.errors({ stack: true }),
     winston.format.splat()
   ),
-  defaultMeta: { service: 'bounty-hunter-bot' },
+  defaultMeta: { service: 'fix-flow-bot' },
   transports: [
     // Write all logs with importance level of `error` or less to `error.log`
     new winston.transports.File({

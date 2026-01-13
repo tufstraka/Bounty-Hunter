@@ -97,7 +97,7 @@ MNEE_TOKEN_ADDRESS=0x8ccedbAe4916b79da7F3F612EfB2EB93A2bFD6cF
 ### 2. Deploy Smart Contracts
 
 ```bash
-cd bounty-hunter/contracts
+cd fix-flow/contracts
 
 # Install dependencies
 npm install
@@ -243,14 +243,14 @@ Monitor your bot's ETH balance and fund it as needed.
 ### Smart Contract Tests
 
 ```bash
-cd bounty-hunter/contracts
+cd fix-flow/contracts
 npm test
 ```
 
 ### Payment Service Tests
 
 ```bash
-cd bounty-hunter/bot
+cd fix-flow/bot
 npm test -- test/paymentService.test.js
 ```
 

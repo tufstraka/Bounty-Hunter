@@ -53,7 +53,7 @@
 1. **Check server status:**
    ```bash
    pm2 status
-   pm2 logs bounty-hunter-bot
+   pm2 logs fix-flow-bot
    ```
 
 2. **Verify port availability:**
@@ -351,11 +351,11 @@ Resource not accessible by integration
 
 ```javascript
 // In .env
-DEBUG=bounty-hunter:*
+DEBUG=fix-flow:*
 LOG_LEVEL=debug
 
 // In code
-const debug = require('debug')('bounty-hunter:service');
+const debug = require('debug')('fix-flow:service');
 debug('Detailed debugging info');
 ```
 
@@ -437,7 +437,7 @@ app.use((req, res, next) => {
 
 ```bash
 # 1. Stop the bot
-pm2 stop bounty-hunter-bot
+pm2 stop fix-flow-bot
 
 # 2. Disable GitHub webhooks
 # Go to GitHub App settings and disable webhooks
@@ -459,7 +459,7 @@ npm install
 npm run db:migrate
 
 # 4. Restart services
-pm2 restart bounty-hunter-bot
+pm2 restart fix-flow-bot
 ```
 
 ### Data Recovery
@@ -478,11 +478,11 @@ If you're still experiencing issues:
 
 1. **Check logs thoroughly:**
    ```bash
-   pm2 logs bounty-hunter-bot --lines 1000
+   pm2 logs fix-flow-bot --lines 1000
    ```
 
 2. **Search existing issues:**
-   https://github.com/bounty-hunter/bounty-hunter/issues
+   https://github.com/fix-flow/fix-flow/issues
 
 3. **Create detailed bug report:**
    - Error messages
@@ -491,8 +491,8 @@ If you're still experiencing issues:
    - Relevant logs
 
 4. **Contact support:**
-   - Discord: https://discord.gg/bounty-hunter
-   - Email: support@bounty-hunter.io
+   - Discord: https://discord.gg/fix-flow
+   - Email: support@locsafe.org
 
 ## Common Environment Variables
 

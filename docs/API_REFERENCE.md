@@ -412,7 +412,7 @@ X-RateLimit-Reset: 1704067200
 
 The API supports CORS for the admin dashboard. Allowed origins:
 - `http://localhost:3000` (development)
-- `https://bounty-hunter-dashboard.vercel.app` (production)
+- `https://fixflow.locsafe.org` (production)
 
 ## Webhooks Security
 
@@ -428,7 +428,7 @@ The API supports CORS for the admin dashboard. Allowed origins:
 
 ### Create a Bounty (GitHub Action)
 ```bash
-curl -X POST https://api.bounty-hunter.io/webhooks/create-bounty \
+curl -X POST https://fixflow-api.locsafe.org/webhooks/create-bounty \
   -H "Authorization: Bearer ${{ secrets.BOUNTY_HUNTER_TOKEN }}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -441,11 +441,11 @@ curl -X POST https://api.bounty-hunter.io/webhooks/create-bounty \
 
 ### Check Bounty Status
 ```bash
-curl https://api.bounty-hunter.io/api/bounties/1 \
+curl https://fixflow-api.locsafe.org/api/bounties/1 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
 ### Monitor System Health
 ```bash
-curl https://api.bounty-hunter.io/api/admin/metrics \
+curl https://fixflow-api.locsafe.org/api/admin/metrics \
   -H "Authorization: Bearer ADMIN_TOKEN"
